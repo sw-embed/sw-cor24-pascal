@@ -1,7 +1,8 @@
 number = 3
 slug = "003-parser"
-status = "in-progress"
+status = "completed"
 description = "Implement the Phase 0 parser in C. Create src/parser.c and src/parser.h. The ..."
 role = "production"
 context_files = []
 created_at = "2026-03-25T23:51:03"
+completed_at = "2026-03-26T00:03:03"

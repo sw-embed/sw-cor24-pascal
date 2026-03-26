@@ -1,0 +1,8 @@
+number = 4
+slug = "004-codegen"
+status = "in-progress"
+description = "Implement Phase 0 code generation (.spc p-code emission). The parser currentl..."
+role = "production"
+context_files = []
+created_at = "2026-03-26T00:06:10"
+task_type = "cor24-c"
