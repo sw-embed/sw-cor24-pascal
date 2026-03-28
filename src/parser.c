@@ -119,7 +119,7 @@ void register_system_unit(void) {
     proc_add("eof", "_p24p_eof", 0, 1, TYPE_BOOLEAN);
     proc_add("eoln", "_p24p_eoln", 0, 1, TYPE_BOOLEAN);
     /* Standard procedures (no return, used as statements) */
-    proc_add("readln", "_p24p_read_ln", 0, 0, 0);
+    /* readln/read handled as keywords, not proc calls */
     proc_add("writechar", "_p24p_write_char", 1, 0, 0);
 }
 
@@ -510,6 +510,59 @@ void parse_for_stmt(void) {
     printf("L%d:\n", l_end);
 }
 
+void parse_read_args(void) {
+    char name[MAX_NAME];
+    int idx;
+
+    /* parse ( var1, var2, ... ) — each var gets read_int + storeg */
+    if (tok_type != TOK_LPAREN) return;
+    next_token();
+
+    if (tok_type == TOK_RPAREN) {
+        next_token();
+        return;
+    }
+
+    while (1) {
+        if (tok_type != TOK_IDENT) {
+            error("expected variable in read");
+            return;
+        }
+        str_copy(name, tok_lexeme);
+        next_token();
+
+        idx = sym_lookup(name);
+        if (idx < 0) {
+            printf("error line %d: undeclared '%s'\n", tok_line, name);
+            parse_error = 1;
+            return;
+        }
+        if (sym_kind[idx] != SYM_VAR) {
+            error("cannot read into constant");
+            return;
+        }
+
+        printf("    call _p24p_read_int\n");
+        printf("    storeg %s\n", sym_name_at(idx));
+
+        if (tok_type != TOK_COMMA) break;
+        next_token();
+    }
+
+    expect(TOK_RPAREN);
+}
+
+void parse_read_stmt(void) {
+    next_token(); /* consume READ */
+    parse_read_args();
+}
+
+void parse_readln_stmt(void) {
+    next_token(); /* consume READLN */
+    parse_read_args();
+    printf("    call _p24p_read_ln\n");
+}
+
 void parse_write_stmt(void) {
     int type;
 
@@ -658,6 +711,10 @@ void parse_stmt(void) {
         parse_while_stmt();
     } else if (tok_type == TOK_FOR) {
         parse_for_stmt();
+    } else if (tok_type == TOK_READ) {
+        parse_read_stmt();
+    } else if (tok_type == TOK_READLN) {
+        parse_readln_stmt();
     } else if (tok_type == TOK_WRITE) {
         parse_write_stmt();
     } else if (tok_type == TOK_WRITELN) {
@@ -883,11 +940,13 @@ void parse_uses_clause(void) {
 
 void emit_externs(void) {
     int i;
-    /* Always emit the write/writeln externs (System builtins handled as keywords) */
+    /* Always emit the write/writeln/read externs (System builtins handled as keywords) */
     printf(".extern _p24p_write_int\n");
     printf(".extern _p24p_write_bool\n");
     printf(".extern _p24p_write_str\n");
     printf(".extern _p24p_write_ln\n");
+    printf(".extern _p24p_read_int\n");
+    printf(".extern _p24p_read_ln\n");
     /* Emit externs for all registered procedures */
     i = 0;
     while (i < proc_count) {

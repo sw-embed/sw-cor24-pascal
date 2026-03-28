@@ -25,6 +25,8 @@ stmt            = [ assignment
                   | if-stmt
                   | while-stmt
                   | for-stmt
+                  | read-stmt
+                  | readln-stmt
                   | write-stmt
                   | writeln-stmt
                   | compound-stmt ] .
@@ -38,6 +40,8 @@ while-stmt      = "while" expression "do" stmt .
 
 for-stmt        = "for" IDENT ":=" expression ( "to" | "downto" ) expression "do" stmt .
 
+read-stmt       = "read" [ "(" ident-list ")" ] .
+readln-stmt     = "readln" [ "(" ident-list ")" ] .
 write-stmt      = "write" [ "(" expr-list ")" ] .
 writeln-stmt    = "writeln" [ "(" expr-list ")" ] .
 expr-list       = expression { "," expression } .
