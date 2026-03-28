@@ -21,6 +21,8 @@ compound-stmt   = "begin" stmt { ";" stmt } "end" .
 stmt            = [ assignment
                   | if-stmt
                   | while-stmt
+                  | for-stmt
+                  | write-stmt
                   | writeln-stmt
                   | compound-stmt ] .
 
@@ -30,6 +32,9 @@ if-stmt         = "if" expression "then" stmt [ "else" stmt ] .
 
 while-stmt      = "while" expression "do" stmt .
 
+for-stmt        = "for" IDENT ":=" expression ( "to" | "downto" ) expression "do" stmt .
+
+write-stmt      = "write" [ "(" expr-list ")" ] .
 writeln-stmt    = "writeln" [ "(" expr-list ")" ] .
 expr-list       = expression { "," expression } .
 
@@ -44,6 +49,8 @@ mul-op          = "*" | "div" | "mod" | "and" .
 
 factor          = IDENT
                | INTEGER
+               | STRING
+               | CHAR
                | "true" | "false"
                | "not" factor
                | "(" expression ")" .

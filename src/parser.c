@@ -59,6 +59,12 @@ char *sym_name_at(int i) {
     return &sym_name[off];
 }
 
+char *str_data_at(int i) {
+    int off;
+    off = i * MAX_STRING_BYTES;
+    return &str_data[off];
+}
+
 int sym_lookup(char *name) {
     int i;
     i = 0;
@@ -95,11 +101,29 @@ int parse_factor(void) {
     int idx;
     int type;
     char name[MAX_NAME];
+    char *s;
 
     if (tok_type == TOK_INT_LIT) {
         printf("    push %d\n", tok_int_val);
         next_token();
         return TYPE_INTEGER;
+    }
+
+    if (tok_type == TOK_CHAR_LIT) {
+        /* Treat char literal as a 1-char string for write/writeln */
+        idx = str_count;
+        if (idx >= MAX_STRINGS) {
+            error("too many string literals");
+            return TYPE_STRING;
+        }
+        s = str_data_at(idx);
+        s[0] = tok_int_val;
+        s[1] = 0;
+        str_len[idx] = 1;
+        str_count = str_count + 1;
+        printf("    push S%d\n", idx);
+        next_token();
+        return TYPE_STRING;
     }
 
     if (tok_type == TOK_TRUE) {
@@ -128,6 +152,20 @@ int parse_factor(void) {
         type = parse_expression();
         expect(TOK_RPAREN);
         return type;
+    }
+
+    if (tok_type == TOK_STR_LIT) {
+        idx = str_count;
+        if (idx >= MAX_STRINGS) {
+            error("too many string literals");
+            return TYPE_STRING;
+        }
+        str_copy(str_data_at(idx), tok_str_val);
+        str_len[idx] = tok_str_len;
+        str_count = str_count + 1;
+        printf("    push S%d\n", idx);
+        next_token();
+        return TYPE_STRING;
     }
 
     if (tok_type == TOK_IDENT) {
@@ -324,6 +362,114 @@ void parse_while_stmt(void) {
     printf("L%d:\n", l_end);
 }
 
+void parse_for_stmt(void) {
+    char name[MAX_NAME];
+    int idx;
+    int l_start;
+    int l_end;
+    int downto;
+
+    next_token(); /* consume FOR */
+
+    if (tok_type != TOK_IDENT) {
+        error("expected variable after for");
+        return;
+    }
+    str_copy(name, tok_lexeme);
+    next_token();
+
+    idx = sym_lookup(name);
+    if (idx < 0) {
+        printf("error line %d: undeclared '%s'\n", tok_line, name);
+        parse_error = 1;
+        return;
+    }
+    if (sym_kind[idx] != SYM_VAR) {
+        error("for variable must be a var");
+        return;
+    }
+
+    expect(TOK_ASSIGN);
+    if (parse_error) return;
+
+    parse_expression();
+    printf("    storeg %s\n", sym_name_at(idx));
+
+    downto = 0;
+    if (tok_type == TOK_DOWNTO) {
+        downto = 1;
+        next_token();
+    } else {
+        expect(TOK_TO);
+        if (parse_error) return;
+    }
+
+    /* limit expression — evaluated each iteration */
+    l_start = new_label();
+    l_end = new_label();
+
+    printf("L%d:\n", l_start);
+    printf("    loadg %s\n", sym_name_at(idx));
+    parse_expression();
+    if (downto) {
+        printf("    ge\n");
+    } else {
+        printf("    le\n");
+    }
+    printf("    jz L%d\n", l_end);
+
+    expect(TOK_DO);
+    if (parse_error) return;
+    parse_stmt();
+
+    /* increment/decrement */
+    printf("    loadg %s\n", sym_name_at(idx));
+    if (downto) {
+        printf("    push 1\n");
+        printf("    sub\n");
+    } else {
+        printf("    push 1\n");
+        printf("    add\n");
+    }
+    printf("    storeg %s\n", sym_name_at(idx));
+    printf("    jmp L%d\n", l_start);
+    printf("L%d:\n", l_end);
+}
+
+void parse_write_stmt(void) {
+    int type;
+
+    next_token(); /* consume WRITE */
+
+    if (tok_type == TOK_LPAREN) {
+        next_token();
+
+        type = parse_expression();
+        if (type == TYPE_STRING) {
+            printf("    call _p24p_write_str\n");
+        } else if (type == TYPE_BOOLEAN) {
+            printf("    call _p24p_write_bool\n");
+        } else {
+            printf("    call _p24p_write_int\n");
+        }
+
+        while (tok_type == TOK_COMMA) {
+            next_token();
+            type = parse_expression();
+            if (type == TYPE_STRING) {
+                printf("    call _p24p_write_str\n");
+            } else if (type == TYPE_BOOLEAN) {
+                printf("    call _p24p_write_bool\n");
+            } else {
+                printf("    call _p24p_write_int\n");
+            }
+        }
+
+        expect(TOK_RPAREN);
+    }
+    /* no call to _p24p_write_ln */
+}
+
 void parse_writeln_stmt(void) {
     int type;
 
@@ -333,7 +479,9 @@ void parse_writeln_stmt(void) {
         next_token();
 
         type = parse_expression();
-        if (type == TYPE_BOOLEAN) {
+        if (type == TYPE_STRING) {
+            printf("    call _p24p_write_str\n");
+        } else if (type == TYPE_BOOLEAN) {
             printf("    call _p24p_write_bool\n");
         } else {
             printf("    call _p24p_write_int\n");
@@ -342,7 +490,9 @@ void parse_writeln_stmt(void) {
         while (tok_type == TOK_COMMA) {
             next_token();
             type = parse_expression();
-            if (type == TYPE_BOOLEAN) {
+            if (type == TYPE_STRING) {
+                printf("    call _p24p_write_str\n");
+            } else if (type == TYPE_BOOLEAN) {
                 printf("    call _p24p_write_bool\n");
             } else {
                 printf("    call _p24p_write_int\n");
@@ -389,6 +539,10 @@ void parse_stmt(void) {
         parse_if_stmt();
     } else if (tok_type == TOK_WHILE) {
         parse_while_stmt();
+    } else if (tok_type == TOK_FOR) {
+        parse_for_stmt();
+    } else if (tok_type == TOK_WRITE) {
+        parse_write_stmt();
     } else if (tok_type == TOK_WRITELN) {
         parse_writeln_stmt();
     } else if (tok_type == TOK_BEGIN) {
@@ -543,10 +697,31 @@ void parse_block(void) {
 
 /* --- Public API --- */
 
+void emit_string_data(void) {
+    int i;
+    int j;
+    char *s;
+
+    i = 0;
+    while (i < str_count) {
+        s = str_data_at(i);
+        printf(".data S%d ", i);
+        j = 0;
+        while (j < str_len[i]) {
+            if (j > 0) printf(",");
+            printf("%d", s[j]);
+            j = j + 1;
+        }
+        printf(",0\n");
+        i = i + 1;
+    }
+}
+
 void parser_init(char *src, int len) {
     sym_count = 0;
     label_count = 0;
     parse_error = 0;
+    str_count = 0;
     lexer_init(src, len);
     next_token(); /* prime the first token */
 }
@@ -567,11 +742,16 @@ void parse_program(void) {
     printf(".module %s\n", prog_name);
     printf(".extern _p24p_write_int\n");
     printf(".extern _p24p_write_bool\n");
+    printf(".extern _p24p_write_str\n");
     printf(".extern _p24p_write_ln\n");
     printf(".export main\n");
     printf("; p24p output: %s\n", prog_name);
 
     parse_block();
+
+    if (str_count > 0) {
+        emit_string_data();
+    }
 
     expect(TOK_DOT);
 

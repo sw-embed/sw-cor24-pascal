@@ -5,6 +5,7 @@
 /* Type kinds */
 #define TYPE_INTEGER 0
 #define TYPE_BOOLEAN 1
+#define TYPE_STRING  2
 
 /* Symbol kinds */
 #define SYM_CONST 0
@@ -24,6 +25,14 @@ int sym_count;
 
 /* Label counter */
 int label_count;
+
+/* String literal table */
+#define MAX_STRINGS 16
+#define MAX_STRING_BYTES 256
+#define STR_DATA_SIZE 4096
+char str_data[STR_DATA_SIZE];
+int str_len[MAX_STRINGS];
+int str_count;
 
 /* Error flag */
 int parse_error;
