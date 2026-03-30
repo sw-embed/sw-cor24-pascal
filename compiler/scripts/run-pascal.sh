@@ -10,11 +10,12 @@ MAX_INSTRS="${2:-50000000}"
 
 # Tool paths
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+REPO_DIR="$(cd "$P24P_DIR/.." && pwd)"
 P24P_S="$P24P_DIR/p24p.s"
-PL24R="$HOME/github/softwarewrighter/pl24r/target/release/pl24r"
-PA24R="$HOME/github/softwarewrighter/pa24r/target/release/pa24r"
-RUNTIME="$HOME/github/softwarewrighter/pr24p/src/runtime.spc"
-PVM="$HOME/github/sw-vibe-coding/pv24a/pvm.s"
+PL24R="$REPO_DIR/../sw-cor24-pcode/target/release/pl24r"
+PA24R="$REPO_DIR/../sw-cor24-pcode/target/release/pa24r"
+RUNTIME="$REPO_DIR/runtime/runtime.spc"
+PVM="$REPO_DIR/../sw-cor24-pcode/vm/pvm.s"
 
 NAME=$(basename "$PAS" .pas)
 TMP="/tmp/p24p_$$"
@@ -40,7 +41,7 @@ echo "$SPC_OUTPUT" | sed -n '/^\.module/,/^\.endmodule/p' > "$TMP/$NAME.spc"
 "$PA24R" "$TMP/${NAME}_linked.spc" -o "$TMP/$NAME.p24" 2>/dev/null
 
 # Step 4: Relocate for load address 0x010000
-python3 /tmp/relocate_p24.py "$TMP/$NAME.p24" 0x010000 >/dev/null
+python3 "$REPO_DIR/scripts/relocate_p24.py" "$TMP/$NAME.p24" 0x010000 >/dev/null
 
 # Step 5: Create code_ptr patch (0x010000 LE)
 printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
@@ -48,7 +49,7 @@ printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
 # Step 6: Run on PVM
 cor24-run --run "$PVM" \
   --load-binary "$TMP/$NAME.bin@0x010000" \
-  --load-binary "$TMP/code_ptr.bin@0x0A0F" \
+  --load-binary "$TMP/code_ptr.bin@0x0A12" \
   --terminal --speed 0 -n "$MAX_INSTRS" 2>&1 | \
   grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
   grep -v '^Executed' | grep -v '^Loaded' | grep -v '^PVM OK' | \

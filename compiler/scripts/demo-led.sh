@@ -6,11 +6,12 @@
 set -euo pipefail
 
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+REPO_DIR="$(cd "$P24P_DIR/.." && pwd)"
 P24P_S="$P24P_DIR/p24p.s"
-PL24R="$HOME/github/softwarewrighter/pl24r/target/release/pl24r"
-PA24R="$HOME/github/softwarewrighter/pa24r/target/release/pa24r"
-RUNTIME="$HOME/github/softwarewrighter/pr24p/src/runtime.spc"
-PVM="$HOME/github/sw-vibe-coding/pv24a/pvm.s"
+PL24R="$REPO_DIR/../sw-cor24-pcode/target/release/pl24r"
+PA24R="$REPO_DIR/../sw-cor24-pcode/target/release/pa24r"
+RUNTIME="$REPO_DIR/runtime/runtime.spc"
+PVM="$REPO_DIR/../sw-cor24-pcode/vm/pvm.s"
 
 TMP="/tmp/p24p_led_$$"
 mkdir -p "$TMP"
@@ -50,12 +51,12 @@ for f in "$P24P_DIR"/tests/led_on.pas "$P24P_DIR"/tests/led_off.pas; do
   # Link + assemble + relocate
   "$PL24R" "$RUNTIME" "$TMP/$NAME.spc" -o "$TMP/${NAME}_linked.spc" 2>/dev/null
   "$PA24R" "$TMP/${NAME}_linked.spc" -o "$TMP/$NAME.p24" 2>/dev/null
-  python3 /tmp/relocate_p24.py "$TMP/$NAME.p24" 0x010000 >/dev/null 2>&1
+  python3 "$REPO_DIR/scripts/relocate_p24.py" "$TMP/$NAME.p24" 0x010000 >/dev/null 2>&1
 
   # Run with dump
   EXEC_OUTPUT=$(cor24-run --run "$PVM" \
     --load-binary "$TMP/$NAME.bin@0x010000" \
-    --load-binary "$TMP/code_ptr.bin@0x0A0F" \
+    --load-binary "$TMP/code_ptr.bin@0x0A12" \
     --dump --speed 0 -n 50000000 2>&1)
 
   INSTRS=$(echo "$EXEC_OUTPUT" | grep -oE 'Executed [0-9]+' | grep -oE '[0-9]+')

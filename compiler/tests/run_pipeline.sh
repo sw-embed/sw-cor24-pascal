@@ -4,8 +4,8 @@
 
 set -euo pipefail
 
-PASM=~/github/sw-vibe-coding/pv24a/pasm.s
-PVM=~/github/sw-vibe-coding/pv24a/pvm.s
+PASM=~/github/sw-embed/sw-cor24-pcode/vm/pasm.s
+PVM=~/github/sw-embed/sw-cor24-pcode/vm/pvm.s
 TC24R_INCLUDE=~/github/sw-vibe-coding/tc24r/include
 WORKDIR=$(mktemp -d)
 

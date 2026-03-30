@@ -6,11 +6,12 @@
 set -euo pipefail
 
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+REPO_DIR="$(cd "$P24P_DIR/.." && pwd)"
 P24P_S="$P24P_DIR/p24p.s"
-PL24R="$HOME/github/softwarewrighter/pl24r/target/release/pl24r"
-PA24R="$HOME/github/softwarewrighter/pa24r/target/release/pa24r"
-RUNTIME="$HOME/github/softwarewrighter/pr24p/src/runtime.spc"
-PVM="$HOME/github/sw-vibe-coding/pv24a/pvm.s"
+PL24R="$REPO_DIR/../sw-cor24-pcode/target/release/pl24r"
+PA24R="$REPO_DIR/../sw-cor24-pcode/target/release/pa24r"
+RUNTIME="$REPO_DIR/runtime/runtime.spc"
+PVM="$REPO_DIR/../sw-cor24-pcode/vm/pvm.s"
 EXPECTED="$P24P_DIR/tests/expected"
 
 TMP="/tmp/p24p_test_$$"
@@ -62,7 +63,7 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
   fi
 
   # Step 4: Relocate
-  if ! python3 /tmp/relocate_p24.py "$TMP/$NAME.p24" 0x010000 2>/dev/null; then
+  if ! python3 "$REPO_DIR/scripts/relocate_p24.py" "$TMP/$NAME.p24" 0x010000 2>/dev/null; then
     printf "FAIL %-20s (relocate error)\n" "$NAME"
     FAIL=$((FAIL + 1))
     continue
@@ -71,7 +72,7 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
   # Step 5: Execute
   EXEC_OUTPUT=$(cor24-run --run "$PVM" \
     --load-binary "$TMP/$NAME.bin@0x010000" \
-    --load-binary "$TMP/code_ptr.bin@0x0A0F" \
+    --load-binary "$TMP/code_ptr.bin@0x0A12" \
     --terminal --speed 0 -n 50000000 2>&1)
 
   ACTUAL=$(echo "$EXEC_OUTPUT" | grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \

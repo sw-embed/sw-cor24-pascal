@@ -10,11 +10,12 @@ MAX_INSTRS="${2:-50000000}"
 
 # Tool paths
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+REPO_DIR="$(cd "$P24P_DIR/.." && pwd)"
 P24P_S="$P24P_DIR/p24p.s"
-PL24R="$HOME/github/softwarewrighter/pl24r/target/release/pl24r"
-PA24R="$HOME/github/softwarewrighter/pa24r/target/release/pa24r"
-RUNTIME="$HOME/github/softwarewrighter/pr24p/src/runtime.spc"
-PVM="$HOME/github/sw-vibe-coding/pv24a/pvm.s"
+PL24R="$REPO_DIR/../sw-cor24-pcode/target/release/pl24r"
+PA24R="$REPO_DIR/../sw-cor24-pcode/target/release/pa24r"
+RUNTIME="$REPO_DIR/runtime/runtime.spc"
+PVM="$REPO_DIR/../sw-cor24-pcode/vm/pvm.s"
 
 NAME=$(basename "$PAS" .pas)
 TMP="/tmp/p24p_demo_$$"
@@ -72,7 +73,7 @@ echo ""
 
 # --- Step 4: Relocate ---
 echo "--- Step 4: Relocate for load address 0x010000 ---"
-RELOC_OUT=$(python3 /tmp/relocate_p24.py "$TMP/$NAME.p24" 0x010000 2>&1)
+RELOC_OUT=$(python3 "$REPO_DIR/scripts/relocate_p24.py" "$TMP/$NAME.p24" 0x010000 2>&1)
 echo "  $RELOC_OUT"
 echo ""
 
@@ -81,7 +82,7 @@ echo "--- Step 5: Execute on PVM (pvm.s + cor24-run) ---"
 printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
 EXEC_OUTPUT=$(cor24-run --run "$PVM" \
   --load-binary "$TMP/$NAME.bin@0x010000" \
-  --load-binary "$TMP/code_ptr.bin@0x0A0F" \
+  --load-binary "$TMP/code_ptr.bin@0x0A12" \
   --terminal --speed 0 -n "$MAX_INSTRS" 2>&1)
 
 EXEC_INSTRS=$(echo "$EXEC_OUTPUT" | grep -oE 'Executed [0-9]+' | grep -oE '[0-9]+')

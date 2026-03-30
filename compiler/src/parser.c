@@ -511,6 +511,111 @@ void parse_for_stmt(void) {
     printf("L%d:\n", l_end);
 }
 
+void parse_repeat_stmt(void) {
+    int type;
+    int l_top;
+
+    next_token(); /* consume REPEAT */
+    l_top = new_label();
+
+    printf("L%d:\n", l_top);
+
+    parse_stmt();
+    while (tok_type == TOK_SEMI) {
+        next_token();
+        parse_stmt();
+    }
+
+    expect(TOK_UNTIL);
+    if (parse_error) return;
+
+    type = parse_expression();
+    if (type != TYPE_BOOLEAN) error("until condition must be boolean");
+
+    printf("    jz L%d\n", l_top);
+}
+
+void parse_case_stmt(void) {
+    int type;
+    int l_end;
+    int l_next;
+    int val;
+
+    next_token(); /* consume CASE */
+
+    type = parse_expression();
+    if (type != TYPE_INTEGER && type != TYPE_BOOLEAN) {
+        error("case selector must be integer or boolean");
+    }
+
+    expect(TOK_OF);
+    if (parse_error) return;
+
+    l_end = new_label();
+
+    /* Parse case branches: <const>: <stmt>; ... */
+    while (tok_type != TOK_END && tok_type != TOK_EOF && !parse_error) {
+        l_next = new_label();
+
+        /* Parse constant value (integer literal or char literal) */
+        printf("    dup\n");
+        if (tok_type == TOK_INT_LIT) {
+            val = tok_int_val;
+            printf("    push %d\n", val);
+            next_token();
+        } else if (tok_type == TOK_CHAR_LIT) {
+            val = tok_int_val;
+            printf("    push %d\n", val);
+            next_token();
+        } else if (tok_type == TOK_MINUS) {
+            next_token();
+            if (tok_type != TOK_INT_LIT) {
+                error("expected integer after minus in case label");
+                return;
+            }
+            val = 0 - tok_int_val;
+            printf("    push %d\n", val);
+            next_token();
+        } else if (tok_type == TOK_IDENT) {
+            /* Named constant */
+            val = sym_lookup(tok_lexeme);
+            if (val < 0 || sym_kind[val] != SYM_CONST) {
+                error("expected constant in case label");
+                return;
+            }
+            printf("    push %d\n", sym_value[val]);
+            next_token();
+        } else {
+            error("expected constant in case label");
+            return;
+        }
+
+        printf("    eq\n");
+        printf("    jz L%d\n", l_next);
+
+        expect(TOK_COLON);
+        if (parse_error) return;
+
+        /* Drop the selector copy before executing the statement */
+        printf("    drop\n");
+        parse_stmt();
+
+        printf("    jmp L%d\n", l_end);
+        printf("L%d:\n", l_next);
+
+        /* Optional semicolon between branches */
+        if (tok_type == TOK_SEMI) {
+            next_token();
+        }
+    }
+
+    /* Drop selector value (no branch matched) */
+    printf("    drop\n");
+    printf("L%d:\n", l_end);
+
+    expect(TOK_END);
+}
+
 void parse_read_args(void) {
     char name[MAX_NAME];
     int idx;
@@ -712,6 +817,10 @@ void parse_stmt(void) {
         parse_while_stmt();
     } else if (tok_type == TOK_FOR) {
         parse_for_stmt();
+    } else if (tok_type == TOK_REPEAT) {
+        parse_repeat_stmt();
+    } else if (tok_type == TOK_CASE) {
+        parse_case_stmt();
     } else if (tok_type == TOK_READ) {
         parse_read_stmt();
     } else if (tok_type == TOK_READLN) {
