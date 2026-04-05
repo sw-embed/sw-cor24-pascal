@@ -1,6 +1,6 @@
 number = 7
 slug = "array-type-support"
-status = "pending"
+status = "in-progress"
 description = "Add array type support to p24p (Phase 1). The lexer already tokenizes the arr..."
 role = "production"
 context_files = []

@@ -6,6 +6,7 @@
 #define TYPE_INTEGER 0
 #define TYPE_BOOLEAN 1
 #define TYPE_STRING  2
+#define TYPE_ARRAY   3
 
 /* Symbol kinds */
 #define SYM_CONST 0
@@ -24,6 +25,12 @@ int sym_kind[MAX_SYMBOLS];
 int sym_type_id[MAX_SYMBOLS];
 int sym_value[MAX_SYMBOLS];
 int sym_count;
+
+/* Array metadata (valid when sym_type_id == TYPE_ARRAY) */
+int sym_arr_low[MAX_SYMBOLS];
+int sym_arr_high[MAX_SYMBOLS];
+int sym_arr_elem[MAX_SYMBOLS];   /* element type: TYPE_INTEGER or TYPE_BOOLEAN */
+int sym_arr_size[MAX_SYMBOLS];   /* total words allocated */
 
 /* Label counter */
 int label_count;
@@ -56,6 +63,9 @@ int in_proc;
 int cur_proc_argc;
 int cur_func_local;              /* -1 = procedure, 0 = function (return val at local 0) */
 char cur_func_name[MAX_NAME];    /* function name for return-value assignment detection */
+
+/* Array scratch global flag */
+int has_arrays;
 
 /* Unit flags */
 int unit_hardware;

@@ -132,6 +132,29 @@ void emit_store_sym(int idx) {
     }
 }
 
+/* Emit code to push the address of array element arr[index_on_stack] */
+/* Expects: index expression already on eval stack */
+/* Leaves: effective byte address on eval stack */
+void emit_array_addr(int idx) {
+    int low;
+    low = sym_arr_low[idx];
+    if (low != 0) {
+        printf("    push %d\n", low);
+        printf("    sub\n");
+    }
+    printf("    push 3\n");   /* element size = 3 bytes (24-bit word) */
+    printf("    mul\n");
+    if (sym_kind[idx] == SYM_VAR) {
+        printf("    addrg %s\n", sym_name_at(idx));
+    } else if (sym_kind[idx] == SYM_LOCAL) {
+        printf("    addrl %d\n", sym_value[idx]);
+    } else if (sym_kind[idx] == SYM_PARAM) {
+        /* Parameter is passed as base address */
+        printf("    loada %d\n", sym_value[idx]);
+    }
+    printf("    add\n");
+}
+
 void register_system_unit(void) {
     /* Standard functions (return values, used in expressions) */
     /* NOTE: names are lowercase because lexer lowercases identifiers */
@@ -278,6 +301,17 @@ int parse_factor(void) {
             parse_error = 1;
             return TYPE_INTEGER;
         }
+
+        /* Array element access: name[expr] */
+        if (sym_type_id[idx] == TYPE_ARRAY && tok_type == TOK_LBRACKET) {
+            next_token();
+            parse_expression();
+            expect(TOK_RBRACKET);
+            emit_array_addr(idx);
+            printf("    load\n");
+            return sym_arr_elem[idx];
+        }
+
         emit_load_sym(idx);
         return sym_type_id[idx];
     }
@@ -806,7 +840,32 @@ void parse_stmt(void) {
         str_copy(name, tok_lexeme);
         next_token();
 
-        if (tok_type == TOK_ASSIGN) {
+        if (tok_type == TOK_LBRACKET) {
+            /* Array element assignment: name[expr] := expr */
+            idx = sym_lookup(name);
+            if (idx < 0) {
+                printf("error line %d: undeclared '%s'\n", tok_line, name);
+                parse_error = 1;
+                return;
+            }
+            if (sym_type_id[idx] != TYPE_ARRAY) {
+                error("not an array");
+                return;
+            }
+            next_token();
+            parse_expression();  /* index on stack */
+            expect(TOK_RBRACKET);
+            if (parse_error) return;
+            emit_array_addr(idx);  /* addr on stack */
+            /* Save addr to scratch, parse value, restore addr */
+            printf("    storeg _p24p_tmp\n");
+            expect(TOK_ASSIGN);
+            if (parse_error) return;
+            parse_expression();  /* value on stack */
+            printf("    loadg _p24p_tmp\n");  /* value, addr on stack */
+            printf("    store\n");
+
+        } else if (tok_type == TOK_ASSIGN) {
             /* Assignment — could be variable or function return value */
             next_token();
 
@@ -962,26 +1021,114 @@ void parse_var_decl(void) {
     expect(TOK_COLON);
     if (parse_error) return;
 
-    /* Type name */
-    if (tok_type == TOK_INTEGER_KW) {
-        type = TYPE_INTEGER;
+    /* Type name — scalar or array */
+    if (tok_type == TOK_ARRAY) {
+        /* array[low..high] of BaseType */
+        int arr_low;
+        int arr_high;
+        int elem_type;
+        int arr_size;
+
         next_token();
-    } else if (tok_type == TOK_BOOLEAN_KW) {
-        type = TYPE_BOOLEAN;
-        next_token();
+        expect(TOK_LBRACKET);
+        if (parse_error) return;
+
+        /* Lower bound */
+        arr_low = 0;
+        if (tok_type == TOK_MINUS) {
+            next_token();
+            if (tok_type != TOK_INT_LIT) { error("expected integer"); return; }
+            arr_low = 0 - tok_int_val;
+            next_token();
+        } else if (tok_type == TOK_INT_LIT) {
+            arr_low = tok_int_val;
+            next_token();
+        } else {
+            error("expected lower bound");
+            return;
+        }
+
+        expect(TOK_DOTDOT);
+        if (parse_error) return;
+
+        /* Upper bound */
+        arr_high = 0;
+        if (tok_type == TOK_MINUS) {
+            next_token();
+            if (tok_type != TOK_INT_LIT) { error("expected integer"); return; }
+            arr_high = 0 - tok_int_val;
+            next_token();
+        } else if (tok_type == TOK_INT_LIT) {
+            arr_high = tok_int_val;
+            next_token();
+        } else {
+            error("expected upper bound");
+            return;
+        }
+
+        expect(TOK_RBRACKET);
+        if (parse_error) return;
+        expect(TOK_OF);
+        if (parse_error) return;
+
+        if (tok_type == TOK_INTEGER_KW) {
+            elem_type = TYPE_INTEGER;
+            next_token();
+        } else if (tok_type == TOK_BOOLEAN_KW) {
+            elem_type = TYPE_BOOLEAN;
+            next_token();
+        } else {
+            error("expected element type");
+            return;
+        }
+
+        arr_size = arr_high - arr_low + 1;
+        if (arr_size <= 0) {
+            error("array size must be positive");
+            return;
+        }
+
+        expect(TOK_SEMI);
+
+        /* Emit scratch global for array store if first array */
+        if (!has_arrays) {
+            has_arrays = 1;
+            printf(".global _p24p_tmp 1\n");
+        }
+
+        /* Fix up as array type */
+        i = first;
+        while (i < sym_count) {
+            sym_type_id[i] = TYPE_ARRAY;
+            sym_arr_low[i] = arr_low;
+            sym_arr_high[i] = arr_high;
+            sym_arr_elem[i] = elem_type;
+            sym_arr_size[i] = arr_size;
+            printf(".global %s %d\n", sym_name_at(i), arr_size);
+            i = i + 1;
+        }
     } else {
-        error("expected type name");
-        return;
-    }
+        /* Scalar type */
+        if (tok_type == TOK_INTEGER_KW) {
+            type = TYPE_INTEGER;
+            next_token();
+        } else if (tok_type == TOK_BOOLEAN_KW) {
+            type = TYPE_BOOLEAN;
+            next_token();
+        } else {
+            error("expected type name");
+            return;
+        }
 
-    expect(TOK_SEMI);
+        expect(TOK_SEMI);
 
-    /* Fix up types and emit .global directives */
-    i = first;
-    while (i < sym_count) {
-        sym_type_id[i] = type;
-        printf(".global %s 1\n", sym_name_at(i));
-        i = i + 1;
+        /* Fix up types and emit .global directives */
+        i = first;
+        while (i < sym_count) {
+            sym_type_id[i] = type;
+            printf(".global %s 1\n", sym_name_at(i));
+            i = i + 1;
+        }
     }
 }
 
@@ -1342,6 +1489,7 @@ void parser_init(char *src, int len) {
     str_count = 0;
     proc_count = 0;
     unit_hardware = 0;
+    has_arrays = 0;
     scope_base = 0;
     in_proc = 0;
     cur_proc_argc = 0;

@@ -1,0 +1,11 @@
+{
+  "task_type": "cor24-c",
+  "state": {
+    "number": 6,
+    "step": "procedure-function-support"
+  },
+  "action": "modified parser.h (added SYM_PARAM/SYM_LOCAL, proc_is_user, scope tracking), modified parser.c (added parse_param_list, parse_local_vars, parse_proc_or_func_decl, emit_load_sym/emit_store_sym, trampoline), added 2 test programs, ran full test suite",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-04-04T19:53:12"
+}
