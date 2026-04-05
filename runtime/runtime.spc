@@ -31,6 +31,10 @@
 .export _p24p_led_off
 .export _p24p_read_switch
 .export _p24p_halt
+.export _p24p_peek
+.export _p24p_poke
+.export _p24p_memcpy
+.export _p24p_memset
 
 ; pr24p — Pascal Runtime Library
 ; Phase 0: Hand-written .spc stubs for p-code VM syscall wrappers
@@ -922,6 +926,85 @@ sr_fail:
 ; Stop execution via sys 0 (HALT).
 .proc _p24p_halt 0
     sys 0                ; HALT
+.end
+
+; Memory access routines
+; For BASIC interpreter PEEK/POKE and program store management.
+
+; _p24p_peek ( addr -- byte )
+; Read single byte at address via loadb.
+.proc _p24p_peek 0
+    loada 0              ; load addr
+    loadb                ; read byte at addr
+    ret 1
+.end
+
+; _p24p_poke ( addr val -- )
+; Write single byte to address via storeb.
+; Calling convention: push addr, push val, call. loada 0=val, loada 1=addr.
+.proc _p24p_poke 0
+    loada 0              ; load val
+    loada 1              ; load addr
+    storeb               ; store byte val at addr
+    ret 2
+.end
+
+; _p24p_memcpy ( dst src len -- )
+; Copy len bytes from src to dst (overlap-safe).
+; Calling convention: push dst, push src, push len, call.
+; loada 0=len, loada 1=src, loada 2=dst.
+; Uses byte-by-byte copy loop (no sys MEMCPY available).
+.proc _p24p_memcpy 1
+    push 0
+    storel 0             ; i = 0
+mc_loop:
+    loadl 0
+    loada 0              ; len
+    ge
+    jnz mc_done          ; if i >= len, done
+    ; load byte from src+i
+    loada 1              ; src
+    loadl 0              ; i
+    add                  ; src + i
+    loadb                ; byte at src+i
+    ; store to dst+i
+    loada 2              ; dst
+    loadl 0              ; i
+    add                  ; dst + i
+    storeb               ; store byte at dst+i
+    loadl 0
+    push 1
+    add
+    storel 0             ; i++
+    jmp mc_loop
+mc_done:
+    ret 3
+.end
+
+; _p24p_memset ( dst val len -- )
+; Fill len bytes at dst with val.
+; Calling convention: push dst, push val, push len, call.
+; loada 0=len, loada 1=val, loada 2=dst.
+.proc _p24p_memset 1
+    push 0
+    storel 0             ; i = 0
+ms_loop:
+    loadl 0
+    loada 0              ; len
+    ge
+    jnz ms_done          ; if i >= len, done
+    loada 1              ; val
+    loada 2              ; dst
+    loadl 0              ; i
+    add                  ; dst + i
+    storeb               ; store val at dst+i
+    loadl 0
+    push 1
+    add
+    storel 0             ; i++
+    jmp ms_loop
+ms_done:
+    ret 3
 .end
 
 .endmodule

@@ -1,0 +1,11 @@
+{
+  "task_type": "cor24-c",
+  "state": {
+    "number": 8,
+    "step": "char-type-byte-ops"
+  },
+  "action": "modified parser.h (TYPE_CHAR), modified parser.c (types_compatible, is_ordinal, char literal codegen, char in all type-parsing locations, write_char dispatch, loadb/storeb for char arrays, compact array allocation), added t19_char test",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-04-04T20:27:28"
+}

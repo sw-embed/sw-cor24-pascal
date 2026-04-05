@@ -1,8 +1,9 @@
 number = 8
 slug = "char-type-byte-ops"
-status = "in-progress"
+status = "completed"
 description = "Add char type and byte-level operations to p24p (Phase 1). Implement: (1) cha..."
 role = "production"
 context_files = []
 created_at = "2026-04-04T15:27:14"
+completed_at = "2026-04-04T20:27:28"
 task_type = "cor24-c"

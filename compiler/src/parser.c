@@ -189,6 +189,11 @@ void register_system_unit(void) {
     /* Standard procedures (no return, used as statements) */
     /* readln/read handled as keywords, not proc calls */
     proc_add("writechar", "_p24p_write_char", 1, 0, 0);
+    /* Memory access */
+    proc_add("peek", "_p24p_peek", 1, 1, TYPE_INTEGER);
+    proc_add("poke", "_p24p_poke", 2, 0, 0);
+    proc_add("memcpy", "_p24p_memcpy", 3, 0, 0);
+    proc_add("memset", "_p24p_memset", 3, 0, 0);
 }
 
 void register_hardware_unit(void) {
