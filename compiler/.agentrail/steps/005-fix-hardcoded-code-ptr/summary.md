@@ -1,0 +1,1 @@
+Fixed hardcoded code_ptr address (0x0A12) in all 4 pipeline scripts: run-pascal.sh, test-all.sh, demo.sh, demo-led.sh. Now dynamically resolves via cor24-run -e code_ptr. Increased compilation instruction limit from 5M to 50M. All 15 tests pass.

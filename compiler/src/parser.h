@@ -10,6 +10,8 @@
 /* Symbol kinds */
 #define SYM_CONST 0
 #define SYM_VAR   1
+#define SYM_PARAM 2
+#define SYM_LOCAL 3
 
 /* Symbol table limits */
 #define MAX_SYMBOLS 64
@@ -43,6 +45,17 @@ int proc_argc[MAX_PROCS];
 int proc_has_ret[MAX_PROCS];
 int proc_ret_type[MAX_PROCS];
 int proc_count;
+
+/* User procedure extensions to proc table */
+int proc_is_user[MAX_PROCS];
+int proc_nlocals[MAX_PROCS];
+
+/* Scope management for procedure/function bodies */
+int scope_base;
+int in_proc;
+int cur_proc_argc;
+int cur_func_local;              /* -1 = procedure, 0 = function (return val at local 0) */
+char cur_func_name[MAX_NAME];    /* function name for return-value assignment detection */
 
 /* Unit flags */
 int unit_hardware;

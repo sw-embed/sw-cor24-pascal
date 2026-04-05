@@ -102,8 +102,34 @@ int proc_add(char *pascal_name, char *extern_name, int argc, int has_ret, int re
     proc_argc[idx] = argc;
     proc_has_ret[idx] = has_ret;
     proc_ret_type[idx] = ret_type;
+    proc_is_user[idx] = 0;
+    proc_nlocals[idx] = 0;
     proc_count = proc_count + 1;
     return idx;
+}
+
+/* --- Symbol load/store helpers --- */
+
+void emit_load_sym(int idx) {
+    if (sym_kind[idx] == SYM_CONST) {
+        printf("    push %d\n", sym_value[idx]);
+    } else if (sym_kind[idx] == SYM_PARAM) {
+        printf("    loada %d\n", sym_value[idx]);
+    } else if (sym_kind[idx] == SYM_LOCAL) {
+        printf("    loadl %d\n", sym_value[idx]);
+    } else {
+        printf("    loadg %s\n", sym_name_at(idx));
+    }
+}
+
+void emit_store_sym(int idx) {
+    if (sym_kind[idx] == SYM_PARAM) {
+        printf("    storea %d\n", sym_value[idx]);
+    } else if (sym_kind[idx] == SYM_LOCAL) {
+        printf("    storel %d\n", sym_value[idx]);
+    } else {
+        printf("    storeg %s\n", sym_name_at(idx));
+    }
 }
 
 void register_system_unit(void) {
@@ -252,11 +278,7 @@ int parse_factor(void) {
             parse_error = 1;
             return TYPE_INTEGER;
         }
-        if (sym_kind[idx] == SYM_CONST) {
-            printf("    push %d\n", sym_value[idx]);
-        } else {
-            printf("    loadg %s\n", sym_name_at(idx));
-        }
+        emit_load_sym(idx);
         return sym_type_id[idx];
     }
 
@@ -459,7 +481,7 @@ void parse_for_stmt(void) {
         parse_error = 1;
         return;
     }
-    if (sym_kind[idx] != SYM_VAR) {
+    if (sym_kind[idx] == SYM_CONST) {
         error("for variable must be a var");
         return;
     }
@@ -468,7 +490,7 @@ void parse_for_stmt(void) {
     if (parse_error) return;
 
     parse_expression();
-    printf("    storeg %s\n", sym_name_at(idx));
+    emit_store_sym(idx);
 
     downto = 0;
     if (tok_type == TOK_DOWNTO) {
@@ -484,7 +506,7 @@ void parse_for_stmt(void) {
     l_end = new_label();
 
     printf("L%d:\n", l_start);
-    printf("    loadg %s\n", sym_name_at(idx));
+    emit_load_sym(idx);
     parse_expression();
     if (downto) {
         printf("    ge\n");
@@ -498,7 +520,7 @@ void parse_for_stmt(void) {
     parse_stmt();
 
     /* increment/decrement */
-    printf("    loadg %s\n", sym_name_at(idx));
+    emit_load_sym(idx);
     if (downto) {
         printf("    push 1\n");
         printf("    sub\n");
@@ -506,7 +528,7 @@ void parse_for_stmt(void) {
         printf("    push 1\n");
         printf("    add\n");
     }
-    printf("    storeg %s\n", sym_name_at(idx));
+    emit_store_sym(idx);
     printf("    jmp L%d\n", l_start);
     printf("L%d:\n", l_end);
 }
@@ -643,13 +665,13 @@ void parse_read_args(void) {
             parse_error = 1;
             return;
         }
-        if (sym_kind[idx] != SYM_VAR) {
+        if (sym_kind[idx] == SYM_CONST) {
             error("cannot read into constant");
             return;
         }
 
         printf("    call _p24p_read_int\n");
-        printf("    storeg %s\n", sym_name_at(idx));
+        emit_store_sym(idx);
 
         if (tok_type != TOK_COMMA) break;
         next_token();
@@ -785,8 +807,15 @@ void parse_stmt(void) {
         next_token();
 
         if (tok_type == TOK_ASSIGN) {
-            /* Assignment */
+            /* Assignment — could be variable or function return value */
             next_token();
+
+            /* Check for function return assignment: FuncName := expr */
+            if (in_proc && cur_func_local >= 0 && strcmp(name, cur_func_name) == 0) {
+                etype = parse_expression();
+                printf("    storel %d\n", cur_func_local);
+                return;
+            }
 
             idx = sym_lookup(name);
             if (idx < 0) {
@@ -794,7 +823,7 @@ void parse_stmt(void) {
                 parse_error = 1;
                 return;
             }
-            if (sym_kind[idx] != SYM_VAR) {
+            if (sym_kind[idx] == SYM_CONST) {
                 error("cannot assign to constant");
                 return;
             }
@@ -804,7 +833,7 @@ void parse_stmt(void) {
             if (sym_type_id[idx] != etype) {
                 error("type mismatch in assignment");
             }
-            printf("    storeg %s\n", sym_name_at(idx));
+            emit_store_sym(idx);
 
         } else {
             /* Procedure call */
@@ -964,11 +993,316 @@ void parse_var_section(void) {
     }
 }
 
+/* --- Procedure and function declarations --- */
+
+int parse_param_list(int pidx) {
+    /* Parse (name1: type1; name2, name3: type2; ...) */
+    /* Returns number of parameters parsed */
+    /* Adds params as SYM_PARAM to symbol table */
+    /* loada indices are set after all params are known */
+    int param_start;
+    int param_count;
+    int first;
+    int type;
+    int i;
+
+    param_start = sym_count;
+    param_count = 0;
+
+    if (tok_type != TOK_LPAREN) return 0;
+    next_token();
+
+    if (tok_type == TOK_RPAREN) {
+        next_token();
+        return 0;
+    }
+
+    while (1) {
+        first = sym_count;
+
+        /* Parse one or more names */
+        if (tok_type != TOK_IDENT) {
+            error("expected parameter name");
+            return param_count;
+        }
+        sym_add(tok_lexeme, SYM_PARAM, TYPE_INTEGER, 0);
+        param_count = param_count + 1;
+        next_token();
+
+        while (tok_type == TOK_COMMA) {
+            next_token();
+            if (tok_type != TOK_IDENT) {
+                error("expected parameter name after comma");
+                return param_count;
+            }
+            sym_add(tok_lexeme, SYM_PARAM, TYPE_INTEGER, 0);
+            param_count = param_count + 1;
+            next_token();
+        }
+
+        expect(TOK_COLON);
+        if (parse_error) return param_count;
+
+        /* Type */
+        if (tok_type == TOK_INTEGER_KW) {
+            type = TYPE_INTEGER;
+            next_token();
+        } else if (tok_type == TOK_BOOLEAN_KW) {
+            type = TYPE_BOOLEAN;
+            next_token();
+        } else {
+            error("expected type name");
+            return param_count;
+        }
+
+        /* Fix up types for this group */
+        i = first;
+        while (i < sym_count) {
+            sym_type_id[i] = type;
+            i = i + 1;
+        }
+
+        if (tok_type != TOK_SEMI) break;
+        next_token();
+    }
+
+    expect(TOK_RPAREN);
+
+    /* Set loada indices: loada 0 = last param, loada N-1 = first param */
+    i = param_start;
+    while (i < sym_count) {
+        sym_value[i] = param_count - 1 - (i - param_start);
+        i = i + 1;
+    }
+
+    return param_count;
+}
+
+int parse_local_vars(int local_offset) {
+    /* Parse var section inside procedure/function body */
+    /* Returns number of locals declared */
+    /* Adds as SYM_LOCAL with value = local index starting at local_offset */
+    int first;
+    int type;
+    int i;
+    int count;
+
+    count = 0;
+    next_token(); /* consume VAR */
+
+    while (tok_type == TOK_IDENT && !parse_error) {
+        first = sym_count;
+
+        /* Parse identifiers */
+        sym_add(tok_lexeme, SYM_LOCAL, TYPE_INTEGER, 0);
+        count = count + 1;
+        next_token();
+
+        while (tok_type == TOK_COMMA) {
+            next_token();
+            if (tok_type != TOK_IDENT) {
+                error("expected identifier after comma");
+                return count;
+            }
+            sym_add(tok_lexeme, SYM_LOCAL, TYPE_INTEGER, 0);
+            count = count + 1;
+            next_token();
+        }
+
+        expect(TOK_COLON);
+        if (parse_error) return count;
+
+        /* Type */
+        if (tok_type == TOK_INTEGER_KW) {
+            type = TYPE_INTEGER;
+            next_token();
+        } else if (tok_type == TOK_BOOLEAN_KW) {
+            type = TYPE_BOOLEAN;
+            next_token();
+        } else {
+            error("expected type name");
+            return count;
+        }
+
+        expect(TOK_SEMI);
+        if (parse_error) return count;
+
+        /* Fix up types and local indices */
+        i = first;
+        while (i < sym_count) {
+            sym_type_id[i] = type;
+            sym_value[i] = local_offset;
+            local_offset = local_offset + 1;
+            i = i + 1;
+        }
+    }
+
+    return count;
+}
+
+void parse_proc_or_func_decl(int is_func) {
+    char name[MAX_NAME];
+    char extern_name[MAX_NAME];
+    int pidx;
+    int param_count;
+    int local_count;
+    int local_offset;
+    int ret_type;
+    int saved_scope_base;
+    int saved_in_proc;
+    int saved_cur_proc_argc;
+    int saved_cur_func_local;
+    char saved_func_name[MAX_NAME];
+    int total_locals;
+
+    next_token(); /* consume PROCEDURE or FUNCTION */
+
+    if (tok_type != TOK_IDENT) {
+        error("expected procedure/function name");
+        return;
+    }
+    str_copy(name, tok_lexeme);
+    next_token();
+
+    /* Build extern name: _user_<name> */
+    str_copy(extern_name, "_user_");
+    str_copy(&extern_name[6], name);
+
+    /* Save scope state */
+    saved_scope_base = scope_base;
+    saved_in_proc = in_proc;
+    saved_cur_proc_argc = cur_proc_argc;
+    saved_cur_func_local = cur_func_local;
+    str_copy(saved_func_name, cur_func_name);
+
+    scope_base = sym_count;
+
+    /* Parse parameters */
+    param_count = parse_param_list(0);
+
+    /* Parse return type for functions */
+    ret_type = TYPE_INTEGER;
+    if (is_func) {
+        expect(TOK_COLON);
+        if (parse_error) return;
+        if (tok_type == TOK_INTEGER_KW) {
+            ret_type = TYPE_INTEGER;
+            next_token();
+        } else if (tok_type == TOK_BOOLEAN_KW) {
+            ret_type = TYPE_BOOLEAN;
+            next_token();
+        } else {
+            error("expected return type");
+            return;
+        }
+    }
+
+    expect(TOK_SEMI);
+    if (parse_error) return;
+
+    /* Check for forward declaration */
+    if (tok_type == TOK_FORWARD) {
+        next_token();
+        expect(TOK_SEMI);
+        /* Register in proc table as user proc */
+        pidx = proc_add(name, extern_name, param_count, is_func, ret_type);
+        if (pidx >= 0) {
+            proc_is_user[pidx] = 1;
+        }
+        /* Restore scope */
+        sym_count = scope_base;
+        scope_base = saved_scope_base;
+        return;
+    }
+
+    /* Register in proc table (or update if forward-declared) */
+    pidx = proc_lookup(name);
+    if (pidx >= 0) {
+        /* Already forward-declared — update */
+        proc_argc[pidx] = param_count;
+    } else {
+        pidx = proc_add(name, extern_name, param_count, is_func, ret_type);
+        if (pidx >= 0) {
+            proc_is_user[pidx] = 1;
+        }
+    }
+
+    /* Set up scope for body */
+    in_proc = 1;
+    cur_proc_argc = param_count;
+
+    /* Functions get a hidden local at index 0 for return value */
+    if (is_func) {
+        cur_func_local = 0;
+        str_copy(cur_func_name, name);
+        local_offset = 1;  /* user locals start at 1 */
+    } else {
+        cur_func_local = -1;
+        cur_func_name[0] = 0;
+        local_offset = 0;
+    }
+
+    /* Parse optional local var section */
+    local_count = 0;
+    if (tok_type == TOK_VAR) {
+        local_count = parse_local_vars(local_offset);
+    }
+
+    total_locals = local_count + (is_func ? 1 : 0);
+    if (pidx >= 0) {
+        proc_nlocals[pidx] = total_locals;
+    }
+
+    /* Emit .proc header (pa24r auto-generates enter from .proc N) */
+    printf("\n.proc %s %d\n", extern_name, total_locals);
+
+    /* Parse body */
+    parse_compound_stmt();
+    expect(TOK_SEMI);  /* semicolon after procedure/function body */
+    if (parse_error) return;
+
+    /* Emit return (pa24r auto-generates leave from .end) */
+    if (is_func) {
+        printf("    loadl %d\n", cur_func_local);  /* push return value */
+    }
+    printf("    ret %d\n", param_count);
+    printf(".end\n");
+
+    /* Restore scope */
+    sym_count = scope_base;
+    scope_base = saved_scope_base;
+    in_proc = saved_in_proc;
+    cur_proc_argc = saved_cur_proc_argc;
+    cur_func_local = saved_cur_func_local;
+    str_copy(cur_func_name, saved_func_name);
+}
+
 /* --- Block and program --- */
 
 void parse_block(void) {
+    int has_procs;
+
     if (tok_type == TOK_CONST) parse_const_section();
     if (tok_type == TOK_VAR) parse_var_section();
+
+    has_procs = (tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION);
+
+    if (has_procs) {
+        /* PVM executes from offset 0, so emit a trampoline that jumps to main */
+        printf("\n.proc _p24p_entry 0\n");
+        printf("    call main\n");
+        printf("    halt\n");
+        printf(".end\n");
+    }
+
+    /* Parse procedure and function declarations */
+    while ((tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION) && !parse_error) {
+        if (tok_type == TOK_PROCEDURE) {
+            parse_proc_or_func_decl(0);
+        } else {
+            parse_proc_or_func_decl(1);
+        }
+    }
 
     printf("\n.proc main 0\n");
     printf("    enter 0\n");
@@ -1008,6 +1342,11 @@ void parser_init(char *src, int len) {
     str_count = 0;
     proc_count = 0;
     unit_hardware = 0;
+    scope_base = 0;
+    in_proc = 0;
+    cur_proc_argc = 0;
+    cur_func_local = -1;
+    cur_func_name[0] = 0;
     register_system_unit();
     lexer_init(src, len);
     next_token(); /* prime the first token */
@@ -1057,10 +1396,12 @@ void emit_externs(void) {
     printf(".extern _p24p_write_ln\n");
     printf(".extern _p24p_read_int\n");
     printf(".extern _p24p_read_ln\n");
-    /* Emit externs for all registered procedures */
+    /* Emit externs for non-user registered procedures */
     i = 0;
     while (i < proc_count) {
-        printf(".extern %s\n", proc_extern_at(i));
+        if (!proc_is_user[i]) {
+            printf(".extern %s\n", proc_extern_at(i));
+        }
         i = i + 1;
     }
 }
