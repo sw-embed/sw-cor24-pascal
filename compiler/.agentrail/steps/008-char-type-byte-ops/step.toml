@@ -1,0 +1,8 @@
+number = 8
+slug = "char-type-byte-ops"
+status = "pending"
+description = "Add char type and byte-level operations to p24p (Phase 1). Implement: (1) cha..."
+role = "production"
+context_files = []
+created_at = "2026-04-04T15:27:14"
+task_type = "cor24-c"

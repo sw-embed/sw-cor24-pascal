@@ -1,0 +1,8 @@
+number = 9
+slug = "runtime-peek-poke-memops"
+status = "pending"
+description = "Add peek/poke and memory operation routines to Pascal runtime (runtime/runtim..."
+role = "production"
+context_files = []
+created_at = "2026-04-04T15:27:18"
+task_type = "cor24-c"

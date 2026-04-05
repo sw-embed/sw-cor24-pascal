@@ -1,0 +1,8 @@
+number = 5
+slug = "fix-hardcoded-code-ptr"
+status = "in-progress"
+description = "Fix bug: run-pascal.sh and test-all.sh use hardcoded code_ptr address 0x0A12 ..."
+role = "production"
+context_files = []
+created_at = "2026-04-04T15:27:01"
+task_type = "pre-commit"

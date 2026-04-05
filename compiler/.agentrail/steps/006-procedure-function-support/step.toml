@@ -1,0 +1,8 @@
+number = 6
+slug = "procedure-function-support"
+status = "pending"
+description = "Add user-defined procedure and function support to p24p (Phase 1). The lexer ..."
+role = "production"
+context_files = []
+created_at = "2026-04-04T15:27:06"
+task_type = "cor24-c"

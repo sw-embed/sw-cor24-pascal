@@ -22,6 +22,14 @@ TMP="/tmp/p24p_demo_$$"
 mkdir -p "$TMP"
 trap "rm -rf $TMP" EXIT
 
+# Resolve code_ptr address dynamically from PVM
+CODE_PTR_ADDR=$(cor24-run --run "$PVM" -e code_ptr --speed 0 -n 0 2>&1 | \
+  grep "Entry point:" | sed 's/.*@ //')
+if [ -z "$CODE_PTR_ADDR" ]; then
+  echo "Error: could not resolve code_ptr address from PVM" >&2
+  exit 1
+fi
+
 echo "════════════════════════════════════════════════════════"
 echo "  p24p Pascal Compiler Demo: $NAME"
 echo "════════════════════════════════════════════════════════"
@@ -36,7 +44,7 @@ echo ""
 echo "--- Step 1: Compile (.pas -> .spc) ---"
 echo "  p24p running on COR24 emulator..."
 SPC_OUTPUT=$(printf '%s\x04' "$(cat "$PAS")" | \
-  cor24-run --run "$P24P_S" --terminal --speed 0 -n 5000000 2>&1)
+  cor24-run --run "$P24P_S" --terminal --speed 0 -n 50000000 2>&1)
 
 if ! echo "$SPC_OUTPUT" | grep -q "; OK"; then
   echo "  FAILED:"
@@ -82,7 +90,7 @@ echo "--- Step 5: Execute on PVM (pvm.s + cor24-run) ---"
 printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
 EXEC_OUTPUT=$(cor24-run --run "$PVM" \
   --load-binary "$TMP/$NAME.bin@0x010000" \
-  --load-binary "$TMP/code_ptr.bin@0x0A12" \
+  --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
   --terminal --speed 0 -n "$MAX_INSTRS" 2>&1)
 
 EXEC_INSTRS=$(echo "$EXEC_OUTPUT" | grep -oE 'Executed [0-9]+' | grep -oE '[0-9]+')

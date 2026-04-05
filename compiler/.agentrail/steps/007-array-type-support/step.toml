@@ -1,0 +1,8 @@
+number = 7
+slug = "array-type-support"
+status = "pending"
+description = "Add array type support to p24p (Phase 1). The lexer already tokenizes the arr..."
+role = "production"
+context_files = []
+created_at = "2026-04-04T15:27:11"
+task_type = "cor24-c"
