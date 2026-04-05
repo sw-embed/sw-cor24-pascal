@@ -7,6 +7,7 @@
 #define TYPE_BOOLEAN 1
 #define TYPE_STRING  2
 #define TYPE_ARRAY   3
+#define TYPE_CHAR    4
 
 /* Symbol kinds */
 #define SYM_CONST 0

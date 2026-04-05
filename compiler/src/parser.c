@@ -18,6 +18,20 @@ void str_copy(char *dst, char *src) {
     dst[i] = 0;
 }
 
+/* --- Type compatibility --- */
+
+int is_ordinal(int t) {
+    return (t == TYPE_INTEGER || t == TYPE_CHAR || t == TYPE_BOOLEAN);
+}
+
+int types_compatible(int t1, int t2) {
+    if (t1 == t2) return 1;
+    /* char and integer are freely interchangeable */
+    if ((t1 == TYPE_CHAR || t1 == TYPE_INTEGER) &&
+        (t2 == TYPE_CHAR || t2 == TYPE_INTEGER)) return 1;
+    return 0;
+}
+
 /* --- Error handling --- */
 
 void error(char *msg) {
@@ -137,19 +151,24 @@ void emit_store_sym(int idx) {
 /* Leaves: effective byte address on eval stack */
 void emit_array_addr(int idx) {
     int low;
+    int elem_size;
+
     low = sym_arr_low[idx];
+    elem_size = (sym_arr_elem[idx] == TYPE_CHAR) ? 1 : 3;
+
     if (low != 0) {
         printf("    push %d\n", low);
         printf("    sub\n");
     }
-    printf("    push 3\n");   /* element size = 3 bytes (24-bit word) */
-    printf("    mul\n");
+    if (elem_size > 1) {
+        printf("    push %d\n", elem_size);
+        printf("    mul\n");
+    }
     if (sym_kind[idx] == SYM_VAR) {
         printf("    addrg %s\n", sym_name_at(idx));
     } else if (sym_kind[idx] == SYM_LOCAL) {
         printf("    addrl %d\n", sym_value[idx]);
     } else if (sym_kind[idx] == SYM_PARAM) {
-        /* Parameter is passed as base address */
         printf("    loada %d\n", sym_value[idx]);
     }
     printf("    add\n");
@@ -225,20 +244,10 @@ int parse_factor(void) {
     }
 
     if (tok_type == TOK_CHAR_LIT) {
-        /* Treat char literal as a 1-char string for write/writeln */
-        idx = str_count;
-        if (idx >= MAX_STRINGS) {
-            error("too many string literals");
-            return TYPE_STRING;
-        }
-        s = str_data_at(idx);
-        s[0] = tok_int_val;
-        s[1] = 0;
-        str_len[idx] = 1;
-        str_count = str_count + 1;
-        printf("    push S%d\n", idx);
+        /* Char literal — push ordinal value */
+        printf("    push %d\n", tok_int_val);
         next_token();
-        return TYPE_STRING;
+        return TYPE_CHAR;
     }
 
     if (tok_type == TOK_TRUE) {
@@ -308,7 +317,11 @@ int parse_factor(void) {
             parse_expression();
             expect(TOK_RBRACKET);
             emit_array_addr(idx);
-            printf("    load\n");
+            if (sym_arr_elem[idx] == TYPE_CHAR) {
+                printf("    loadb\n");
+            } else {
+                printf("    load\n");
+            }
             return sym_arr_elem[idx];
         }
 
@@ -334,17 +347,20 @@ int parse_term(void) {
         rtype = parse_factor();
 
         if (op == TOK_STAR) {
-            if (type != TYPE_INTEGER || rtype != TYPE_INTEGER)
+            if (!is_ordinal(type) || !is_ordinal(rtype))
                 error("* requires integers");
             printf("    mul\n");
+            type = TYPE_INTEGER;
         } else if (op == TOK_DIV) {
-            if (type != TYPE_INTEGER || rtype != TYPE_INTEGER)
+            if (!is_ordinal(type) || !is_ordinal(rtype))
                 error("div requires integers");
             printf("    div\n");
+            type = TYPE_INTEGER;
         } else if (op == TOK_MOD) {
-            if (type != TYPE_INTEGER || rtype != TYPE_INTEGER)
+            if (!is_ordinal(type) || !is_ordinal(rtype))
                 error("mod requires integers");
             printf("    mod\n");
+            type = TYPE_INTEGER;
         } else {
             if (type != TYPE_BOOLEAN || rtype != TYPE_BOOLEAN)
                 error("and requires booleans");
@@ -373,8 +389,9 @@ int parse_simple_expr(void) {
     type = parse_term();
 
     if (negate) {
-        if (type != TYPE_INTEGER) error("unary minus requires integer");
+        if (!is_ordinal(type)) error("unary minus requires integer");
         printf("    neg\n");
+        type = TYPE_INTEGER;
     }
 
     while (tok_type == TOK_PLUS || tok_type == TOK_MINUS || tok_type == TOK_OR) {
@@ -383,13 +400,15 @@ int parse_simple_expr(void) {
         rtype = parse_term();
 
         if (op == TOK_PLUS) {
-            if (type != TYPE_INTEGER || rtype != TYPE_INTEGER)
+            if (!is_ordinal(type) || !is_ordinal(rtype))
                 error("+ requires integers");
             printf("    add\n");
+            type = TYPE_INTEGER;
         } else if (op == TOK_MINUS) {
-            if (type != TYPE_INTEGER || rtype != TYPE_INTEGER)
+            if (!is_ordinal(type) || !is_ordinal(rtype))
                 error("- requires integers");
             printf("    sub\n");
+            type = TYPE_INTEGER;
         } else {
             if (type != TYPE_BOOLEAN || rtype != TYPE_BOOLEAN)
                 error("or requires booleans");
@@ -415,7 +434,7 @@ int parse_expression(void) {
         next_token();
         rtype = parse_simple_expr();
 
-        if (type != rtype) error("type mismatch in comparison");
+        if (!types_compatible(type, rtype)) error("type mismatch in comparison");
 
         if (op == TOK_EQ) printf("    eq\n");
         else if (op == TOK_NEQ) printf("    ne\n");
@@ -738,6 +757,8 @@ void parse_write_stmt(void) {
             printf("    call _p24p_write_str\n");
         } else if (type == TYPE_BOOLEAN) {
             printf("    call _p24p_write_bool\n");
+        } else if (type == TYPE_CHAR) {
+            printf("    call _p24p_write_char\n");
         } else {
             printf("    call _p24p_write_int\n");
         }
@@ -749,6 +770,8 @@ void parse_write_stmt(void) {
                 printf("    call _p24p_write_str\n");
             } else if (type == TYPE_BOOLEAN) {
                 printf("    call _p24p_write_bool\n");
+            } else if (type == TYPE_CHAR) {
+                printf("    call _p24p_write_char\n");
             } else {
                 printf("    call _p24p_write_int\n");
             }
@@ -772,6 +795,8 @@ void parse_writeln_stmt(void) {
             printf("    call _p24p_write_str\n");
         } else if (type == TYPE_BOOLEAN) {
             printf("    call _p24p_write_bool\n");
+        } else if (type == TYPE_CHAR) {
+            printf("    call _p24p_write_char\n");
         } else {
             printf("    call _p24p_write_int\n");
         }
@@ -783,6 +808,8 @@ void parse_writeln_stmt(void) {
                 printf("    call _p24p_write_str\n");
             } else if (type == TYPE_BOOLEAN) {
                 printf("    call _p24p_write_bool\n");
+            } else if (type == TYPE_CHAR) {
+                printf("    call _p24p_write_char\n");
             } else {
                 printf("    call _p24p_write_int\n");
             }
@@ -863,7 +890,11 @@ void parse_stmt(void) {
             if (parse_error) return;
             parse_expression();  /* value on stack */
             printf("    loadg _p24p_tmp\n");  /* value, addr on stack */
-            printf("    store\n");
+            if (sym_arr_elem[idx] == TYPE_CHAR) {
+                printf("    storeb\n");
+            } else {
+                printf("    store\n");
+            }
 
         } else if (tok_type == TOK_ASSIGN) {
             /* Assignment — could be variable or function return value */
@@ -889,7 +920,7 @@ void parse_stmt(void) {
 
             etype = parse_expression();
 
-            if (sym_type_id[idx] != etype) {
+            if (!types_compatible(sym_type_id[idx], etype)) {
                 error("type mismatch in assignment");
             }
             emit_store_sym(idx);
@@ -1077,6 +1108,9 @@ void parse_var_decl(void) {
         } else if (tok_type == TOK_BOOLEAN_KW) {
             elem_type = TYPE_BOOLEAN;
             next_token();
+        } else if (tok_type == TOK_CHAR_KW) {
+            elem_type = TYPE_CHAR;
+            next_token();
         } else {
             error("expected element type");
             return;
@@ -1099,12 +1133,19 @@ void parse_var_decl(void) {
         /* Fix up as array type */
         i = first;
         while (i < sym_count) {
+            int alloc_words;
             sym_type_id[i] = TYPE_ARRAY;
             sym_arr_low[i] = arr_low;
             sym_arr_high[i] = arr_high;
             sym_arr_elem[i] = elem_type;
             sym_arr_size[i] = arr_size;
-            printf(".global %s %d\n", sym_name_at(i), arr_size);
+            /* Char arrays: 1 byte/elem, alloc ceil(size/3) words */
+            if (elem_type == TYPE_CHAR) {
+                alloc_words = (arr_size + 2) / 3;
+            } else {
+                alloc_words = arr_size;
+            }
+            printf(".global %s %d\n", sym_name_at(i), alloc_words);
             i = i + 1;
         }
     } else {
@@ -1114,6 +1155,9 @@ void parse_var_decl(void) {
             next_token();
         } else if (tok_type == TOK_BOOLEAN_KW) {
             type = TYPE_BOOLEAN;
+            next_token();
+        } else if (tok_type == TOK_CHAR_KW) {
+            type = TYPE_CHAR;
             next_token();
         } else {
             error("expected type name");
@@ -1197,6 +1241,9 @@ int parse_param_list(int pidx) {
         } else if (tok_type == TOK_BOOLEAN_KW) {
             type = TYPE_BOOLEAN;
             next_token();
+        } else if (tok_type == TOK_CHAR_KW) {
+            type = TYPE_CHAR;
+            next_token();
         } else {
             error("expected type name");
             return param_count;
@@ -1265,6 +1312,9 @@ int parse_local_vars(int local_offset) {
             next_token();
         } else if (tok_type == TOK_BOOLEAN_KW) {
             type = TYPE_BOOLEAN;
+            next_token();
+        } else if (tok_type == TOK_CHAR_KW) {
+            type = TYPE_CHAR;
             next_token();
         } else {
             error("expected type name");
@@ -1337,6 +1387,9 @@ void parse_proc_or_func_decl(int is_func) {
             next_token();
         } else if (tok_type == TOK_BOOLEAN_KW) {
             ret_type = TYPE_BOOLEAN;
+            next_token();
+        } else if (tok_type == TOK_CHAR_KW) {
+            ret_type = TYPE_CHAR;
             next_token();
         } else {
             error("expected return type");
