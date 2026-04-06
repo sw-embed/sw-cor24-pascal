@@ -62,3 +62,7 @@ demo-all:
 # Demo LED on/off programs (checks I/O dump)
 demo-led:
     bash scripts/demo-led.sh
+
+# Pre-assemble runtime as a p-code unit (v2 .p24 with exports)
+build-runtime-unit:
+    ~/github/sw-embed/sw-cor24-pcode/target/release/pa24r ../runtime/runtime-unit.spc -o ../runtime/p24p_rt.p24

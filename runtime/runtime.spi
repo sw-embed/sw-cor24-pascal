@@ -1,0 +1,54 @@
+; runtime.spi — p24p runtime interface file
+; Lists exported procedures with arg counts for compiler consumption.
+; Auto-generated from runtime-unit.spc exports.
+.unit p24p_rt
+
+; I/O — write
+.export _p24p_write_int 1
+.export _p24p_write_bool 1
+.export _p24p_write_ln 0
+.export _p24p_write_str 1
+.export _p24p_write_char 1
+.export _p24p_write_int_w 2
+.export _p24p_write_char_w 2
+.export _p24p_write_bool_w 2
+.export _p24p_write_str_w 2
+
+; I/O — read
+.export _p24p_read_int 0
+.export _p24p_read_char 0
+.export _p24p_read_ln 0
+.export _p24p_eof 0
+.export _p24p_eoln 0
+
+; Standard functions
+.export _p24p_abs 1
+.export _p24p_odd 1
+.export _p24p_ord 1
+.export _p24p_chr 1
+.export _p24p_succ 1
+.export _p24p_pred 1
+.export _p24p_sqr 1
+
+; Runtime checks
+.export _p24p_bounds_check 3
+.export _p24p_nil_check 1
+.export _p24p_subrange_check 3
+
+; Heap management
+.export _p24p_heap_init 0
+.export _p24p_new 1
+.export _p24p_dispose 1
+.export _p24p_leak_report 0
+
+; Hardware
+.export _p24p_led_on 0
+.export _p24p_led_off 0
+.export _p24p_read_switch 0
+.export _p24p_halt 0
+
+; Memory access
+.export _p24p_peek 1
+.export _p24p_poke 2
+.export _p24p_memcpy 3
+.export _p24p_memset 3
