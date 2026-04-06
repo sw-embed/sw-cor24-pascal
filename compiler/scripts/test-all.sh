@@ -34,6 +34,8 @@ printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
 
 for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests/countdown.pas; do
   [ -f "$f" ] || continue
+  # Skip unit-mode tests (handled separately below)
+  case "$f" in *_unit*) continue ;; esac
   NAME=$(basename "$f" .pas)
   EXPECT="$EXPECTED/${NAME}.txt"
 
@@ -101,6 +103,32 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
     fi
   else
     printf "FAIL %-20s (output mismatch)\n" "$NAME"
+    diff "$EXPECT" "$TMP/${NAME}_actual.txt" | head -10 | sed 's/^/     /'
+    FAIL=$((FAIL + 1))
+  fi
+done
+
+# Unit-mode tests (files matching *_unit*.pas, compiled via unit pipeline)
+UNIT_SCRIPT="$P24P_DIR/scripts/run-pascal-unit.sh"
+for f in "$P24P_DIR"/tests/*_unit*.pas; do
+  [ -f "$f" ] || continue
+  NAME=$(basename "$f" .pas)
+  EXPECT="$EXPECTED/${NAME}.txt"
+
+  if [ ! -f "$EXPECT" ]; then
+    printf "SKIP %-20s (no expected output)\n" "$NAME"
+    SKIP=$((SKIP + 1))
+    continue
+  fi
+
+  ACTUAL=$(bash "$UNIT_SCRIPT" "$f" 50000000 2>&1)
+
+  echo "$ACTUAL" > "$TMP/${NAME}_actual.txt"
+  if diff -q "$EXPECT" "$TMP/${NAME}_actual.txt" > /dev/null 2>&1; then
+    printf "PASS %-20s (unit)\n" "$NAME"
+    PASS=$((PASS + 1))
+  else
+    printf "FAIL %-20s (unit, output mismatch)\n" "$NAME"
     diff "$EXPECT" "$TMP/${NAME}_actual.txt" | head -10 | sed 's/^/     /'
     FAIL=$((FAIL + 1))
   fi
