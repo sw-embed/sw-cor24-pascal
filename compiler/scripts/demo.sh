@@ -43,8 +43,9 @@ echo ""
 # --- Step 1: Compile ---
 echo "--- Step 1: Compile (.pas -> .spc) ---"
 echo "  p24p running on COR24 emulator..."
-SPC_OUTPUT=$(printf '%s\x04' "$(cat "$PAS")" | \
-  cor24-run --run "$P24P_S" --terminal --speed 0 -n 50000000 2>&1)
+# Use -u (preloaded UART) instead of --terminal to avoid ~4KB terminal buffer limit
+SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "$(cat "$PAS")"$'\x04' --speed 0 -n 50000000 2>&1 | \
+  grep -v '^\[UART' | sed 's/^UART output: //')
 
 if ! echo "$SPC_OUTPUT" | grep -q "; OK"; then
   echo "  FAILED:"

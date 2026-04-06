@@ -45,8 +45,9 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
   fi
 
   # Step 1: Compile
-  SPC_OUTPUT=$(printf '%s\x04' "$(cat "$f")" | \
-    cor24-run --run "$P24P_S" --terminal --speed 0 -n 50000000 2>&1)
+  # Use -u (preloaded UART) instead of --terminal to avoid ~4KB terminal buffer limit
+  SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "$(cat "$f")"$'\x04' --speed 0 -n 50000000 2>&1 | \
+    grep -v '^\[UART' | sed 's/^UART output: //')
 
   if ! echo "$SPC_OUTPUT" | grep -q "; OK"; then
     printf "FAIL %-20s (compile error)\n" "$NAME"

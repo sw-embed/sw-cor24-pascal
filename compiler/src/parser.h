@@ -70,6 +70,7 @@ int has_arrays;
 
 /* Unit flags */
 int unit_hardware;
+int unit_mode;       /* 1 = emit .unit/.xcall for multi-unit loading */
 
 /* Error flag */
 int parse_error;

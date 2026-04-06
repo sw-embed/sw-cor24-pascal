@@ -59,6 +59,14 @@ int accept(int tok) {
 
 /* --- .spc emission --- */
 
+void emit_rt_call(char *name) {
+    if (unit_mode) {
+        printf("    xcall %s\n", name);
+    } else {
+        printf("    call %s\n", name);
+    }
+}
+
 int new_label(void) {
     int l;
     l = label_count;
@@ -728,7 +736,7 @@ void parse_read_args(void) {
             return;
         }
 
-        printf("    call _p24p_read_int\n");
+        emit_rt_call("_p24p_read_int");
         emit_store_sym(idx);
 
         if (tok_type != TOK_COMMA) break;
@@ -746,7 +754,7 @@ void parse_read_stmt(void) {
 void parse_readln_stmt(void) {
     next_token(); /* consume READLN */
     parse_read_args();
-    printf("    call _p24p_read_ln\n");
+    emit_rt_call("_p24p_read_ln");
 }
 
 void parse_write_stmt(void) {
@@ -759,26 +767,26 @@ void parse_write_stmt(void) {
 
         type = parse_expression();
         if (type == TYPE_STRING) {
-            printf("    call _p24p_write_str\n");
+            emit_rt_call("_p24p_write_str");
         } else if (type == TYPE_BOOLEAN) {
-            printf("    call _p24p_write_bool\n");
+            emit_rt_call("_p24p_write_bool");
         } else if (type == TYPE_CHAR) {
-            printf("    call _p24p_write_char\n");
+            emit_rt_call("_p24p_write_char");
         } else {
-            printf("    call _p24p_write_int\n");
+            emit_rt_call("_p24p_write_int");
         }
 
         while (tok_type == TOK_COMMA) {
             next_token();
             type = parse_expression();
             if (type == TYPE_STRING) {
-                printf("    call _p24p_write_str\n");
+                emit_rt_call("_p24p_write_str");
             } else if (type == TYPE_BOOLEAN) {
-                printf("    call _p24p_write_bool\n");
+                emit_rt_call("_p24p_write_bool");
             } else if (type == TYPE_CHAR) {
-                printf("    call _p24p_write_char\n");
+                emit_rt_call("_p24p_write_char");
             } else {
-                printf("    call _p24p_write_int\n");
+                emit_rt_call("_p24p_write_int");
             }
         }
 
@@ -797,33 +805,33 @@ void parse_writeln_stmt(void) {
 
         type = parse_expression();
         if (type == TYPE_STRING) {
-            printf("    call _p24p_write_str\n");
+            emit_rt_call("_p24p_write_str");
         } else if (type == TYPE_BOOLEAN) {
-            printf("    call _p24p_write_bool\n");
+            emit_rt_call("_p24p_write_bool");
         } else if (type == TYPE_CHAR) {
-            printf("    call _p24p_write_char\n");
+            emit_rt_call("_p24p_write_char");
         } else {
-            printf("    call _p24p_write_int\n");
+            emit_rt_call("_p24p_write_int");
         }
 
         while (tok_type == TOK_COMMA) {
             next_token();
             type = parse_expression();
             if (type == TYPE_STRING) {
-                printf("    call _p24p_write_str\n");
+                emit_rt_call("_p24p_write_str");
             } else if (type == TYPE_BOOLEAN) {
-                printf("    call _p24p_write_bool\n");
+                emit_rt_call("_p24p_write_bool");
             } else if (type == TYPE_CHAR) {
-                printf("    call _p24p_write_char\n");
+                emit_rt_call("_p24p_write_char");
             } else {
-                printf("    call _p24p_write_int\n");
+                emit_rt_call("_p24p_write_int");
             }
         }
 
         expect(TOK_RPAREN);
     }
 
-    printf("    call _p24p_write_ln\n");
+    emit_rt_call("_p24p_write_ln");
 }
 
 void parse_proc_call(char *name) {
@@ -859,7 +867,11 @@ void parse_proc_call(char *name) {
         return;
     }
 
-    printf("    call %s\n", proc_extern_at(pidx));
+    if (unit_mode && !proc_is_user[pidx]) {
+        printf("    xcall %s\n", proc_extern_at(pidx));
+    } else {
+        printf("    call %s\n", proc_extern_at(pidx));
+    }
 }
 
 void parse_stmt(void) {
@@ -1492,10 +1504,10 @@ void parse_block(void) {
 
     has_procs = (tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION);
 
-    if (has_procs) {
-        /* PVM executes from offset 0, so emit a trampoline that jumps to main */
-        printf("\n.proc _p24p_entry 0\n");
-        printf("    call main\n");
+    if (has_procs && !unit_mode) {
+        /* PVM executes from offset 0, so emit main as trampoline first */
+        printf("\n.proc main 0\n");
+        printf("    call _p24p_main\n");
         printf("    halt\n");
         printf(".end\n");
     }
@@ -1509,12 +1521,20 @@ void parse_block(void) {
         }
     }
 
-    printf("\n.proc main 0\n");
+    if (has_procs && !unit_mode) {
+        printf("\n.proc _p24p_main 0\n");
+    } else {
+        printf("\n.proc main 0\n");
+    }
     printf("    enter 0\n");
 
     parse_compound_stmt();
 
-    printf("    halt\n");
+    if (has_procs && !unit_mode) {
+        printf("    ret 0\n");
+    } else {
+        printf("    halt\n");
+    }
     printf(".end\n");
 }
 
@@ -1547,6 +1567,7 @@ void parser_init(char *src, int len) {
     str_count = 0;
     proc_count = 0;
     unit_hardware = 0;
+    unit_mode = 0;
     has_arrays = 0;
     scope_base = 0;
     in_proc = 0;
@@ -1576,6 +1597,8 @@ void parse_uses_clause(void) {
         if (strcmp(unit_name, "hardware") == 0) {
             unit_hardware = 1;
             register_hardware_unit();
+        } else if (strcmp(unit_name, "units") == 0) {
+            unit_mode = 1;
         } else {
             printf("error line %d: unknown unit '%s'\n", tok_line, unit_name);
             parse_error = 1;
@@ -1596,17 +1619,30 @@ void parse_uses_clause(void) {
 void emit_externs(void) {
     int i;
     /* Always emit the write/writeln/read externs (System builtins handled as keywords) */
-    printf(".extern _p24p_write_int\n");
-    printf(".extern _p24p_write_bool\n");
-    printf(".extern _p24p_write_str\n");
-    printf(".extern _p24p_write_ln\n");
-    printf(".extern _p24p_read_int\n");
-    printf(".extern _p24p_read_ln\n");
+    if (unit_mode) {
+        printf(".extern _p24p_write_int 1\n");
+        printf(".extern _p24p_write_bool 1\n");
+        printf(".extern _p24p_write_str 1\n");
+        printf(".extern _p24p_write_ln 0\n");
+        printf(".extern _p24p_read_int 0\n");
+        printf(".extern _p24p_read_ln 0\n");
+    } else {
+        printf(".extern _p24p_write_int\n");
+        printf(".extern _p24p_write_bool\n");
+        printf(".extern _p24p_write_str\n");
+        printf(".extern _p24p_write_ln\n");
+        printf(".extern _p24p_read_int\n");
+        printf(".extern _p24p_read_ln\n");
+    }
     /* Emit externs for non-user registered procedures */
     i = 0;
     while (i < proc_count) {
         if (!proc_is_user[i]) {
-            printf(".extern %s\n", proc_extern_at(i));
+            if (unit_mode) {
+                printf(".extern %s %d\n", proc_extern_at(i), proc_argc[i]);
+            } else {
+                printf(".extern %s\n", proc_extern_at(i));
+            }
         }
         i = i + 1;
     }
@@ -1631,7 +1667,12 @@ void parse_program(void) {
         if (parse_error) return;
     }
 
-    printf(".module %s\n", prog_name);
+    if (unit_mode) {
+        printf(".unit %s\n", prog_name);
+        printf(".import p24p_rt\n");
+    } else {
+        printf(".module %s\n", prog_name);
+    }
     emit_externs();
     printf(".export main\n");
     printf("; p24p output: %s\n", prog_name);
@@ -1644,7 +1685,11 @@ void parse_program(void) {
 
     expect(TOK_DOT);
 
-    printf(".endmodule\n");
+    if (unit_mode) {
+        printf(".endunit\n");
+    } else {
+        printf(".endmodule\n");
+    }
 
     if (parse_error) {
         printf("; compilation failed\n");
