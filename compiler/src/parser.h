@@ -57,9 +57,14 @@ int proc_count;
 /* User procedure extensions to proc table */
 int proc_is_user[MAX_PROCS];
 int proc_nlocals[MAX_PROCS];
+int proc_depth[MAX_PROCS];       /* nesting depth where proc was declared */
+
+/* Symbol nesting depth (for nonlocal access) */
+int sym_depth[MAX_SYMBOLS];      /* nesting depth when symbol was declared */
 
 /* Scope management for procedure/function bodies */
 int scope_base;
+int scope_depth;                 /* current nesting depth (0=global, 1=first proc, ...) */
 int in_proc;
 int cur_proc_argc;
 int cur_func_local;              /* -1 = procedure, 0 = function (return val at local 0) */

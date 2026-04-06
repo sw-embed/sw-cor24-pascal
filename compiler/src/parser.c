@@ -126,6 +126,7 @@ int proc_add(char *pascal_name, char *extern_name, int argc, int has_ret, int re
     proc_ret_type[idx] = ret_type;
     proc_is_user[idx] = 0;
     proc_nlocals[idx] = 0;
+    proc_depth[idx] = 0;
     proc_count = proc_count + 1;
     return idx;
 }
@@ -133,22 +134,35 @@ int proc_add(char *pascal_name, char *extern_name, int argc, int has_ret, int re
 /* --- Symbol load/store helpers --- */
 
 void emit_load_sym(int idx) {
+    int depth;
     if (sym_kind[idx] == SYM_CONST) {
         printf("    push %d\n", sym_value[idx]);
-    } else if (sym_kind[idx] == SYM_PARAM) {
-        printf("    loada %d\n", sym_value[idx]);
-    } else if (sym_kind[idx] == SYM_LOCAL) {
-        printf("    loadl %d\n", sym_value[idx]);
+    } else if (sym_kind[idx] == SYM_PARAM || sym_kind[idx] == SYM_LOCAL) {
+        depth = scope_depth - sym_depth[idx];
+        if (depth > 0) {
+            /* Nonlocal access via static link chain */
+            printf("    loadn %d %d\n", depth, sym_value[idx]);
+        } else if (sym_kind[idx] == SYM_PARAM) {
+            printf("    loada %d\n", sym_value[idx]);
+        } else {
+            printf("    loadl %d\n", sym_value[idx]);
+        }
     } else {
         printf("    loadg %s\n", sym_name_at(idx));
     }
 }
 
 void emit_store_sym(int idx) {
-    if (sym_kind[idx] == SYM_PARAM) {
-        printf("    storea %d\n", sym_value[idx]);
-    } else if (sym_kind[idx] == SYM_LOCAL) {
-        printf("    storel %d\n", sym_value[idx]);
+    int depth;
+    if (sym_kind[idx] == SYM_PARAM || sym_kind[idx] == SYM_LOCAL) {
+        depth = scope_depth - sym_depth[idx];
+        if (depth > 0) {
+            printf("    storen %d %d\n", depth, sym_value[idx]);
+        } else if (sym_kind[idx] == SYM_PARAM) {
+            printf("    storea %d\n", sym_value[idx]);
+        } else {
+            printf("    storel %d\n", sym_value[idx]);
+        }
     } else {
         printf("    storeg %s\n", sym_name_at(idx));
     }
@@ -238,6 +252,7 @@ int sym_add(char *name, int kind, int type, int value) {
     sym_kind[idx] = kind;
     sym_type_id[idx] = type;
     sym_value[idx] = value;
+    sym_depth[idx] = scope_depth;
     sym_count = sym_count + 1;
     return idx;
 }
@@ -869,6 +884,11 @@ void parse_proc_call(char *name) {
 
     if (unit_mode && !proc_is_user[pidx]) {
         printf("    xcall %s\n", proc_extern_at(pidx));
+    } else if (proc_is_user[pidx] && proc_depth[pidx] > 1) {
+        /* Nested proc: emit calln with static link depth */
+        /* depth = caller_scope_depth - (proc_depth - 1) */
+        /* proc_depth is the scope where the proc lives; its parent is proc_depth-1 */
+        printf("    calln %d %s\n", scope_depth - proc_depth[pidx] + 1, proc_extern_at(pidx));
     } else {
         printf("    call %s\n", proc_extern_at(pidx));
     }
@@ -1363,6 +1383,7 @@ void parse_proc_or_func_decl(int is_func) {
     int local_offset;
     int ret_type;
     int saved_scope_base;
+    int saved_scope_depth;
     int saved_in_proc;
     int saved_cur_proc_argc;
     int saved_cur_func_local;
@@ -1384,12 +1405,14 @@ void parse_proc_or_func_decl(int is_func) {
 
     /* Save scope state */
     saved_scope_base = scope_base;
+    saved_scope_depth = scope_depth;
     saved_in_proc = in_proc;
     saved_cur_proc_argc = cur_proc_argc;
     saved_cur_func_local = cur_func_local;
     str_copy(saved_func_name, cur_func_name);
 
     scope_base = sym_count;
+    scope_depth = scope_depth + 1;
 
     /* Parse parameters */
     param_count = parse_param_list(0);
@@ -1425,10 +1448,12 @@ void parse_proc_or_func_decl(int is_func) {
         pidx = proc_add(name, extern_name, param_count, is_func, ret_type);
         if (pidx >= 0) {
             proc_is_user[pidx] = 1;
+            proc_depth[pidx] = scope_depth;
         }
         /* Restore scope */
         sym_count = scope_base;
         scope_base = saved_scope_base;
+        scope_depth = saved_scope_depth;
         return;
     }
 
@@ -1437,10 +1462,12 @@ void parse_proc_or_func_decl(int is_func) {
     if (pidx >= 0) {
         /* Already forward-declared — update */
         proc_argc[pidx] = param_count;
+        proc_depth[pidx] = scope_depth;
     } else {
         pidx = proc_add(name, extern_name, param_count, is_func, ret_type);
         if (pidx >= 0) {
             proc_is_user[pidx] = 1;
+            proc_depth[pidx] = scope_depth;
         }
     }
 
@@ -1470,6 +1497,15 @@ void parse_proc_or_func_decl(int is_func) {
         proc_nlocals[pidx] = total_locals;
     }
 
+    /* Parse nested procedure/function declarations */
+    while ((tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION) && !parse_error) {
+        if (tok_type == TOK_PROCEDURE) {
+            parse_proc_or_func_decl(0);
+        } else {
+            parse_proc_or_func_decl(1);
+        }
+    }
+
     /* Emit .proc header (pa24r auto-generates enter from .proc N) */
     printf("\n.proc %s %d\n", extern_name, total_locals);
 
@@ -1488,6 +1524,7 @@ void parse_proc_or_func_decl(int is_func) {
     /* Restore scope */
     sym_count = scope_base;
     scope_base = saved_scope_base;
+    scope_depth = saved_scope_depth;
     in_proc = saved_in_proc;
     cur_proc_argc = saved_cur_proc_argc;
     cur_func_local = saved_cur_func_local;
@@ -1570,6 +1607,7 @@ void parser_init(char *src, int len) {
     unit_mode = 0;
     has_arrays = 0;
     scope_base = 0;
+    scope_depth = 0;
     in_proc = 0;
     cur_proc_argc = 0;
     cur_func_local = -1;
