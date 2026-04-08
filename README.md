@@ -6,7 +6,7 @@ Pascal compiler(s) and runtime library targeting the COR24 p-code VM.
 
 ```
 compiler/    Pascal compiler (C, compiled by tc24r, runs on COR24)
-runtime/     Runtime library (32 routines, hand-coded .spc)
+runtime/     Runtime library (written in Pascal)
 scripts/     Build and utility scripts
 ```
 
@@ -45,6 +45,11 @@ Sibling repos (cloned under `~/github/sw-embed/`):
 # Run all regression tests
 ./compiler/scripts/test-all.sh
 ```
+
+## Projects Using This Compiler
+
+- [sw-cor24-basic](https://github.com/sw-embed/sw-cor24-basic) — 1970s-terminal-inspired "Time Sharing" BASIC interpreter for COR24 ISA hardware and emulator.
+- `runtime/` — the Pascal runtime library in this repo is itself written in Pascal.
 
 ## License
 
