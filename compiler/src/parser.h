@@ -8,6 +8,9 @@
 #define TYPE_STRING  2
 #define TYPE_ARRAY   3
 #define TYPE_CHAR    4
+#define TYPE_POINTER 5
+#define TYPE_RECORD  6
+#define TYPE_NIL     7
 
 /* Symbol kinds */
 #define SYM_CONST 0
@@ -74,6 +77,28 @@ int in_proc;
 int cur_proc_argc;
 int cur_func_local;              /* -1 = procedure, 0 = function (return val at local 0) */
 char cur_func_name[MAX_NAME];    /* function name for return-value assignment detection */
+
+/* User-defined type table (records and pointer types) */
+#define MAX_TYPES 32
+#define TYPE_NAME_SIZE 1024
+char utype_name[TYPE_NAME_SIZE];  /* packed names */
+int utype_kind[MAX_TYPES];        /* TYPE_RECORD or TYPE_POINTER */
+int utype_size[MAX_TYPES];        /* size in words (records) */
+int utype_base[MAX_TYPES];        /* pointer: base type id; record: first field index */
+int utype_nfields[MAX_TYPES];     /* record: number of fields */
+int utype_count;
+
+/* Record field table */
+#define MAX_FIELDS 128
+#define FIELD_NAME_SIZE 2048
+char field_name[FIELD_NAME_SIZE]; /* packed names */
+int field_type[MAX_FIELDS];       /* field type id */
+int field_offset[MAX_FIELDS];     /* offset in words from record base */
+int field_size[MAX_FIELDS];       /* size in words (1 for scalars/pointers) */
+int field_count;
+
+/* Pointer metadata for symbols */
+int sym_ptr_base[MAX_SYMBOLS];    /* for pointer vars: user type index of pointed-to type */
 
 /* Array scratch global flag */
 int has_arrays;

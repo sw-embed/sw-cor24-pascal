@@ -71,6 +71,8 @@
 #define TOK_STR_LIT    61
 #define TOK_USES       62
 #define TOK_EXIT       63
+#define TOK_NIL        64
+#define TOK_CARET      65
 /* Special */
 #define TOK_EOF        38
 #define TOK_ERROR      39

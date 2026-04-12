@@ -29,6 +29,11 @@ int types_compatible(int t1, int t2) {
     /* char and integer are freely interchangeable */
     if ((t1 == TYPE_CHAR || t1 == TYPE_INTEGER) &&
         (t2 == TYPE_CHAR || t2 == TYPE_INTEGER)) return 1;
+    /* nil is compatible with any pointer */
+    if (t1 == TYPE_POINTER && t2 == TYPE_NIL) return 1;
+    if (t1 == TYPE_NIL && t2 == TYPE_POINTER) return 1;
+    /* all pointers are compatible with each other */
+    if (t1 == TYPE_POINTER && t2 == TYPE_POINTER) return 1;
     return 0;
 }
 
@@ -127,6 +132,81 @@ int proc_add(char *pascal_name, char *extern_name, int argc, int has_ret, int re
     proc_depth[idx] = 0;
     proc_count = proc_count + 1;
     return idx;
+}
+
+/* --- User type table --- */
+
+char *utype_name_at(int i) {
+    int off;
+    off = i * MAX_NAME;
+    return &utype_name[off];
+}
+
+char *field_name_at(int i) {
+    int off;
+    off = i * MAX_NAME;
+    return &field_name[off];
+}
+
+int utype_lookup(char *name) {
+    int i;
+    i = 0;
+    while (i < utype_count) {
+        if (strcmp(utype_name_at(i), name) == 0) return i;
+        i = i + 1;
+    }
+    return -1;
+}
+
+int utype_add(char *name, int kind) {
+    int idx;
+    if (utype_count >= MAX_TYPES) {
+        error("too many types");
+        return -1;
+    }
+    idx = utype_count;
+    str_copy(utype_name_at(idx), name);
+    utype_kind[idx] = kind;
+    utype_size[idx] = 0;
+    utype_base[idx] = -1;
+    utype_nfields[idx] = 0;
+    utype_count = utype_count + 1;
+    return idx;
+}
+
+int field_lookup(int type_idx, char *name) {
+    int base;
+    int n;
+    int i;
+    base = utype_base[type_idx];
+    n = utype_nfields[type_idx];
+    i = 0;
+    while (i < n) {
+        if (strcmp(field_name_at(base + i), name) == 0) return base + i;
+        i = i + 1;
+    }
+    return -1;
+}
+
+/* Resolve a type name to a type kind.
+   Returns: TYPE_INTEGER, TYPE_BOOLEAN, TYPE_CHAR, TYPE_POINTER, TYPE_RECORD.
+   For user types, sets *utype_idx to the utype table index (-1 for builtins). */
+int resolve_type_name(int *utype_idx) {
+    int tidx;
+    *utype_idx = -1;
+    if (tok_type == TOK_INTEGER_KW) { next_token(); return TYPE_INTEGER; }
+    if (tok_type == TOK_BOOLEAN_KW) { next_token(); return TYPE_BOOLEAN; }
+    if (tok_type == TOK_CHAR_KW)    { next_token(); return TYPE_CHAR; }
+    if (tok_type == TOK_IDENT) {
+        tidx = utype_lookup(tok_lexeme);
+        if (tidx >= 0) {
+            *utype_idx = tidx;
+            next_token();
+            return utype_kind[tidx];
+        }
+    }
+    error("expected type name");
+    return TYPE_INTEGER;
 }
 
 /* --- Symbol load/store helpers --- */
@@ -288,6 +368,12 @@ int parse_factor(void) {
         return TYPE_BOOLEAN;
     }
 
+    if (tok_type == TOK_NIL) {
+        printf("    push 0\n");
+        next_token();
+        return TYPE_NIL;
+    }
+
     if (tok_type == TOK_NOT) {
         next_token();
         type = parse_factor();
@@ -355,6 +441,55 @@ int parse_factor(void) {
                 printf("    load\n");
             }
             return sym_arr_elem[idx];
+        }
+
+        /* Pointer dereference: p^  or p^.field */
+        if (sym_type_id[idx] == TYPE_POINTER && tok_type == TOK_CARET) {
+            int ptr_utidx;
+            int base_utidx;
+            int fld_idx;
+
+            emit_load_sym(idx);  /* load pointer value (address) */
+            next_token();  /* consume ^ */
+
+            ptr_utidx = sym_ptr_base[idx];
+            if (ptr_utidx < 0) {
+                /* Raw pointer dereference */
+                printf("    load\n");
+                return TYPE_INTEGER;
+            }
+            base_utidx = utype_base[ptr_utidx];
+
+            if (tok_type == TOK_DOT && base_utidx >= 0 && utype_kind[base_utidx] == TYPE_RECORD) {
+                /* p^.field */
+                next_token();  /* consume . */
+                if (tok_type != TOK_IDENT) {
+                    error("expected field name after '.'");
+                    return TYPE_INTEGER;
+                }
+                fld_idx = field_lookup(base_utidx, tok_lexeme);
+                if (fld_idx < 0) {
+                    printf("error line %d: unknown field '%s'\n", tok_line, tok_lexeme);
+                    parse_error = 1;
+                    return TYPE_INTEGER;
+                }
+                next_token();
+
+                /* address + offset, then load */
+                if (field_offset[fld_idx] > 0) {
+                    printf("    push %d\n", field_offset[fld_idx] * 3);
+                    printf("    add\n");
+                }
+                printf("    load\n");
+                return field_type[fld_idx];
+            }
+
+            /* p^ without field — dereference whole record or scalar */
+            printf("    load\n");
+            if (base_utidx >= 0) {
+                return utype_kind[base_utidx];
+            }
+            return TYPE_INTEGER;
         }
 
         emit_load_sym(idx);
@@ -861,6 +996,49 @@ void parse_proc_call(char *name) {
     int pidx;
     int argc;
 
+    /* Built-in: new(p) — allocate heap memory for pointer's base type */
+    if (strcmp(name, "new") == 0) {
+        int vidx;
+        int ptr_utidx;
+        int base_utidx;
+        int size;
+        expect(TOK_LPAREN);
+        if (parse_error) return;
+        if (tok_type != TOK_IDENT) { error("expected pointer variable"); return; }
+        vidx = sym_lookup(tok_lexeme);
+        if (vidx < 0) { error("undeclared variable"); return; }
+        if (sym_type_id[vidx] != TYPE_POINTER) { error("new requires pointer variable"); return; }
+        next_token();
+        expect(TOK_RPAREN);
+        if (parse_error) return;
+
+        ptr_utidx = sym_ptr_base[vidx];
+        base_utidx = (ptr_utidx >= 0) ? utype_base[ptr_utidx] : -1;
+        size = (base_utidx >= 0) ? utype_size[base_utidx] : 1;
+
+        printf("    push %d\n", size * 3);  /* size in bytes (3 bytes/word) */
+        emit_rt_call("_p24p_new");
+        emit_store_sym(vidx);
+        return;
+    }
+
+    /* Built-in: dispose(p) — free heap memory */
+    if (strcmp(name, "dispose") == 0) {
+        int vidx;
+        expect(TOK_LPAREN);
+        if (parse_error) return;
+        if (tok_type != TOK_IDENT) { error("expected pointer variable"); return; }
+        vidx = sym_lookup(tok_lexeme);
+        if (vidx < 0) { error("undeclared variable"); return; }
+        next_token();
+        expect(TOK_RPAREN);
+        if (parse_error) return;
+
+        emit_load_sym(vidx);
+        emit_rt_call("_p24p_dispose");
+        return;
+    }
+
     pidx = proc_lookup(name);
     if (pidx < 0) {
         printf("error line %d: unknown procedure '%s'\n", tok_line, name);
@@ -939,6 +1117,82 @@ void parse_stmt(void) {
                 printf("    storeb\n");
             } else {
                 printf("    store\n");
+            }
+
+        } else if (tok_type == TOK_CARET) {
+            /* Pointer dereference assignment: p^ := expr or p^.field := expr */
+            int ptr_utidx;
+            int base_utidx;
+            int fld_idx;
+
+            idx = sym_lookup(name);
+            if (idx < 0) {
+                printf("error line %d: undeclared '%s'\n", tok_line, name);
+                parse_error = 1;
+                return;
+            }
+            if (sym_type_id[idx] != TYPE_POINTER) {
+                error("not a pointer");
+                return;
+            }
+            next_token();  /* consume ^ */
+
+            ptr_utidx = sym_ptr_base[idx];
+            base_utidx = (ptr_utidx >= 0) ? utype_base[ptr_utidx] : -1;
+
+            if (tok_type == TOK_DOT && base_utidx >= 0 && utype_kind[base_utidx] == TYPE_RECORD) {
+                /* p^.field := expr */
+                next_token();  /* consume . */
+                if (tok_type != TOK_IDENT) {
+                    error("expected field name");
+                    return;
+                }
+                fld_idx = field_lookup(base_utidx, tok_lexeme);
+                if (fld_idx < 0) {
+                    printf("error line %d: unknown field '%s'\n", tok_line, tok_lexeme);
+                    parse_error = 1;
+                    return;
+                }
+                next_token();
+
+                expect(TOK_ASSIGN);
+                if (parse_error) return;
+
+                /* Compute address: load pointer, add field offset */
+                emit_load_sym(idx);
+                if (field_offset[fld_idx] > 0) {
+                    printf("    push %d\n", field_offset[fld_idx] * 3);
+                    printf("    add\n");
+                }
+                /* Save addr to scratch */
+                if (!has_arrays) {
+                    has_arrays = 1;
+                    printf(".global _p24p_tmp 1\n");
+                }
+                printf("    storeg _p24p_tmp\n");
+
+                etype = parse_expression();
+
+                printf("    loadg _p24p_tmp\n");
+                printf("    store\n");
+
+            } else if (tok_type == TOK_ASSIGN) {
+                /* p^ := expr */
+                next_token();
+
+                emit_load_sym(idx);  /* address */
+                if (!has_arrays) {
+                    has_arrays = 1;
+                    printf(".global _p24p_tmp 1\n");
+                }
+                printf("    storeg _p24p_tmp\n");
+
+                etype = parse_expression();
+
+                printf("    loadg _p24p_tmp\n");
+                printf("    store\n");
+            } else {
+                error("expected := or .field after ^");
             }
 
         } else if (tok_type == TOK_ASSIGN) {
@@ -1075,6 +1329,146 @@ void parse_const_section(void) {
     }
 }
 
+/* --- Type section parsing --- */
+
+void parse_type_section(void) {
+    char tname[MAX_NAME];
+    char base_name[MAX_NAME];
+    int tidx;
+    int base_tidx;
+    int fld_base;
+    int fld_count;
+    int fld_offset;
+    int fld_type;
+    int fld_utype;
+
+    next_token(); /* consume TYPE */
+
+    while (tok_type == TOK_IDENT && !parse_error) {
+        str_copy(tname, tok_lexeme);
+        next_token();
+
+        expect(TOK_EQ);
+        if (parse_error) return;
+
+        if (tok_type == TOK_CARET) {
+            /* Pointer type: ^BaseType */
+            next_token();
+            if (tok_type != TOK_IDENT) {
+                error("expected type name after ^");
+                return;
+            }
+            str_copy(base_name, tok_lexeme);
+            next_token();
+
+            tidx = utype_lookup(tname);
+            if (tidx < 0) {
+                tidx = utype_add(tname, TYPE_POINTER);
+            } else {
+                utype_kind[tidx] = TYPE_POINTER;
+            }
+            if (tidx < 0) return;
+            utype_size[tidx] = 1;  /* pointer is 1 word */
+
+            /* Resolve base type (may be forward reference) */
+            base_tidx = utype_lookup(base_name);
+            if (base_tidx < 0) {
+                /* Forward reference — create placeholder */
+                base_tidx = utype_add(base_name, TYPE_RECORD);
+            }
+            utype_base[tidx] = base_tidx;
+
+        } else if (tok_type == TOK_RECORD) {
+            /* Record type: record field1: type1; field2: type2; ... end */
+            next_token();
+
+            tidx = utype_lookup(tname);
+            if (tidx < 0) {
+                tidx = utype_add(tname, TYPE_RECORD);
+            } else {
+                utype_kind[tidx] = TYPE_RECORD;
+            }
+            if (tidx < 0) return;
+
+            fld_base = field_count;
+            fld_count = 0;
+            fld_offset = 0;
+
+            while (tok_type == TOK_IDENT && !parse_error) {
+                /* Parse field names */
+                int fld_first;
+                int fi;
+                fld_first = field_count;
+
+                if (field_count >= MAX_FIELDS) {
+                    error("too many record fields");
+                    return;
+                }
+                str_copy(field_name_at(field_count), tok_lexeme);
+                field_count = field_count + 1;
+                fld_count = fld_count + 1;
+                next_token();
+
+                while (tok_type == TOK_COMMA) {
+                    next_token();
+                    if (tok_type != TOK_IDENT) {
+                        error("expected field name");
+                        return;
+                    }
+                    if (field_count >= MAX_FIELDS) {
+                        error("too many record fields");
+                        return;
+                    }
+                    str_copy(field_name_at(field_count), tok_lexeme);
+                    field_count = field_count + 1;
+                    fld_count = fld_count + 1;
+                    next_token();
+                }
+
+                expect(TOK_COLON);
+                if (parse_error) return;
+
+                /* Field type */
+                fld_type = resolve_type_name(&fld_utype);
+                if (parse_error) return;
+
+                /* Fix up field types and offsets */
+                fi = fld_first;
+                while (fi < field_count) {
+                    field_type[fi] = fld_type;
+                    field_offset[fi] = fld_offset;
+                    field_size[fi] = 1;  /* all types are 1 word */
+                    fld_offset = fld_offset + 1;
+                    fi = fi + 1;
+                }
+
+                /* Semicolon between fields, optional before end */
+                if (tok_type == TOK_SEMI) {
+                    next_token();
+                }
+                if (tok_type == TOK_END) break;
+            }
+
+            if (tok_type != TOK_END) {
+                error("expected 'end' after record fields");
+                return;
+            }
+            next_token(); /* consume END */
+
+            utype_base[tidx] = fld_base;
+            utype_nfields[tidx] = fld_count;
+            utype_size[tidx] = fld_offset;  /* total words */
+
+        } else {
+            error("expected ^ or record in type definition");
+            return;
+        }
+
+        expect(TOK_SEMI);
+        if (parse_error) return;
+    }
+}
+
 void parse_var_decl(void) {
     int first;
     int type;
@@ -1201,7 +1595,10 @@ void parse_var_decl(void) {
             i = i + 1;
         }
     } else {
-        /* Scalar type */
+        /* Scalar or user-defined type */
+        int utidx;
+        utidx = -1;
+
         if (tok_type == TOK_INTEGER_KW) {
             type = TYPE_INTEGER;
             next_token();
@@ -1211,6 +1608,15 @@ void parse_var_decl(void) {
         } else if (tok_type == TOK_CHAR_KW) {
             type = TYPE_CHAR;
             next_token();
+        } else if (tok_type == TOK_IDENT) {
+            utidx = utype_lookup(tok_lexeme);
+            if (utidx >= 0) {
+                type = utype_kind[utidx];
+                next_token();
+            } else {
+                error("expected type name");
+                return;
+            }
         } else {
             error("expected type name");
             return;
@@ -1222,6 +1628,7 @@ void parse_var_decl(void) {
         i = first;
         while (i < sym_count) {
             sym_type_id[i] = type;
+            sym_ptr_base[i] = utidx;
             printf(".global %s 1\n", sym_name_at(i));
             i = i + 1;
         }
@@ -1287,18 +1694,10 @@ int parse_param_list(int pidx) {
         if (parse_error) return param_count;
 
         /* Type */
-        if (tok_type == TOK_INTEGER_KW) {
-            type = TYPE_INTEGER;
-            next_token();
-        } else if (tok_type == TOK_BOOLEAN_KW) {
-            type = TYPE_BOOLEAN;
-            next_token();
-        } else if (tok_type == TOK_CHAR_KW) {
-            type = TYPE_CHAR;
-            next_token();
-        } else {
-            error("expected type name");
-            return param_count;
+        {
+            int utidx;
+            type = resolve_type_name(&utidx);
+            if (parse_error) return param_count;
         }
 
         /* Fix up types for this group */
@@ -1359,18 +1758,10 @@ int parse_local_vars(int local_offset) {
         if (parse_error) return count;
 
         /* Type */
-        if (tok_type == TOK_INTEGER_KW) {
-            type = TYPE_INTEGER;
-            next_token();
-        } else if (tok_type == TOK_BOOLEAN_KW) {
-            type = TYPE_BOOLEAN;
-            next_token();
-        } else if (tok_type == TOK_CHAR_KW) {
-            type = TYPE_CHAR;
-            next_token();
-        } else {
-            error("expected type name");
-            return count;
+        {
+            int utidx;
+            type = resolve_type_name(&utidx);
+            if (parse_error) return count;
         }
 
         expect(TOK_SEMI);
@@ -1565,6 +1956,7 @@ void parse_block(void) {
     int has_procs;
 
     if (tok_type == TOK_CONST) parse_const_section();
+    if (tok_type == TOK_TYPE) parse_type_section();
     if (tok_type == TOK_VAR) parse_var_section();
 
     has_procs = (tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION);
@@ -1593,6 +1985,7 @@ void parse_block(void) {
     }
     printf("    enter 0\n");
     emit_rt_call("_p24p_io_init");
+    emit_rt_call("_p24p_heap_init");
 
     {
         int main_exit_label;
@@ -1643,6 +2036,8 @@ void parser_init(char *src, int len) {
     str_count = 0;
     str_data_used = 0;
     proc_count = 0;
+    utype_count = 0;
+    field_count = 0;
     unit_hardware = 0;
     unit_mode = 0;
     has_arrays = 0;
@@ -1706,6 +2101,9 @@ void emit_externs(void) {
         printf(".extern _p24p_read_int 0\n");
         printf(".extern _p24p_read_char 0\n");
         printf(".extern _p24p_read_ln 0\n");
+        printf(".extern _p24p_heap_init 0\n");
+        printf(".extern _p24p_new 1\n");
+        printf(".extern _p24p_dispose 1\n");
     } else {
         printf(".extern _p24p_write_int\n");
         printf(".extern _p24p_write_bool\n");
@@ -1715,6 +2113,9 @@ void emit_externs(void) {
         printf(".extern _p24p_read_int\n");
         printf(".extern _p24p_read_char\n");
         printf(".extern _p24p_read_ln\n");
+        printf(".extern _p24p_heap_init\n");
+        printf(".extern _p24p_new\n");
+        printf(".extern _p24p_dispose\n");
     }
     /* Emit externs for non-user registered procedures */
     i = 0;

@@ -106,6 +106,7 @@ int lex_keyword(char *id) {
     if (strcmp(id, "readln") == 0) return TOK_READLN;
     if (strcmp(id, "uses") == 0) return TOK_USES;
     if (strcmp(id, "exit") == 0) return TOK_EXIT;
+    if (strcmp(id, "nil") == 0) return TOK_NIL;
     return TOK_IDENT;
 }
 
@@ -283,6 +284,7 @@ int next_token(void) {
     if (c == '=') { tok_lexeme[0] = '='; tok_lexeme[1] = 0; tok_type = TOK_EQ; return TOK_EQ; }
     if (c == '[') { tok_lexeme[0] = '['; tok_lexeme[1] = 0; tok_type = TOK_LBRACKET; return TOK_LBRACKET; }
     if (c == ']') { tok_lexeme[0] = ']'; tok_lexeme[1] = 0; tok_type = TOK_RBRACKET; return TOK_RBRACKET; }
+    if (c == '^') { tok_lexeme[0] = '^'; tok_lexeme[1] = 0; tok_type = TOK_CARET; return TOK_CARET; }
 
     /* Unknown character */
     tok_lexeme[0] = c;
@@ -354,6 +356,8 @@ char *token_name(int type) {
     if (type == TOK_STR_LIT) return "STR_LIT";
     if (type == TOK_USES) return "USES";
     if (type == TOK_EXIT) return "EXIT";
+    if (type == TOK_NIL) return "NIL";
+    if (type == TOK_CARET) return "CARET";
     if (type == TOK_EOF) return "EOF";
     return "ERROR";
 }
