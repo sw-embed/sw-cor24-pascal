@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-04-12 — Compiler limits, record arrays, pointer returns
+
+### Compiler
+- **MAX_SYMBOLS** raised from 64 to 256 (issue #8); SYM_NAME_SIZE 2048 -> 8192
+- **Array fields in records** (issue #9): `text: array[0..3] of char` inside record types
+  - Correct multi-word field size and offset calculations
+  - `p^.arrfield[i]` in both expressions and assignments
+  - Supports char arrays (byte access via loadb/storeb) and integer arrays
+- **Pointer return types** (issue #10): functions can return `PNode`, `PExpr`, etc.
+  - Fixed `sym_ptr_base` metadata for local pointer variables in `parse_local_vars`
+- **MAX_PROCS** raised from 32 to 128 (issue #11); PROC_NAME_SIZE 1024 -> 4096
+- **INPUT_BUF_SIZE** raised from 16384 to 32768 (issue #12)
+
+### Tests
+- t31_many_symbols — 70 symbols (35 constants + 35 variables), exceeds old limit
+- t32_record_array — char array field in record, accessed via pointer
+- t33_record_intarray — integer array field in record, sum loop
+- t34_func_pointer — function returning pointer type, factory pattern
+
+### Documentation
+- `docs/linked-list-demo-analysis.md` — detailed COR24 memory layout analysis
+
+### Issues closed
+- #8 Raise MAX_SYMBOLS from 64
+- #9 Support array fields inside record types
+- #10 Functions cannot return pointer types
+- #11 Raise MAX_PROCS from 32
+- #12 Raise INPUT_BUF_SIZE from 16384
+
 ## 2026-04-12 — Issue sweep: pointers, exit, read_char, strings
 
 ### Compiler

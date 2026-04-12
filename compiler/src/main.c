@@ -6,7 +6,7 @@
 #include <string.h>
 #include "parser.c"
 
-#define INPUT_BUF_SIZE 16384
+#define INPUT_BUF_SIZE 32768
 
 char input_buf[INPUT_BUF_SIZE];
 

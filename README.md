@@ -29,12 +29,13 @@ runtime/runtime.spc  -------------+
 ## Language Features
 
 - Integer, boolean, char types
-- Arrays, records, pointer types (`^T`)
+- Arrays, records (including array fields), pointer types (`^T`)
 - `new` / `dispose` for heap allocation
-- Procedures and functions (nested, forward-declared)
+- Procedures and functions (nested, forward-declared, pointer return types)
 - Control flow: if/else, while, for, repeat/until, case, exit
 - Standard I/O: read, readln, write, writeln
 - 128 string literals (packed pool)
+- Up to 256 symbols, 128 procedures, 32 KB source input
 
 ## Dependencies
 

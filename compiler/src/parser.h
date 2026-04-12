@@ -19,9 +19,9 @@
 #define SYM_LOCAL 3
 
 /* Symbol table limits */
-#define MAX_SYMBOLS 64
+#define MAX_SYMBOLS 256
 #define MAX_NAME 32
-#define SYM_NAME_SIZE 2048
+#define SYM_NAME_SIZE 8192
 
 /* Symbol table — parallel arrays (avoids tc24r struct array bugs) */
 char sym_name[SYM_NAME_SIZE];
@@ -53,8 +53,8 @@ int str_data_used;
 int str_count;
 
 /* External procedure table */
-#define MAX_PROCS 32
-#define PROC_NAME_SIZE 1024
+#define MAX_PROCS 128
+#define PROC_NAME_SIZE 4096
 char proc_pascal[PROC_NAME_SIZE];
 char proc_extern[PROC_NAME_SIZE];
 int proc_argc[MAX_PROCS];
@@ -94,8 +94,14 @@ int utype_count;
 char field_name[FIELD_NAME_SIZE]; /* packed names */
 int field_type[MAX_FIELDS];       /* field type id */
 int field_offset[MAX_FIELDS];     /* offset in words from record base */
-int field_size[MAX_FIELDS];       /* size in words (1 for scalars/pointers) */
+int field_size[MAX_FIELDS];       /* size in words (1 for scalars, N for arrays) */
 int field_count;
+
+/* Array metadata for record fields (valid when field_type == TYPE_ARRAY) */
+int field_arr_low[MAX_FIELDS];
+int field_arr_high[MAX_FIELDS];
+int field_arr_elem[MAX_FIELDS];   /* element type: TYPE_INTEGER, TYPE_BOOLEAN, TYPE_CHAR */
+int field_arr_size[MAX_FIELDS];   /* element count (high - low + 1) */
 
 /* Pointer metadata for symbols */
 int sym_ptr_base[MAX_SYMBOLS];    /* for pointer vars: user type index of pointed-to type */

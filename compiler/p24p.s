@@ -4655,7 +4655,7 @@ _proc_add:
         add     sp,-3
         la      r1,_proc_count
         lw      r0,0(r1)
-        lc      r1,32
+        la      r1,128
         cls     r0,r1
         brt     L559
         la      r0,_S110
@@ -5986,7 +5986,7 @@ _sym_add:
 L630:
         la      r1,_sym_count
         lw      r0,0(r1)
-        lc      r1,64
+        la      r1,256
         cls     r0,r1
         brt     L632
         la      r0,_S165
@@ -6084,7 +6084,7 @@ _parse_factor:
         push    r2
         push    r1
         mov     fp,sp
-        add     sp,-50
+        add     sp,-56
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
@@ -6228,10 +6228,10 @@ L649:
         lw      r0,0(r1)
         lc      r1,61
         ceq     r0,r1
-        brt     L694
+        brt     L713
         la      r2,L651
         jmp     (r2)
-L694:
+L713:
         la      r1,_str_count
         lw      r0,0(r1)
         sw      r0,-3(fp)
@@ -6337,10 +6337,10 @@ L651:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L693
+        brt     L712
         la      r2,L657
         jmp     (r2)
-L693:
+L712:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-38
@@ -6458,10 +6458,10 @@ L666:
         lc      r0,0
 L667:
         ceq     r0,z
-        brf     L692
+        brf     L711
         la      r2,L665
         jmp     (r2)
-L692:
+L711:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -6540,10 +6540,10 @@ L672:
         lc      r0,0
 L673:
         ceq     r0,z
-        brf     L691
+        brf     L710
         la      r2,L671
         jmp     (r2)
-L691:
+L710:
         lw      r0,-3(fp)
         push    r0
         la      r0,_emit_load_sym
@@ -6626,10 +6626,10 @@ L678:
         lc      r0,0
 L679:
         ceq     r0,z
-        brf     L690
+        brf     L709
         la      r2,L677
         jmp     (r2)
-L690:
+L709:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
@@ -6677,6 +6677,21 @@ L683:
 L685:
         la      r0,_next_token
         jal     r1,(r0)
+        la      r0,_field_type
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,3
+        ceq     r0,r1
+        brt     L708
+        la      r2,L687
+        jmp     (r2)
+L708:
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -6688,7 +6703,7 @@ L685:
         lw      r0,0(r0)
         lc      r1,0
         cls     r1,r0
-        brf     L687
+        brf     L689
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -6711,8 +6726,202 @@ L685:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L687:
+L689:
+        lc      r0,57
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L691
+        lc      r0,0
+        la      r2,L633
+        jmp     (r2)
+L691:
+        la      r1,_has_arrays
+        lw      r0,0(r1)
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L693
+        lc      r0,1
+        la      r1,_has_arrays
+        sw      r0,0(r1)
         la      r0,_S185
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L693:
+        la      r0,_S186
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_parse_expression
+        jal     r1,(r0)
+        la      r0,_field_arr_low
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        sw      r0,-53(fp)
+        la      r0,_field_arr_elem
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,4
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L694
+        lc      r0,1
+        bra     L695
+L694:
+        lc      r0,3
+L695:
+        sw      r0,-56(fp)
+        lw      r0,-53(fp)
+        lc      r1,0
+        ceq     r0,r1
+        brt     L697
+        lw      r0,-53(fp)
+        push    r0
+        la      r0,_S187
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S188
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L697:
+        lw      r0,-56(fp)
+        lc      r1,1
+        cls     r1,r0
+        brf     L699
+        lw      r0,-56(fp)
+        push    r0
+        la      r0,_S189
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S190
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L699:
+        la      r0,_S191
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S192
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,58
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L701
+        lc      r0,0
+        la      r2,L633
+        jmp     (r2)
+L701:
+        la      r0,_field_arr_elem
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L702
+        la      r0,_S193
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        bra     L703
+L702:
+        la      r0,_S194
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L703:
+        la      r0,_field_arr_elem
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        la      r2,L633
+        jmp     (r2)
+L687:
+        la      r0,_field_offset
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,0
+        cls     r1,r0
+        brf     L705
+        la      r0,_field_offset
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,3
+        mul     r0,r1
+        push    r0
+        la      r0,_S195
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S196
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L705:
+        la      r0,_S197
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -6729,7 +6938,7 @@ L687:
         la      r2,L633
         jmp     (r2)
 L677:
-        la      r0,_S186
+        la      r0,_S198
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -6737,7 +6946,7 @@ L677:
         lw      r0,-47(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L689
+        brt     L707
         la      r0,_utype_kind
         push    r0
         lw      r0,-47(fp)
@@ -6748,7 +6957,7 @@ L677:
         add     r0,r1
         lw      r0,0(r0)
         bra     L633
-L689:
+L707:
         lc      r0,0
         bra     L633
 L671:
@@ -6768,7 +6977,7 @@ L671:
         lw      r0,0(r0)
         bra     L633
 L657:
-        la      r0,_S187
+        la      r0,_S199
         push    r0
         la      r0,_error
         jal     r1,(r0)
@@ -6792,59 +7001,59 @@ _parse_term:
         la      r0,_parse_factor
         jal     r1,(r0)
         sw      r0,-3(fp)
-L696:
+L715:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,28
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L702
+        brf     L721
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,15
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L702
+        brf     L721
         lc      r0,0
-        bra     L703
-L702:
+        bra     L722
+L721:
         lc      r0,1
-L703:
+L722:
         ceq     r0,z
-        brf     L700
+        brf     L719
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,16
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L700
+        brf     L719
         lc      r0,0
-        bra     L701
-L700:
+        bra     L720
+L719:
         lc      r0,1
-L701:
+L720:
         ceq     r0,z
-        brf     L698
+        brf     L717
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,17
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L698
+        brf     L717
         lc      r0,0
-        bra     L699
-L698:
+        bra     L718
+L717:
         lc      r0,1
-L699:
+L718:
         ceq     r0,z
-        brf     L729
-        la      r2,L697
+        brf     L748
+        la      r2,L716
         jmp     (r2)
-L729:
+L748:
         la      r1,_tok_type
         lw      r0,0(r1)
         sw      r0,-6(fp)
@@ -6856,10 +7065,10 @@ L729:
         lw      r0,-6(fp)
         lc      r1,28
         ceq     r0,r1
-        brt     L728
-        la      r2,L704
+        brt     L747
+        la      r2,L723
         jmp     (r2)
-L728:
+L747:
         lw      r0,-3(fp)
         push    r0
         la      r0,_is_ordinal
@@ -6868,7 +7077,7 @@ L728:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L708
+        brf     L727
         lw      r0,-9(fp)
         push    r0
         la      r0,_is_ordinal
@@ -6877,37 +7086,37 @@ L728:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L708
+        brf     L727
         lc      r0,0
-        bra     L709
-L708:
+        bra     L728
+L727:
         lc      r0,1
-L709:
+L728:
         ceq     r0,z
-        brt     L707
-        la      r0,_S188
+        brt     L726
+        la      r0,_S200
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L707:
-        la      r0,_S189
+L726:
+        la      r0,_S201
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-3(fp)
-        la      r2,L705
+        la      r2,L724
         jmp     (r2)
-L704:
+L723:
         lw      r0,-6(fp)
         lc      r1,15
         ceq     r0,r1
-        brt     L727
-        la      r2,L710
+        brt     L746
+        la      r2,L729
         jmp     (r2)
-L727:
+L746:
         lw      r0,-3(fp)
         push    r0
         la      r0,_is_ordinal
@@ -6916,7 +7125,7 @@ L727:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L714
+        brf     L733
         lw      r0,-9(fp)
         push    r0
         la      r0,_is_ordinal
@@ -6925,37 +7134,37 @@ L727:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L714
+        brf     L733
         lc      r0,0
-        bra     L715
-L714:
+        bra     L734
+L733:
         lc      r0,1
-L715:
+L734:
         ceq     r0,z
-        brt     L713
-        la      r0,_S190
+        brt     L732
+        la      r0,_S202
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L713:
-        la      r0,_S191
+L732:
+        la      r0,_S203
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-3(fp)
-        la      r2,L711
+        la      r2,L730
         jmp     (r2)
-L710:
+L729:
         lw      r0,-6(fp)
         lc      r1,16
         ceq     r0,r1
-        brt     L726
-        la      r2,L716
+        brt     L745
+        la      r2,L735
         jmp     (r2)
-L726:
+L745:
         lw      r0,-3(fp)
         push    r0
         la      r0,_is_ordinal
@@ -6964,7 +7173,7 @@ L726:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L720
+        brf     L739
         lw      r0,-9(fp)
         push    r0
         la      r0,_is_ordinal
@@ -6973,75 +7182,75 @@ L726:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L720
+        brf     L739
         lc      r0,0
-        bra     L721
-L720:
+        bra     L740
+L739:
         lc      r0,1
-L721:
+L740:
         ceq     r0,z
-        brt     L719
-        la      r0,_S192
+        brt     L738
+        la      r0,_S204
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L719:
-        la      r0,_S193
+L738:
+        la      r0,_S205
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-3(fp)
-        la      r2,L717
+        la      r2,L736
+        jmp     (r2)
+L735:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brf     L743
+        lw      r0,-9(fp)
+        lc      r1,1
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brf     L743
+        lc      r0,0
+        bra     L744
+L743:
+        lc      r0,1
+L744:
+        ceq     r0,z
+        brt     L742
+        la      r0,_S206
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+L742:
+        la      r0,_S207
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,1
+        sw      r0,-3(fp)
+L736:
+L730:
+L724:
+        la      r2,L715
         jmp     (r2)
 L716:
         lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        mov     r0,c
-        ceq     r0,z
-        mov     r0,c
-        ceq     r0,z
-        brf     L724
-        lw      r0,-9(fp)
-        lc      r1,1
-        ceq     r0,r1
-        mov     r0,c
-        ceq     r0,z
-        mov     r0,c
-        ceq     r0,z
-        brf     L724
-        lc      r0,0
-        bra     L725
-L724:
-        lc      r0,1
-L725:
-        ceq     r0,z
-        brt     L723
-        la      r0,_S194
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-L723:
-        la      r0,_S195
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,1
-        sw      r0,-3(fp)
-L717:
-L711:
-L705:
-        la      r2,L696
-        jmp     (r2)
-L697:
-        lw      r0,-3(fp)
-        bra     L695
-L695:
+        bra     L714
+L714:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7061,28 +7270,28 @@ _parse_simple_expr:
         lw      r0,0(r1)
         lc      r1,26
         ceq     r0,r1
-        brf     L731
+        brf     L750
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L732
-L731:
+        bra     L751
+L750:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L734
+        brf     L753
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,1
         sw      r0,-3(fp)
-L734:
-L732:
+L753:
+L751:
         la      r0,_parse_term
         jal     r1,(r0)
         sw      r0,-6(fp)
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L736
+        brt     L755
         lw      r0,-6(fp)
         push    r0
         la      r0,_is_ordinal
@@ -7091,60 +7300,60 @@ L732:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L738
-        la      r0,_S196
+        brt     L757
+        la      r0,_S208
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L738:
-        la      r0,_S197
+L757:
+        la      r0,_S209
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-6(fp)
-L736:
-L739:
+L755:
+L758:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,26
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L743
+        brf     L762
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L743
+        brf     L762
         lc      r0,0
-        bra     L744
-L743:
+        bra     L763
+L762:
         lc      r0,1
-L744:
+L763:
         ceq     r0,z
-        brf     L741
+        brf     L760
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,18
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L741
+        brf     L760
         lc      r0,0
-        bra     L742
-L741:
+        bra     L761
+L760:
         lc      r0,1
-L742:
+L761:
         ceq     r0,z
-        brf     L763
-        la      r2,L740
+        brf     L782
+        la      r2,L759
         jmp     (r2)
-L763:
+L782:
         la      r1,_tok_type
         lw      r0,0(r1)
         sw      r0,-9(fp)
@@ -7156,10 +7365,10 @@ L763:
         lw      r0,-9(fp)
         lc      r1,26
         ceq     r0,r1
-        brt     L762
-        la      r2,L745
+        brt     L781
+        la      r2,L764
         jmp     (r2)
-L762:
+L781:
         lw      r0,-6(fp)
         push    r0
         la      r0,_is_ordinal
@@ -7168,7 +7377,7 @@ L762:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L749
+        brf     L768
         lw      r0,-12(fp)
         push    r0
         la      r0,_is_ordinal
@@ -7177,37 +7386,37 @@ L762:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L749
+        brf     L768
         lc      r0,0
-        bra     L750
-L749:
+        bra     L769
+L768:
         lc      r0,1
-L750:
+L769:
         ceq     r0,z
-        brt     L748
-        la      r0,_S198
+        brt     L767
+        la      r0,_S210
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L748:
-        la      r0,_S199
+L767:
+        la      r0,_S211
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-6(fp)
-        la      r2,L746
+        la      r2,L765
         jmp     (r2)
-L745:
+L764:
         lw      r0,-9(fp)
         lc      r1,27
         ceq     r0,r1
-        brt     L761
-        la      r2,L751
+        brt     L780
+        la      r2,L770
         jmp     (r2)
-L761:
+L780:
         lw      r0,-6(fp)
         push    r0
         la      r0,_is_ordinal
@@ -7216,7 +7425,7 @@ L761:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L755
+        brf     L774
         lw      r0,-12(fp)
         push    r0
         la      r0,_is_ordinal
@@ -7225,30 +7434,30 @@ L761:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L755
+        brf     L774
         lc      r0,0
-        bra     L756
-L755:
+        bra     L775
+L774:
         lc      r0,1
-L756:
+L775:
         ceq     r0,z
-        brt     L754
-        la      r0,_S200
+        brt     L773
+        la      r0,_S212
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L754:
-        la      r0,_S201
+L773:
+        la      r0,_S213
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-6(fp)
-        la      r2,L752
+        la      r2,L771
         jmp     (r2)
-L751:
+L770:
         lw      r0,-6(fp)
         lc      r1,1
         ceq     r0,r1
@@ -7256,7 +7465,7 @@ L751:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L759
+        brf     L778
         lw      r0,-12(fp)
         lc      r1,1
         ceq     r0,r1
@@ -7264,35 +7473,35 @@ L751:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L759
+        brf     L778
         lc      r0,0
-        bra     L760
+        bra     L779
+L778:
+        lc      r0,1
+L779:
+        ceq     r0,z
+        brt     L777
+        la      r0,_S214
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+L777:
+        la      r0,_S215
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,1
+        sw      r0,-6(fp)
+L771:
+L765:
+        la      r2,L758
+        jmp     (r2)
 L759:
-        lc      r0,1
-L760:
-        ceq     r0,z
-        brt     L758
-        la      r0,_S202
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-L758:
-        la      r0,_S203
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,1
-        sw      r0,-6(fp)
-L752:
-L746:
-        la      r2,L739
-        jmp     (r2)
-L740:
         lw      r0,-6(fp)
-        bra     L730
-L730:
+        bra     L749
+L749:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7315,80 +7524,80 @@ _parse_expression:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L775
+        brf     L794
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,30
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L775
+        brf     L794
         lc      r0,0
-        bra     L776
-L775:
+        bra     L795
+L794:
         lc      r0,1
-L776:
+L795:
         ceq     r0,z
-        brf     L773
+        brf     L792
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,31
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L773
+        brf     L792
         lc      r0,0
-        bra     L774
-L773:
+        bra     L793
+L792:
         lc      r0,1
-L774:
+L793:
         ceq     r0,z
-        brf     L771
+        brf     L790
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,32
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L771
+        brf     L790
         lc      r0,0
-        bra     L772
-L771:
+        bra     L791
+L790:
         lc      r0,1
-L772:
+L791:
         ceq     r0,z
-        brf     L769
+        brf     L788
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,33
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L769
+        brf     L788
         lc      r0,0
-        bra     L770
-L769:
+        bra     L789
+L788:
         lc      r0,1
-L770:
+L789:
         ceq     r0,z
-        brf     L767
+        brf     L786
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,34
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L767
+        brf     L786
         lc      r0,0
-        bra     L768
-L767:
+        bra     L787
+L786:
         lc      r0,1
-L768:
+L787:
         ceq     r0,z
-        brf     L791
-        la      r2,L766
+        brf     L810
+        la      r2,L785
         jmp     (r2)
-L791:
+L810:
         la      r1,_tok_type
         lw      r0,0(r1)
         sw      r0,-6(fp)
@@ -7407,91 +7616,91 @@ L791:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L778
-        la      r0,_S204
+        brt     L797
+        la      r0,_S216
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L778:
+L797:
         lw      r0,-6(fp)
         lc      r1,29
         ceq     r0,r1
-        brf     L779
-        la      r0,_S205
+        brf     L798
+        la      r0,_S217
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r2,L780
+        la      r2,L799
         jmp     (r2)
-L779:
+L798:
         lw      r0,-6(fp)
         lc      r1,30
         ceq     r0,r1
-        brf     L781
-        la      r0,_S206
+        brf     L800
+        la      r0,_S218
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r2,L782
+        la      r2,L801
         jmp     (r2)
-L781:
+L800:
         lw      r0,-6(fp)
         lc      r1,31
         ceq     r0,r1
-        brf     L783
-        la      r0,_S207
+        brf     L802
+        la      r0,_S219
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L784
-L783:
+        bra     L803
+L802:
         lw      r0,-6(fp)
         lc      r1,32
         ceq     r0,r1
-        brf     L785
-        la      r0,_S208
+        brf     L804
+        la      r0,_S220
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L786
-L785:
+        bra     L805
+L804:
         lw      r0,-6(fp)
         lc      r1,33
         ceq     r0,r1
-        brf     L787
-        la      r0,_S209
+        brf     L806
+        la      r0,_S221
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L788
-L787:
+        bra     L807
+L806:
         lw      r0,-6(fp)
         lc      r1,34
         ceq     r0,r1
-        brf     L790
-        la      r0,_S210
+        brf     L809
+        la      r0,_S222
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L790:
-L788:
-L786:
-L784:
-L782:
-L780:
+L809:
+L807:
+L805:
+L803:
+L801:
+L799:
         lc      r0,1
-        bra     L764
-L766:
+        bra     L783
+L785:
         lw      r0,-3(fp)
-        bra     L764
-L764:
+        bra     L783
+L783:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7511,24 +7720,24 @@ _parse_compound_stmt:
         add     sp,3
         la      r0,_parse_stmt
         jal     r1,(r0)
-L793:
+L812:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L794
+        brf     L813
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_stmt
         jal     r1,(r0)
-        bra     L793
-L794:
+        bra     L812
+L813:
         lc      r0,4
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L792:
+L811:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7550,13 +7759,13 @@ _parse_if_stmt:
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L797
-        la      r0,_S211
+        brt     L816
+        la      r0,_S223
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L797:
+L816:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-6(fp)
@@ -7565,7 +7774,7 @@ L797:
         sw      r0,-9(fp)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S212
+        la      r0,_S224
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7581,17 +7790,17 @@ L797:
         lw      r0,0(r1)
         lc      r1,7
         ceq     r0,r1
-        brf     L798
+        brf     L817
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S213
+        la      r0,_S225
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S214
+        la      r0,_S226
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7602,22 +7811,22 @@ L797:
         jal     r1,(r0)
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S215
+        la      r0,_S227
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        bra     L799
-L798:
+        bra     L818
+L817:
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S216
+        la      r0,_S228
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L799:
-L795:
+L818:
+L814:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7641,7 +7850,7 @@ _parse_while_stmt:
         sw      r0,-9(fp)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S217
+        la      r0,_S229
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7652,16 +7861,16 @@ _parse_while_stmt:
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L802
-        la      r0,_S218
+        brt     L821
+        la      r0,_S230
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L802:
+L821:
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S219
+        la      r0,_S231
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7675,19 +7884,19 @@ L802:
         jal     r1,(r0)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S220
+        la      r0,_S232
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S221
+        la      r0,_S233
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L800:
+L819:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7707,16 +7916,16 @@ _parse_for_stmt:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L805
-        la      r0,_S222
+        brt     L824
+        la      r0,_S234
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L803
+        la      r2,L822
         jmp     (r2)
-L805:
+L824:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -7737,14 +7946,14 @@ L805:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L807
+        brf     L826
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S223
+        la      r0,_S235
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -7753,9 +7962,9 @@ L805:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L803
+        la      r2,L822
         jmp     (r2)
-L807:
+L826:
         la      r0,_sym_kind
         push    r0
         lw      r0,-35(fp)
@@ -7767,16 +7976,16 @@ L807:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L809
-        la      r0,_S224
+        brf     L828
+        la      r0,_S236
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L803
+        la      r2,L822
         jmp     (r2)
-L809:
+L828:
         lc      r0,20
         push    r0
         la      r0,_expect
@@ -7785,11 +7994,11 @@ L809:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L811
+        brt     L830
         lc      r0,0
-        la      r2,L803
+        la      r2,L822
         jmp     (r2)
-L811:
+L830:
         la      r0,_parse_expression
         jal     r1,(r0)
         lw      r0,-35(fp)
@@ -7803,13 +8012,13 @@ L811:
         lw      r0,0(r1)
         lc      r1,50
         ceq     r0,r1
-        brf     L812
+        brf     L831
         lc      r0,1
         sw      r0,-44(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L813
-L812:
+        bra     L832
+L831:
         lc      r0,49
         push    r0
         la      r0,_expect
@@ -7818,12 +8027,12 @@ L812:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L815
+        brt     L834
         lc      r0,0
-        la      r2,L803
+        la      r2,L822
         jmp     (r2)
-L815:
-L813:
+L834:
+L832:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-38(fp)
@@ -7832,7 +8041,7 @@ L813:
         sw      r0,-41(fp)
         lw      r0,-38(fp)
         push    r0
-        la      r0,_S225
+        la      r0,_S237
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7846,23 +8055,23 @@ L813:
         jal     r1,(r0)
         lw      r0,-44(fp)
         ceq     r0,z
-        brt     L816
-        la      r0,_S226
+        brt     L835
+        la      r0,_S238
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L817
-L816:
-        la      r0,_S227
+        bra     L836
+L835:
+        la      r0,_S239
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L817:
+L836:
         lw      r0,-41(fp)
         push    r0
-        la      r0,_S228
+        la      r0,_S240
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7875,11 +8084,11 @@ L817:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L819
+        brt     L838
         lc      r0,0
-        la      r2,L803
+        la      r2,L822
         jmp     (r2)
-L819:
+L838:
         la      r0,_parse_stmt
         jal     r1,(r0)
         lw      r0,-35(fp)
@@ -7889,30 +8098,30 @@ L819:
         add     sp,3
         lw      r0,-44(fp)
         ceq     r0,z
-        brt     L820
-        la      r0,_S229
+        brt     L839
+        la      r0,_S241
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S230
+        la      r0,_S242
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L821
-L820:
-        la      r0,_S231
+        bra     L840
+L839:
+        la      r0,_S243
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S232
+        la      r0,_S244
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L821:
+L840:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_store_sym
@@ -7920,19 +8129,19 @@ L821:
         add     sp,3
         lw      r0,-38(fp)
         push    r0
-        la      r0,_S233
+        la      r0,_S245
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-41(fp)
         push    r0
-        la      r0,_S234
+        la      r0,_S246
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L803:
+L822:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7953,25 +8162,25 @@ _parse_repeat_stmt:
         sw      r0,-6(fp)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S235
+        la      r0,_S247
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_parse_stmt
         jal     r1,(r0)
-L823:
+L842:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L824
+        brf     L843
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_stmt
         jal     r1,(r0)
-        bra     L823
-L824:
+        bra     L842
+L843:
         lc      r0,52
         push    r0
         la      r0,_expect
@@ -7980,31 +8189,31 @@ L824:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L826
+        brt     L845
         lc      r0,0
-        bra     L822
-L826:
+        bra     L841
+L845:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-3(fp)
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L828
-        la      r0,_S236
+        brt     L847
+        la      r0,_S248
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L828:
+L847:
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S237
+        la      r0,_S249
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L822:
+L841:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8030,7 +8239,7 @@ _parse_case_stmt:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L832
+        brt     L851
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
@@ -8038,20 +8247,20 @@ _parse_case_stmt:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L832
+        brt     L851
         lc      r0,1
-        bra     L833
-L832:
+        bra     L852
+L851:
         lc      r0,0
-L833:
+L852:
         ceq     r0,z
-        brt     L831
-        la      r0,_S238
+        brt     L850
+        la      r0,_S250
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L831:
+L850:
         lc      r0,45
         push    r0
         la      r0,_expect
@@ -8060,15 +8269,15 @@ L831:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L835
+        brt     L854
         lc      r0,0
-        la      r2,L829
+        la      r2,L848
         jmp     (r2)
-L835:
+L854:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-6(fp)
-L836:
+L855:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,4
@@ -8077,7 +8286,7 @@ L836:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L840
+        brt     L859
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,38
@@ -8086,34 +8295,34 @@ L836:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L840
+        brt     L859
         lc      r0,1
-        bra     L841
-L840:
+        bra     L860
+L859:
         lc      r0,0
-L841:
+L860:
         ceq     r0,z
-        brt     L838
+        brt     L857
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L838
+        brt     L857
         lc      r0,1
-        bra     L839
-L838:
+        bra     L858
+L857:
         lc      r0,0
-L839:
+L858:
         ceq     r0,z
-        brf     L861
-        la      r2,L837
+        brf     L880
+        la      r2,L856
         jmp     (r2)
-L861:
+L880:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-9(fp)
-        la      r0,_S239
+        la      r0,_S251
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -8122,63 +8331,63 @@ L861:
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L842
+        brf     L861
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-12(fp)
         lw      r0,-12(fp)
         push    r0
-        la      r0,_S240
+        la      r0,_S252
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L843
+        la      r2,L862
         jmp     (r2)
-L842:
+L861:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,60
         ceq     r0,r1
-        brf     L844
+        brf     L863
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-12(fp)
         lw      r0,-12(fp)
         push    r0
-        la      r0,_S241
+        la      r0,_S253
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L845
+        la      r2,L864
         jmp     (r2)
-L844:
+L863:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L846
+        brf     L865
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L849
-        la      r0,_S242
+        brt     L868
+        la      r0,_S254
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L829
+        la      r2,L848
         jmp     (r2)
-L849:
+L868:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -8186,24 +8395,24 @@ L849:
         sw      r0,-12(fp)
         lw      r0,-12(fp)
         push    r0
-        la      r0,_S243
+        la      r0,_S255
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L847
+        la      r2,L866
         jmp     (r2)
-L846:
+L865:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L860
-        la      r2,L850
+        brt     L879
+        la      r2,L869
         jmp     (r2)
-L860:
+L879:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -8215,7 +8424,7 @@ L860:
         cls     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L854
+        brf     L873
         la      r0,_sym_kind
         push    r0
         lw      r0,-12(fp)
@@ -8231,23 +8440,23 @@ L860:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L854
+        brf     L873
         lc      r0,0
-        bra     L855
-L854:
+        bra     L874
+L873:
         lc      r0,1
-L855:
+L874:
         ceq     r0,z
-        brt     L853
-        la      r0,_S244
+        brt     L872
+        la      r0,_S256
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L829
+        la      r2,L848
         jmp     (r2)
-L853:
+L872:
         la      r0,_sym_value
         push    r0
         lw      r0,-12(fp)
@@ -8258,35 +8467,35 @@ L853:
         add     r0,r1
         lw      r0,0(r0)
         push    r0
-        la      r0,_S245
+        la      r0,_S257
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L851
-L850:
-        la      r0,_S246
+        bra     L870
+L869:
+        la      r0,_S258
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L829
+        la      r2,L848
         jmp     (r2)
-L851:
-L847:
-L845:
-L843:
-        la      r0,_S247
+L870:
+L866:
+L864:
+L862:
+        la      r0,_S259
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S248
+        la      r0,_S260
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -8299,12 +8508,12 @@ L843:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L857
+        brt     L876
         lc      r0,0
-        la      r2,L829
+        la      r2,L848
         jmp     (r2)
-L857:
-        la      r0,_S249
+L876:
+        la      r0,_S261
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -8313,14 +8522,14 @@ L857:
         jal     r1,(r0)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S250
+        la      r0,_S262
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S251
+        la      r0,_S263
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -8329,21 +8538,21 @@ L857:
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L859
+        brf     L878
         la      r0,_next_token
         jal     r1,(r0)
-L859:
-        la      r2,L836
+L878:
+        la      r2,L855
         jmp     (r2)
-L837:
-        la      r0,_S252
+L856:
+        la      r0,_S264
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S253
+        la      r0,_S265
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -8353,7 +8562,7 @@ L837:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L829:
+L848:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8371,45 +8580,45 @@ _parse_read_args:
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L864
+        brt     L883
         lc      r0,0
-        la      r2,L862
+        la      r2,L881
         jmp     (r2)
-L864:
+L883:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,25
         ceq     r0,r1
-        brf     L866
+        brf     L885
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,0
-        la      r2,L862
+        la      r2,L881
         jmp     (r2)
-L866:
-L867:
+L885:
+L886:
         lc      r0,1
         ceq     r0,z
-        brf     L879
-        la      r2,L868
+        brf     L898
+        la      r2,L887
         jmp     (r2)
-L879:
+L898:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L870
-        la      r0,_S254
+        brt     L889
+        la      r0,_S266
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L862
+        la      r2,L881
         jmp     (r2)
-L870:
+L889:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -8430,14 +8639,14 @@ L870:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L872
+        brf     L891
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S255
+        la      r0,_S267
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -8446,9 +8655,9 @@ L870:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L862
+        la      r2,L881
         jmp     (r2)
-L872:
+L891:
         la      r0,_sym_kind
         push    r0
         lw      r0,-35(fp)
@@ -8460,16 +8669,16 @@ L872:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L874
-        la      r0,_S256
+        brf     L893
+        la      r0,_S268
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L862
+        la      r2,L881
         jmp     (r2)
-L874:
+L893:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-35(fp)
@@ -8481,20 +8690,20 @@ L874:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L875
-        la      r0,_S257
+        brf     L894
+        la      r0,_S269
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        bra     L876
-L875:
-        la      r0,_S258
+        bra     L895
+L894:
+        la      r0,_S270
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L876:
+L895:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_store_sym
@@ -8504,20 +8713,20 @@ L876:
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L878
-        bra     L868
-L878:
+        brt     L897
+        bra     L887
+L897:
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L867
+        la      r2,L886
         jmp     (r2)
-L868:
+L887:
         lc      r0,25
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L862:
+L881:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8534,7 +8743,7 @@ _parse_read_stmt:
         jal     r1,(r0)
         la      r0,_parse_read_args
         jal     r1,(r0)
-L880:
+L899:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8551,12 +8760,12 @@ _parse_readln_stmt:
         jal     r1,(r0)
         la      r0,_parse_read_args
         jal     r1,(r0)
-        la      r0,_S259
+        la      r0,_S271
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L881:
+L900:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8565,140 +8774,6 @@ L881:
 
         .globl  _parse_write_stmt
 _parse_write_stmt:
-        push    fp
-        push    r2
-        push    r1
-        mov     fp,sp
-        add     sp,-3
-        la      r0,_next_token
-        jal     r1,(r0)
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,24
-        ceq     r0,r1
-        brt     L900
-        la      r2,L884
-        jmp     (r2)
-L900:
-        la      r0,_next_token
-        jal     r1,(r0)
-        la      r0,_parse_expression
-        jal     r1,(r0)
-        sw      r0,-3(fp)
-        lw      r0,-3(fp)
-        lc      r1,2
-        ceq     r0,r1
-        brf     L885
-        la      r0,_S260
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L886
-L885:
-        lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        brf     L887
-        la      r0,_S261
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L888
-L887:
-        lw      r0,-3(fp)
-        lc      r1,4
-        ceq     r0,r1
-        brf     L889
-        la      r0,_S262
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L890
-L889:
-        la      r0,_S263
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-L890:
-L888:
-L886:
-L891:
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,23
-        ceq     r0,r1
-        brt     L899
-        la      r2,L892
-        jmp     (r2)
-L899:
-        la      r0,_next_token
-        jal     r1,(r0)
-        la      r0,_parse_expression
-        jal     r1,(r0)
-        sw      r0,-3(fp)
-        lw      r0,-3(fp)
-        lc      r1,2
-        ceq     r0,r1
-        brf     L893
-        la      r0,_S264
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L894
-L893:
-        lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        brf     L895
-        la      r0,_S265
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L896
-L895:
-        lw      r0,-3(fp)
-        lc      r1,4
-        ceq     r0,r1
-        brf     L897
-        la      r0,_S266
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L898
-L897:
-        la      r0,_S267
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-L898:
-L896:
-L894:
-        la      r2,L891
-        jmp     (r2)
-L892:
-        lc      r0,25
-        push    r0
-        la      r0,_expect
-        jal     r1,(r0)
-        add     sp,3
-L884:
-L882:
-        mov     sp,fp
-        pop     r1
-        pop     r2
-        pop     fp
-        jmp     (r1)
-
-        .globl  _parse_writeln_stmt
-_parse_writeln_stmt:
         push    fp
         push    r2
         push    r1
@@ -8723,7 +8798,7 @@ L919:
         lc      r1,2
         ceq     r0,r1
         brf     L904
-        la      r0,_S268
+        la      r0,_S272
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -8734,7 +8809,7 @@ L904:
         lc      r1,1
         ceq     r0,r1
         brf     L906
-        la      r0,_S269
+        la      r0,_S273
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -8745,14 +8820,14 @@ L906:
         lc      r1,4
         ceq     r0,r1
         brf     L908
-        la      r0,_S270
+        la      r0,_S274
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
         bra     L909
 L908:
-        la      r0,_S271
+        la      r0,_S275
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -8778,7 +8853,7 @@ L918:
         lc      r1,2
         ceq     r0,r1
         brf     L912
-        la      r0,_S272
+        la      r0,_S276
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -8789,7 +8864,7 @@ L912:
         lc      r1,1
         ceq     r0,r1
         brf     L914
-        la      r0,_S273
+        la      r0,_S277
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -8800,14 +8875,14 @@ L914:
         lc      r1,4
         ceq     r0,r1
         brf     L916
-        la      r0,_S274
+        la      r0,_S278
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
         bra     L917
 L916:
-        la      r0,_S275
+        la      r0,_S279
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -8824,12 +8899,146 @@ L911:
         jal     r1,(r0)
         add     sp,3
 L903:
-        la      r0,_S276
+L901:
+        mov     sp,fp
+        pop     r1
+        pop     r2
+        pop     fp
+        jmp     (r1)
+
+        .globl  _parse_writeln_stmt
+_parse_writeln_stmt:
+        push    fp
+        push    r2
+        push    r1
+        mov     fp,sp
+        add     sp,-3
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,24
+        ceq     r0,r1
+        brt     L938
+        la      r2,L922
+        jmp     (r2)
+L938:
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r0,_parse_expression
+        jal     r1,(r0)
+        sw      r0,-3(fp)
+        lw      r0,-3(fp)
+        lc      r1,2
+        ceq     r0,r1
+        brf     L923
+        la      r0,_S280
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L901:
+        bra     L924
+L923:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        brf     L925
+        la      r0,_S281
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L926
+L925:
+        lw      r0,-3(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L927
+        la      r0,_S282
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L928
+L927:
+        la      r0,_S283
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L928:
+L926:
+L924:
+L929:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,23
+        ceq     r0,r1
+        brt     L937
+        la      r2,L930
+        jmp     (r2)
+L937:
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r0,_parse_expression
+        jal     r1,(r0)
+        sw      r0,-3(fp)
+        lw      r0,-3(fp)
+        lc      r1,2
+        ceq     r0,r1
+        brf     L931
+        la      r0,_S284
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L932
+L931:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        brf     L933
+        la      r0,_S285
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L934
+L933:
+        lw      r0,-3(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L935
+        la      r0,_S286
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L936
+L935:
+        la      r0,_S287
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L936:
+L934:
+L932:
+        la      r2,L929
+        jmp     (r2)
+L930:
+        lc      r0,25
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+L922:
+        la      r0,_S288
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L920:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8843,7 +9052,7 @@ _parse_proc_call:
         push    r1
         mov     fp,sp
         add     sp,-18
-        la      r0,_S277
+        la      r0,_S289
         push    r0
         lw      r0,9(fp)
         push    r0
@@ -8852,10 +9061,10 @@ _parse_proc_call:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brt     L969
-        la      r2,L922
+        brt     L988
+        la      r2,L941
         jmp     (r2)
-L969:
+L988:
         lc      r0,24
         push    r0
         la      r0,_expect
@@ -8864,25 +9073,25 @@ L969:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L924
+        brt     L943
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L924:
+L943:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L926
-        la      r0,_S278
+        brt     L945
+        la      r0,_S290
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L926:
+L945:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -8892,16 +9101,16 @@ L926:
         lw      r0,-9(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L928
-        la      r0,_S279
+        brf     L947
+        la      r0,_S291
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L928:
+L947:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -8913,16 +9122,16 @@ L928:
         lw      r0,0(r0)
         lc      r1,5
         ceq     r0,r1
-        brt     L930
-        la      r0,_S280
+        brt     L949
+        la      r0,_S292
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L930:
+L949:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,25
@@ -8933,11 +9142,11 @@ L930:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L932
+        brt     L951
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L932:
+L951:
         la      r0,_sym_ptr_base
         push    r0
         lw      r0,-9(fp)
@@ -8955,7 +9164,7 @@ L932:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L933
+        brt     L952
         la      r0,_utype_base
         push    r0
         lw      r0,-12(fp)
@@ -8965,14 +9174,14 @@ L932:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L934
-L933:
+        bra     L953
+L952:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-L934:
+L953:
         sw      r0,-15(fp)
         lw      r0,-15(fp)
         lc      r1,0
@@ -8981,7 +9190,7 @@ L934:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L935
+        brt     L954
         la      r0,_utype_size
         push    r0
         lw      r0,-15(fp)
@@ -8991,21 +9200,21 @@ L934:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L936
-L935:
+        bra     L955
+L954:
         lc      r0,1
-L936:
+L955:
         sw      r0,-18(fp)
         lw      r0,-18(fp)
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S281
+        la      r0,_S293
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S282
+        la      r0,_S294
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -9016,10 +9225,10 @@ L936:
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L922:
-        la      r0,_S283
+L941:
+        la      r0,_S295
         push    r0
         lw      r0,9(fp)
         push    r0
@@ -9028,10 +9237,10 @@ L922:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brt     L968
-        la      r2,L938
+        brt     L987
+        la      r2,L957
         jmp     (r2)
-L968:
+L987:
         lc      r0,24
         push    r0
         la      r0,_expect
@@ -9040,25 +9249,25 @@ L968:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L940
+        brt     L959
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L940:
+L959:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L942
-        la      r0,_S284
+        brt     L961
+        la      r0,_S296
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L942:
+L961:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -9068,16 +9277,16 @@ L942:
         lw      r0,-9(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L944
-        la      r0,_S285
+        brf     L963
+        la      r0,_S297
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L944:
+L963:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,25
@@ -9088,25 +9297,25 @@ L944:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L946
+        brt     L965
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L946:
+L965:
         lw      r0,-9(fp)
         push    r0
         la      r0,_emit_load_sym
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S286
+        la      r0,_S298
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L938:
+L957:
         lw      r0,9(fp)
         push    r0
         la      r0,_proc_lookup
@@ -9116,13 +9325,13 @@ L938:
         lw      r0,-3(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L948
+        brf     L967
         lw      r0,9(fp)
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S287
+        la      r0,_S299
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9131,38 +9340,38 @@ L938:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L948:
+L967:
         lc      r0,0
         sw      r0,-6(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L967
-        la      r2,L950
+        brt     L986
+        la      r2,L969
         jmp     (r2)
-L967:
+L986:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,25
         ceq     r0,r1
-        brt     L952
+        brt     L971
         la      r0,_parse_expression
         jal     r1,(r0)
         lw      r0,-6(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-L953:
+L972:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brf     L954
+        brf     L973
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -9171,9 +9380,9 @@ L953:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        bra     L953
-L954:
-L952:
+        bra     L972
+L973:
+L971:
         lc      r0,25
         push    r0
         la      r0,_expect
@@ -9182,12 +9391,12 @@ L952:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L956
+        brt     L975
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L956:
-L950:
+L975:
+L969:
         lw      r0,-6(fp)
         push    r0
         la      r0,_proc_argc
@@ -9202,13 +9411,13 @@ L950:
         mov     r1,r0
         pop     r0
         ceq     r0,r1
-        brt     L958
+        brt     L977
         lw      r0,9(fp)
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S288
+        la      r0,_S300
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9217,13 +9426,13 @@ L950:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L920
+        la      r2,L939
         jmp     (r2)
-L958:
+L977:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L961
+        brt     L980
         la      r0,_proc_is_user
         push    r0
         lw      r0,-3(fp)
@@ -9236,28 +9445,28 @@ L958:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L961
+        brt     L980
         lc      r0,1
-        bra     L962
-L961:
+        bra     L981
+L980:
         lc      r0,0
-L962:
+L981:
         ceq     r0,z
-        brt     L959
+        brt     L978
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S289
+        la      r0,_S301
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r2,L960
+        la      r2,L979
         jmp     (r2)
-L959:
+L978:
         la      r0,_proc_is_user
         push    r0
         lw      r0,-3(fp)
@@ -9268,7 +9477,7 @@ L959:
         add     r0,r1
         lw      r0,0(r0)
         ceq     r0,z
-        brt     L965
+        brt     L984
         la      r0,_proc_depth
         push    r0
         lw      r0,-3(fp)
@@ -9282,14 +9491,14 @@ L959:
         cls     r1,r0
         mov     r0,c
         ceq     r0,z
-        brt     L965
+        brt     L984
         lc      r0,1
-        bra     L966
-L965:
+        bra     L985
+L984:
         lc      r0,0
-L966:
+L985:
         ceq     r0,z
-        brt     L963
+        brt     L982
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
@@ -9314,27 +9523,27 @@ L966:
         lc      r1,1
         add     r0,r1
         push    r0
-        la      r0,_S290
+        la      r0,_S302
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        bra     L964
-L963:
+        bra     L983
+L982:
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S291
+        la      r0,_S303
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L964:
-L960:
-L920:
+L983:
+L979:
+L939:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9347,15 +9556,15 @@ _parse_stmt:
         push    r2
         push    r1
         mov     fp,sp
-        add     sp,-50
+        add     sp,-56
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1056
-        la      r2,L971
+        brt     L1094
+        la      r2,L990
         jmp     (r2)
-L1056:
+L1094:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -9370,10 +9579,10 @@ L1056:
         lw      r0,0(r1)
         lc      r1,57
         ceq     r0,r1
-        brt     L1055
-        la      r2,L973
+        brt     L1093
+        la      r2,L992
         jmp     (r2)
-L1055:
+L1093:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -9384,14 +9593,14 @@ L1055:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L976
+        brf     L995
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S292
+        la      r0,_S304
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9400,9 +9609,9 @@ L1055:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L976:
+L995:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-35(fp)
@@ -9414,16 +9623,16 @@ L976:
         lw      r0,0(r0)
         lc      r1,3
         ceq     r0,r1
-        brt     L978
-        la      r0,_S293
+        brt     L997
+        la      r0,_S305
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L978:
+L997:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -9436,17 +9645,17 @@ L978:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L980
+        brt     L999
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L980:
+L999:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_array_addr
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S294
+        la      r0,_S306
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -9459,14 +9668,14 @@ L980:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L982
+        brt     L1001
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L982:
+L1001:
         la      r0,_parse_expression
         jal     r1,(r0)
-        la      r0,_S295
+        la      r0,_S307
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -9482,31 +9691,31 @@ L982:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L983
-        la      r0,_S296
+        brf     L1002
+        la      r0,_S308
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L984
-L983:
-        la      r0,_S297
+        bra     L1003
+L1002:
+        la      r0,_S309
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L984:
-        la      r2,L974
+L1003:
+        la      r2,L993
         jmp     (r2)
-L973:
+L992:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,65
         ceq     r0,r1
-        brt     L1054
-        la      r2,L985
+        brt     L1092
+        la      r2,L1004
         jmp     (r2)
-L1054:
+L1092:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -9517,14 +9726,14 @@ L1054:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L988
+        brf     L1007
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S298
+        la      r0,_S310
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9533,9 +9742,9 @@ L1054:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L988:
+L1007:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-35(fp)
@@ -9547,16 +9756,16 @@ L988:
         lw      r0,0(r0)
         lc      r1,5
         ceq     r0,r1
-        brt     L990
-        la      r0,_S299
+        brt     L1009
+        la      r0,_S311
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L990:
+L1009:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_sym_ptr_base
@@ -9576,7 +9785,7 @@ L990:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L991
+        brt     L1010
         la      r0,_utype_base
         push    r0
         lw      r0,-44(fp)
@@ -9586,14 +9795,14 @@ L990:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L992
-L991:
+        bra     L1011
+L1010:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-L992:
+L1011:
         sw      r0,-47(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
@@ -9601,7 +9810,7 @@ L992:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L997
+        brt     L1016
         lw      r0,-47(fp)
         lc      r1,0
         cls     r0,r1
@@ -9609,14 +9818,14 @@ L992:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L997
+        brt     L1016
         lc      r0,1
-        bra     L998
-L997:
+        bra     L1017
+L1016:
         lc      r0,0
-L998:
+L1017:
         ceq     r0,z
-        brt     L995
+        brt     L1014
         la      r0,_utype_kind
         push    r0
         lw      r0,-47(fp)
@@ -9630,33 +9839,33 @@ L998:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L995
+        brt     L1014
         lc      r0,1
-        bra     L996
-L995:
+        bra     L1015
+L1014:
         lc      r0,0
-L996:
+L1015:
         ceq     r0,z
-        brf     L1053
-        la      r2,L993
+        brf     L1091
+        la      r2,L1012
         jmp     (r2)
-L1053:
+L1091:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1000
-        la      r0,_S300
+        brt     L1019
+        la      r0,_S312
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L1000:
+L1019:
         la      r0,_tok_lexeme
         push    r0
         lw      r0,-47(fp)
@@ -9668,13 +9877,13 @@ L1000:
         lw      r0,-50(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1002
+        brf     L1021
         la      r0,_tok_lexeme
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S301
+        la      r0,_S313
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9683,12 +9892,42 @@ L1000:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L1002:
+L1021:
         la      r0,_next_token
         jal     r1,(r0)
-        lc      r0,20
+        la      r1,_has_arrays
+        lw      r0,0(r1)
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L1023
+        lc      r0,1
+        la      r1,_has_arrays
+        sw      r0,0(r1)
+        la      r0,_S314
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1023:
+        la      r0,_field_type
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,3
+        ceq     r0,r1
+        brt     L1090
+        la      r2,L1024
+        jmp     (r2)
+L1090:
+        lc      r0,57
         push    r0
         la      r0,_expect
         jal     r1,(r0)
@@ -9696,11 +9935,11 @@ L1002:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1004
+        brt     L1027
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L1004:
+L1027:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_load_sym
@@ -9717,7 +9956,7 @@ L1004:
         lw      r0,0(r0)
         lc      r1,0
         cls     r1,r0
-        brf     L1006
+        brf     L1029
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -9730,33 +9969,219 @@ L1004:
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S302
+        la      r0,_S315
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S303
+        la      r0,_S316
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1006:
-        la      r1,_has_arrays
-        lw      r0,0(r1)
-        ceq     r0,z
+L1029:
+        la      r0,_S317
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_parse_expression
+        jal     r1,(r0)
+        la      r0,_field_arr_low
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        sw      r0,-53(fp)
+        la      r0,_field_arr_elem
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,4
+        ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1008
+        brt     L1030
         lc      r0,1
-        la      r1,_has_arrays
-        sw      r0,0(r1)
-        la      r0,_S304
+        bra     L1031
+L1030:
+        lc      r0,3
+L1031:
+        sw      r0,-56(fp)
+        lw      r0,-53(fp)
+        lc      r1,0
+        ceq     r0,r1
+        brt     L1033
+        lw      r0,-53(fp)
+        push    r0
+        la      r0,_S318
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S319
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1008:
-        la      r0,_S305
+L1033:
+        lw      r0,-56(fp)
+        lc      r1,1
+        cls     r1,r0
+        brf     L1035
+        lw      r0,-56(fp)
+        push    r0
+        la      r0,_S320
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S321
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1035:
+        la      r0,_S322
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S323
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,58
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1037
+        lc      r0,0
+        la      r2,L989
+        jmp     (r2)
+L1037:
+        la      r0,_S324
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,20
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1039
+        lc      r0,0
+        la      r2,L989
+        jmp     (r2)
+L1039:
+        la      r0,_parse_expression
+        jal     r1,(r0)
+        sw      r0,-38(fp)
+        la      r0,_S325
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_field_arr_elem
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L1040
+        la      r0,_S326
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        bra     L1041
+L1040:
+        la      r0,_S327
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1041:
+        la      r2,L1025
+        jmp     (r2)
+L1024:
+        lc      r0,20
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1043
+        lc      r0,0
+        la      r2,L989
+        jmp     (r2)
+L1043:
+        lw      r0,-35(fp)
+        push    r0
+        la      r0,_emit_load_sym
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_field_offset
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,0
+        cls     r1,r0
+        brf     L1045
+        la      r0,_field_offset
+        push    r0
+        lw      r0,-50(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,3
+        mul     r0,r1
+        push    r0
+        la      r0,_S328
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S329
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1045:
+        la      r0,_S330
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -9764,27 +10189,28 @@ L1008:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
-        la      r0,_S306
+        la      r0,_S331
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S307
+        la      r0,_S332
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r2,L994
+L1025:
+        la      r2,L1013
         jmp     (r2)
-L993:
+L1012:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,20
         ceq     r0,r1
-        brt     L1052
-        la      r2,L1009
+        brt     L1089
+        la      r2,L1046
         jmp     (r2)
-L1052:
+L1089:
         la      r0,_next_token
         jal     r1,(r0)
         lw      r0,-35(fp)
@@ -9797,17 +10223,17 @@ L1052:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1012
+        brt     L1049
         lc      r0,1
         la      r1,_has_arrays
         sw      r0,0(r1)
-        la      r0,_S308
+        la      r0,_S333
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1012:
-        la      r0,_S309
+L1049:
+        la      r0,_S334
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -9815,42 +10241,42 @@ L1012:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
-        la      r0,_S310
+        la      r0,_S335
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S311
+        la      r0,_S336
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1010
-L1009:
-        la      r0,_S312
+        bra     L1047
+L1046:
+        la      r0,_S337
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L1010:
-L994:
-        la      r2,L986
+L1047:
+L1013:
+        la      r2,L1005
         jmp     (r2)
-L985:
+L1004:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,20
         ceq     r0,r1
-        brt     L1051
-        la      r2,L1013
+        brt     L1088
+        la      r2,L1050
         jmp     (r2)
-L1051:
+L1088:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_in_proc
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1019
+        brt     L1056
         la      r1,_cur_func_local
         lw      r0,0(r1)
         lc      r1,0
@@ -9859,14 +10285,14 @@ L1051:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1019
+        brt     L1056
         lc      r0,1
-        bra     L1020
-L1019:
+        bra     L1057
+L1056:
         lc      r0,0
-L1020:
+L1057:
         ceq     r0,z
-        brt     L1017
+        brt     L1054
         la      r0,_cur_func_name
         push    r0
         lc      r0,-32
@@ -9879,29 +10305,29 @@ L1020:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1017
+        brt     L1054
         lc      r0,1
-        bra     L1018
-L1017:
+        bra     L1055
+L1054:
         lc      r0,0
-L1018:
+L1055:
         ceq     r0,z
-        brt     L1016
+        brt     L1053
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
         la      r1,_cur_func_local
         lw      r0,0(r1)
         push    r0
-        la      r0,_S313
+        la      r0,_S338
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L1016:
+L1053:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -9912,14 +10338,14 @@ L1016:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1022
+        brf     L1059
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S314
+        la      r0,_S339
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9928,9 +10354,9 @@ L1016:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L1022:
+L1059:
         la      r0,_sym_kind
         push    r0
         lw      r0,-35(fp)
@@ -9942,16 +10368,16 @@ L1022:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L1024
-        la      r0,_S315
+        brf     L1061
+        la      r0,_S340
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L970
+        la      r2,L989
         jmp     (r2)
-L1024:
+L1061:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
@@ -9973,172 +10399,172 @@ L1024:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1026
-        la      r0,_S316
+        brt     L1063
+        la      r0,_S341
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L1026:
+L1063:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_store_sym
         jal     r1,(r0)
         add     sp,3
-        bra     L1014
-L1013:
+        bra     L1051
+L1050:
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r0,_parse_proc_call
         jal     r1,(r0)
         add     sp,3
-L1014:
-L986:
-L974:
-        la      r2,L972
+L1051:
+L1005:
+L993:
+        la      r2,L991
         jmp     (r2)
-L971:
+L990:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,5
         ceq     r0,r1
-        brf     L1027
+        brf     L1064
         la      r0,_parse_if_stmt
         jal     r1,(r0)
-        la      r2,L1028
+        la      r2,L1065
         jmp     (r2)
-L1027:
+L1064:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,8
         ceq     r0,r1
-        brf     L1029
+        brf     L1066
         la      r0,_parse_while_stmt
         jal     r1,(r0)
-        la      r2,L1030
+        la      r2,L1067
         jmp     (r2)
-L1029:
+L1066:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,48
         ceq     r0,r1
-        brf     L1031
+        brf     L1068
         la      r0,_parse_for_stmt
         jal     r1,(r0)
-        la      r2,L1032
+        la      r2,L1069
         jmp     (r2)
-L1031:
+L1068:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,51
         ceq     r0,r1
-        brf     L1033
+        brf     L1070
         la      r0,_parse_repeat_stmt
         jal     r1,(r0)
-        la      r2,L1034
+        la      r2,L1071
         jmp     (r2)
-L1033:
+L1070:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,53
         ceq     r0,r1
-        brf     L1035
+        brf     L1072
         la      r0,_parse_case_stmt
         jal     r1,(r0)
-        la      r2,L1036
+        la      r2,L1073
         jmp     (r2)
-L1035:
+L1072:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,55
         ceq     r0,r1
-        brf     L1037
+        brf     L1074
         la      r0,_parse_read_stmt
         jal     r1,(r0)
-        la      r2,L1038
+        la      r2,L1075
         jmp     (r2)
-L1037:
+L1074:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,56
         ceq     r0,r1
-        brf     L1039
+        brf     L1076
         la      r0,_parse_readln_stmt
         jal     r1,(r0)
-        la      r2,L1040
+        la      r2,L1077
         jmp     (r2)
-L1039:
+L1076:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,54
         ceq     r0,r1
-        brf     L1041
+        brf     L1078
         la      r0,_parse_write_stmt
         jal     r1,(r0)
-        la      r2,L1042
+        la      r2,L1079
         jmp     (r2)
-L1041:
+L1078:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,10
         ceq     r0,r1
-        brf     L1043
+        brf     L1080
         la      r0,_parse_writeln_stmt
         jal     r1,(r0)
-        la      r2,L1044
+        la      r2,L1081
         jmp     (r2)
-L1043:
+L1080:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,3
         ceq     r0,r1
-        brf     L1045
+        brf     L1082
         la      r0,_parse_compound_stmt
         jal     r1,(r0)
-        bra     L1046
-L1045:
+        bra     L1083
+L1082:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,63
         ceq     r0,r1
-        brf     L1048
+        brf     L1085
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_exit_label
         lw      r0,0(r1)
         lc      r1,0
         cls     r0,r1
-        brf     L1049
-        la      r0,_S317
+        brf     L1086
+        la      r0,_S342
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-        bra     L1050
-L1049:
+        bra     L1087
+L1086:
         la      r1,_exit_label
         lw      r0,0(r1)
         push    r0
-        la      r0,_S318
+        la      r0,_S343
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1050:
-L1048:
-L1046:
-L1044:
-L1042:
-L1040:
-L1038:
-L1036:
-L1034:
-L1032:
-L1030:
-L1028:
-L972:
-L970:
+L1087:
+L1085:
+L1083:
+L1081:
+L1079:
+L1077:
+L1075:
+L1073:
+L1071:
+L1069:
+L1067:
+L1065:
+L991:
+L989:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10156,16 +10582,16 @@ _parse_const_def:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1059
-        la      r0,_S319
+        brt     L1097
+        la      r0,_S344
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1057
+        la      r2,L1095
         jmp     (r2)
-L1059:
+L1097:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -10184,92 +10610,92 @@ L1059:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1061
+        brt     L1099
         lc      r0,0
-        la      r2,L1057
+        la      r2,L1095
         jmp     (r2)
-L1061:
+L1099:
         lc      r0,0
         sw      r0,-41(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1062
+        brf     L1100
         lc      r0,1
         sw      r0,-41(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1063
-L1062:
+        bra     L1101
+L1100:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,26
         ceq     r0,r1
-        brf     L1065
+        brf     L1103
         la      r0,_next_token
         jal     r1,(r0)
-L1065:
-L1063:
+L1103:
+L1101:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1066
+        brf     L1104
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-35(fp)
         lw      r0,-41(fp)
         ceq     r0,z
-        brt     L1069
+        brt     L1107
         lc      r0,0
         lw      r1,-35(fp)
         sub     r0,r1
         sw      r0,-35(fp)
-L1069:
+L1107:
         lc      r0,0
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1067
+        la      r2,L1105
         jmp     (r2)
-L1066:
+L1104:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,13
         ceq     r0,r1
-        brf     L1070
+        brf     L1108
         lc      r0,1
         sw      r0,-35(fp)
         lc      r0,1
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1071
+        la      r2,L1109
         jmp     (r2)
-L1070:
+L1108:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,14
         ceq     r0,r1
-        brf     L1072
+        brf     L1110
         lc      r0,0
         sw      r0,-35(fp)
         lc      r0,1
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1073
+        la      r2,L1111
         jmp     (r2)
-L1072:
+L1110:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1082
-        la      r2,L1074
+        brt     L1120
+        la      r2,L1112
         jmp     (r2)
-L1082:
+L1120:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -10281,7 +10707,7 @@ L1082:
         cls     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1078
+        brf     L1116
         la      r0,_sym_kind
         push    r0
         lw      r0,-44(fp)
@@ -10297,15 +10723,15 @@ L1082:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L1078
+        brf     L1116
         lc      r0,0
-        bra     L1079
-L1078:
+        bra     L1117
+L1116:
         lc      r0,1
-L1079:
+L1117:
         ceq     r0,z
-        brt     L1077
-        la      r0,_S320
+        brt     L1115
+        la      r0,_S345
         push    r0
         la      r0,_error
         jal     r1,(r0)
@@ -10318,9 +10744,9 @@ L1079:
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1057
+        la      r2,L1095
         jmp     (r2)
-L1077:
+L1115:
         la      r0,_sym_value
         push    r0
         lw      r0,-44(fp)
@@ -10333,12 +10759,12 @@ L1077:
         sw      r0,-35(fp)
         lw      r0,-41(fp)
         ceq     r0,z
-        brt     L1081
+        brt     L1119
         lc      r0,0
         lw      r1,-35(fp)
         sub     r0,r1
         sw      r0,-35(fp)
-L1081:
+L1119:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-44(fp)
@@ -10351,19 +10777,19 @@ L1081:
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1075
-L1074:
-        la      r0,_S321
+        bra     L1113
+L1112:
+        la      r0,_S346
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1057
-L1075:
-L1073:
-L1071:
-L1067:
+        bra     L1095
+L1113:
+L1111:
+L1109:
+L1105:
         lw      r0,-35(fp)
         push    r0
         lw      r0,-38(fp)
@@ -10381,7 +10807,7 @@ L1067:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1057:
+L1095:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10398,32 +10824,32 @@ _parse_const_section:
         jal     r1,(r0)
         la      r0,_parse_const_def
         jal     r1,(r0)
-L1084:
+L1122:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1086
+        brt     L1124
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1086
+        brt     L1124
         lc      r0,1
-        bra     L1087
-L1086:
+        bra     L1125
+L1124:
         lc      r0,0
-L1087:
+L1125:
         ceq     r0,z
-        brt     L1085
+        brt     L1123
         la      r0,_parse_const_def
         jal     r1,(r0)
-        bra     L1084
-L1085:
-L1083:
+        bra     L1122
+L1123:
+L1121:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10436,33 +10862,33 @@ _parse_type_section:
         push    r2
         push    r1
         mov     fp,sp
-        add     sp,-91
+        add     sp,-106
         la      r0,_next_token
         jal     r1,(r0)
-L1089:
+L1127:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1091
+        brt     L1129
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1091
+        brt     L1129
         lc      r0,1
-        bra     L1092
-L1091:
+        bra     L1130
+L1129:
         lc      r0,0
-L1092:
+L1130:
         ceq     r0,z
-        brf     L1142
-        la      r2,L1090
+        brf     L1216
+        la      r2,L1128
         jmp     (r2)
-L1142:
+L1216:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -10481,35 +10907,35 @@ L1142:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1094
+        brt     L1132
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1094:
+L1132:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,65
         ceq     r0,r1
-        brt     L1141
-        la      r2,L1095
+        brt     L1215
+        la      r2,L1133
         jmp     (r2)
-L1141:
+L1215:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1098
-        la      r0,_S322
+        brt     L1136
+        la      r0,_S347
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1098:
+L1136:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-64
@@ -10530,7 +10956,7 @@ L1098:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1099
+        brf     L1137
         lc      r0,5
         push    r0
         lc      r0,-32
@@ -10540,8 +10966,8 @@ L1098:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-67(fp)
-        bra     L1100
-L1099:
+        bra     L1138
+L1137:
         la      r0,_utype_kind
         push    r0
         lw      r0,-67(fp)
@@ -10553,15 +10979,15 @@ L1099:
         mov     r1,r0
         lc      r0,5
         sw      r0,0(r1)
-L1100:
+L1138:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1102
+        brf     L1140
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1102:
+L1140:
         la      r0,_utype_size
         push    r0
         lw      r0,-67(fp)
@@ -10583,7 +11009,7 @@ L1102:
         lw      r0,-70(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1104
+        brf     L1142
         lc      r0,6
         push    r0
         lc      r0,-64
@@ -10593,7 +11019,7 @@ L1102:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-70(fp)
-L1104:
+L1142:
         la      r0,_utype_base
         push    r0
         lw      r0,-67(fp)
@@ -10605,17 +11031,17 @@ L1104:
         mov     r1,r0
         lw      r0,-70(fp)
         sw      r0,0(r1)
-        la      r2,L1096
+        la      r2,L1134
         jmp     (r2)
-L1095:
+L1133:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,46
         ceq     r0,r1
-        brt     L1140
-        la      r2,L1105
+        brt     L1214
+        la      r2,L1143
         jmp     (r2)
-L1140:
+L1214:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,-32
@@ -10628,7 +11054,7 @@ L1140:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1107
+        brf     L1145
         lc      r0,6
         push    r0
         lc      r0,-32
@@ -10638,8 +11064,8 @@ L1140:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-67(fp)
-        bra     L1108
-L1107:
+        bra     L1146
+L1145:
         la      r0,_utype_kind
         push    r0
         lw      r0,-67(fp)
@@ -10651,15 +11077,15 @@ L1107:
         mov     r1,r0
         lc      r0,6
         sw      r0,0(r1)
-L1108:
+L1146:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1110
+        brf     L1148
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1110:
+L1148:
         la      r1,_field_count
         lw      r0,0(r1)
         sw      r0,-73(fp)
@@ -10667,30 +11093,30 @@ L1110:
         sw      r0,-76(fp)
         lc      r0,0
         sw      r0,-79(fp)
-L1111:
+L1149:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1113
+        brt     L1151
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1113
+        brt     L1151
         lc      r0,1
-        bra     L1114
-L1113:
+        bra     L1152
+L1151:
         lc      r0,0
-L1114:
+L1152:
         ceq     r0,z
-        brf     L1139
-        la      r2,L1112
+        brf     L1213
+        la      r2,L1150
         jmp     (r2)
-L1139:
+L1213:
         la      r1,_field_count
         lw      r0,0(r1)
         sw      r0,-88(fp)
@@ -10698,16 +11124,16 @@ L1139:
         lw      r0,0(r1)
         la      r1,128
         cls     r0,r1
-        brt     L1116
-        la      r0,_S323
+        brt     L1154
+        la      r0,_S348
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1116:
+L1154:
         la      r0,_tok_lexeme
         push    r0
         la      r1,_field_count
@@ -10732,45 +11158,45 @@ L1116:
         sw      r0,-76(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1117:
+L1155:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1138
-        la      r2,L1118
+        brt     L1212
+        la      r2,L1156
         jmp     (r2)
-L1138:
+L1212:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1120
-        la      r0,_S324
+        brt     L1158
+        la      r0,_S349
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1120:
+L1158:
         la      r1,_field_count
         lw      r0,0(r1)
         la      r1,128
         cls     r0,r1
-        brt     L1122
-        la      r0,_S325
+        brt     L1160
+        la      r0,_S350
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1122:
+L1160:
         la      r0,_tok_lexeme
         push    r0
         la      r1,_field_count
@@ -10795,9 +11221,9 @@ L1122:
         sw      r0,-76(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1117
+        la      r2,L1155
         jmp     (r2)
-L1118:
+L1156:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -10806,11 +11232,365 @@ L1118:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1124
+        brt     L1162
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1124:
+L1162:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,44
+        ceq     r0,r1
+        brt     L1211
+        la      r2,L1163
+        jmp     (r2)
+L1211:
+        la      r0,_next_token
+        jal     r1,(r0)
+        lc      r0,57
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1166
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1166:
+        lc      r0,0
+        sw      r0,-94(fp)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,27
+        ceq     r0,r1
+        brf     L1167
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,37
+        ceq     r0,r1
+        brt     L1170
+        la      r0,_S351
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1170:
+        lc      r0,0
+        la      r1,_tok_int_val
+        lw      r1,0(r1)
+        sub     r0,r1
+        sw      r0,-94(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1168
+L1167:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,37
+        ceq     r0,r1
+        brf     L1171
+        la      r1,_tok_int_val
+        lw      r0,0(r1)
+        sw      r0,-94(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1172
+L1171:
+        la      r0,_S352
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1172:
+L1168:
+        lc      r0,59
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1174
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1174:
+        lc      r0,0
+        sw      r0,-97(fp)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,27
+        ceq     r0,r1
+        brf     L1175
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,37
+        ceq     r0,r1
+        brt     L1178
+        la      r0,_S353
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1178:
+        lc      r0,0
+        la      r1,_tok_int_val
+        lw      r1,0(r1)
+        sub     r0,r1
+        sw      r0,-97(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1176
+L1175:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,37
+        ceq     r0,r1
+        brf     L1179
+        la      r1,_tok_int_val
+        lw      r0,0(r1)
+        sw      r0,-97(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1180
+L1179:
+        la      r0,_S354
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1180:
+L1176:
+        lc      r0,58
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1182
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1182:
+        lc      r0,45
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1184
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1184:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,11
+        ceq     r0,r1
+        brf     L1185
+        lc      r0,0
+        sw      r0,-100(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1186
+L1185:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,12
+        ceq     r0,r1
+        brf     L1187
+        lc      r0,1
+        sw      r0,-100(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1188
+L1187:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,47
+        ceq     r0,r1
+        brf     L1189
+        lc      r0,4
+        sw      r0,-100(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1190
+L1189:
+        la      r0,_S355
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1190:
+L1188:
+L1186:
+        lw      r0,-97(fp)
+        lw      r1,-94(fp)
+        sub     r0,r1
+        lc      r1,1
+        add     r0,r1
+        sw      r0,-103(fp)
+        lw      r0,-103(fp)
+        lc      r1,0
+        cls     r1,r0
+        brt     L1192
+        la      r0,_S356
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1126
+        jmp     (r2)
+L1192:
+        lw      r0,-100(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L1193
+        lw      r0,-103(fp)
+        lc      r1,2
+        add     r0,r1
+        lc      r1,3
+        push    r1
+        push    r0
+        la      r0,__tc24r_div
+        jal     r1,(r0)
+        add     sp,6
+        sw      r0,-106(fp)
+        bra     L1194
+L1193:
+        lw      r0,-103(fp)
+        sw      r0,-106(fp)
+L1194:
+        lw      r0,-88(fp)
+        sw      r0,-91(fp)
+L1195:
+        lw      r0,-91(fp)
+        la      r1,_field_count
+        lw      r1,0(r1)
+        cls     r0,r1
+        brt     L1210
+        la      r2,L1196
+        jmp     (r2)
+L1210:
+        la      r0,_field_type
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,3
+        sw      r0,0(r1)
+        la      r0,_field_offset
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-79(fp)
+        sw      r0,0(r1)
+        la      r0,_field_size
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-106(fp)
+        sw      r0,0(r1)
+        la      r0,_field_arr_low
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-94(fp)
+        sw      r0,0(r1)
+        la      r0,_field_arr_high
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-97(fp)
+        sw      r0,0(r1)
+        la      r0,_field_arr_elem
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-100(fp)
+        sw      r0,0(r1)
+        la      r0,_field_arr_size
+        push    r0
+        lw      r0,-91(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-103(fp)
+        sw      r0,0(r1)
+        lw      r0,-79(fp)
+        lw      r1,-106(fp)
+        add     r0,r1
+        sw      r0,-79(fp)
+        lw      r0,-91(fp)
+        lc      r1,1
+        add     r0,r1
+        sw      r0,-91(fp)
+        la      r2,L1195
+        jmp     (r2)
+L1196:
+        la      r2,L1164
+        jmp     (r2)
+L1163:
         lc      r0,-85
         add     r0,fp
         push    r0
@@ -10821,22 +11601,22 @@ L1124:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1126
+        brt     L1198
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1126:
+L1198:
         lw      r0,-88(fp)
         sw      r0,-91(fp)
-L1127:
+L1199:
         lw      r0,-91(fp)
         la      r1,_field_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1137
-        la      r2,L1128
+        brt     L1209
+        la      r2,L1200
         jmp     (r2)
-L1137:
+L1209:
         la      r0,_field_type
         push    r0
         lw      r0,-91(fp)
@@ -10878,41 +11658,42 @@ L1137:
         lc      r1,1
         add     r0,r1
         sw      r0,-91(fp)
-        la      r2,L1127
+        la      r2,L1199
         jmp     (r2)
-L1128:
+L1200:
+L1164:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L1130
+        brf     L1202
         la      r0,_next_token
         jal     r1,(r0)
-L1130:
+L1202:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,4
         ceq     r0,r1
-        brf     L1132
-        bra     L1112
-L1132:
-        la      r2,L1111
+        brf     L1204
+        bra     L1150
+L1204:
+        la      r2,L1149
         jmp     (r2)
-L1112:
+L1150:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,4
         ceq     r0,r1
-        brt     L1134
-        la      r0,_S326
+        brt     L1206
+        la      r0,_S357
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1088
+        la      r2,L1126
         jmp     (r2)
-L1134:
+L1206:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_utype_base
@@ -10948,17 +11729,17 @@ L1134:
         mov     r1,r0
         lw      r0,-79(fp)
         sw      r0,0(r1)
-        bra     L1106
-L1105:
-        la      r0,_S327
+        bra     L1144
+L1143:
+        la      r0,_S358
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1088
-L1106:
-L1096:
+        bra     L1126
+L1144:
+L1134:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -10967,14 +11748,14 @@ L1096:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1136
+        brt     L1208
         lc      r0,0
-        bra     L1088
-L1136:
-        la      r2,L1089
+        bra     L1126
+L1208:
+        la      r2,L1127
         jmp     (r2)
-L1090:
-L1088:
+L1128:
+L1126:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10995,16 +11776,16 @@ _parse_var_decl:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1145
-        la      r0,_S328
+        brt     L1219
+        la      r0,_S359
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1145:
+L1219:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -11018,28 +11799,28 @@ L1145:
         add     sp,12
         la      r0,_next_token
         jal     r1,(r0)
-L1146:
+L1220:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brf     L1147
+        brf     L1221
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1149
-        la      r0,_S329
+        brt     L1223
+        la      r0,_S360
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1149:
+L1223:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -11053,9 +11834,9 @@ L1149:
         add     sp,12
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1146
+        la      r2,L1220
         jmp     (r2)
-L1147:
+L1221:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -11064,19 +11845,19 @@ L1147:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1151
+        brt     L1225
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1151:
+L1225:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,44
         ceq     r0,r1
-        brt     L1203
-        la      r2,L1152
+        brt     L1277
+        la      r2,L1226
         jmp     (r2)
-L1203:
+L1277:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,57
@@ -11087,34 +11868,34 @@ L1203:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1155
+        brt     L1229
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1155:
+L1229:
         lc      r0,0
         sw      r0,-12(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1156
+        brf     L1230
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L1159
-        la      r0,_S330
+        brt     L1233
+        la      r0,_S361
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1159:
+L1233:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -11122,30 +11903,30 @@ L1159:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1157
-L1156:
+        bra     L1231
+L1230:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1160
+        brf     L1234
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1161
-L1160:
-        la      r0,_S331
+        bra     L1235
+L1234:
+        la      r0,_S362
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1161:
-L1157:
+L1235:
+L1231:
         lc      r0,59
         push    r0
         la      r0,_expect
@@ -11154,34 +11935,34 @@ L1157:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1163
+        brt     L1237
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1163:
+L1237:
         lc      r0,0
         sw      r0,-15(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1164
+        brf     L1238
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L1167
-        la      r0,_S332
+        brt     L1241
+        la      r0,_S363
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1167:
+L1241:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -11189,30 +11970,30 @@ L1167:
         sw      r0,-15(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1165
-L1164:
+        bra     L1239
+L1238:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1168
+        brf     L1242
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-15(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1169
-L1168:
-        la      r0,_S333
+        bra     L1243
+L1242:
+        la      r0,_S364
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1169:
-L1165:
+L1243:
+L1239:
         lc      r0,58
         push    r0
         la      r0,_expect
@@ -11221,11 +12002,11 @@ L1165:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1171
+        brt     L1245
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1171:
+L1245:
         lc      r0,45
         push    r0
         la      r0,_expect
@@ -11234,55 +12015,55 @@ L1171:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1173
+        brt     L1247
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1173:
+L1247:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1174
+        brf     L1248
         lc      r0,0
         sw      r0,-18(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1175
-L1174:
+        bra     L1249
+L1248:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1176
+        brf     L1250
         lc      r0,1
         sw      r0,-18(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1177
-L1176:
+        bra     L1251
+L1250:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1178
+        brf     L1252
         lc      r0,4
         sw      r0,-18(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1179
-L1178:
-        la      r0,_S334
+        bra     L1253
+L1252:
+        la      r0,_S365
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1179:
-L1177:
-L1175:
+L1253:
+L1251:
+L1249:
         lw      r0,-15(fp)
         lw      r1,-12(fp)
         sub     r0,r1
@@ -11292,16 +12073,16 @@ L1175:
         lw      r0,-21(fp)
         lc      r1,0
         cls     r1,r0
-        brt     L1181
-        la      r0,_S335
+        brt     L1255
+        la      r0,_S366
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1181:
+L1255:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -11312,27 +12093,27 @@ L1181:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1183
+        brt     L1257
         lc      r0,1
         la      r1,_has_arrays
         sw      r0,0(r1)
-        la      r0,_S336
+        la      r0,_S367
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1183:
+L1257:
         lw      r0,-3(fp)
         sw      r0,-9(fp)
-L1184:
+L1258:
         lw      r0,-9(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1202
-        la      r2,L1185
+        brt     L1276
+        la      r2,L1259
         jmp     (r2)
-L1202:
+L1276:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -11391,7 +12172,7 @@ L1202:
         lw      r0,-18(fp)
         lc      r1,4
         ceq     r0,r1
-        brf     L1186
+        brf     L1260
         lw      r0,-21(fp)
         lc      r1,2
         add     r0,r1
@@ -11402,11 +12183,11 @@ L1202:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-24(fp)
-        bra     L1187
-L1186:
+        bra     L1261
+L1260:
         lw      r0,-21(fp)
         sw      r0,-24(fp)
-L1187:
+L1261:
         lw      r0,-24(fp)
         push    r0
         lw      r0,-9(fp)
@@ -11415,7 +12196,7 @@ L1187:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S337
+        la      r0,_S368
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -11424,12 +12205,12 @@ L1187:
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        la      r2,L1184
+        la      r2,L1258
         jmp     (r2)
-L1185:
-        la      r2,L1153
+L1259:
+        la      r2,L1227
         jmp     (r2)
-L1152:
+L1226:
         lc      r0,1
         push    r0
         lc      r0,0
@@ -11440,46 +12221,46 @@ L1152:
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1188
+        brf     L1262
         lc      r0,0
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1189
+        la      r2,L1263
         jmp     (r2)
-L1188:
+L1262:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1190
+        brf     L1264
         lc      r0,1
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1191
+        la      r2,L1265
         jmp     (r2)
-L1190:
+L1264:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1192
+        brf     L1266
         lc      r0,4
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1193
+        la      r2,L1267
         jmp     (r2)
-L1192:
+L1266:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1201
-        la      r2,L1194
+        brt     L1275
+        la      r2,L1268
         jmp     (r2)
-L1201:
+L1275:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_utype_lookup
@@ -11489,7 +12270,7 @@ L1201:
         lw      r0,-27(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1196
+        brt     L1270
         la      r0,_utype_kind
         push    r0
         lw      r0,-27(fp)
@@ -11502,31 +12283,31 @@ L1201:
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1197
-L1196:
-        la      r0,_S338
+        bra     L1271
+L1270:
+        la      r0,_S369
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1197:
-        bra     L1195
-L1194:
-        la      r0,_S339
+L1271:
+        bra     L1269
+L1268:
+        la      r0,_S370
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1143
+        la      r2,L1217
         jmp     (r2)
-L1195:
-L1193:
-L1191:
-L1189:
+L1269:
+L1267:
+L1265:
+L1263:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -11534,15 +12315,15 @@ L1189:
         add     sp,3
         lw      r0,-3(fp)
         sw      r0,-9(fp)
-L1198:
+L1272:
         lw      r0,-9(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1200
-        la      r2,L1199
+        brt     L1274
+        la      r2,L1273
         jmp     (r2)
-L1200:
+L1274:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -11571,7 +12352,7 @@ L1200:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S340
+        la      r0,_S371
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -11580,11 +12361,11 @@ L1200:
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        la      r2,L1198
+        la      r2,L1272
         jmp     (r2)
-L1199:
-L1153:
-L1143:
+L1273:
+L1227:
+L1217:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -11601,32 +12382,32 @@ _parse_var_section:
         jal     r1,(r0)
         la      r0,_parse_var_decl
         jal     r1,(r0)
-L1205:
+L1279:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1207
+        brt     L1281
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1207
+        brt     L1281
         lc      r0,1
-        bra     L1208
-L1207:
+        bra     L1282
+L1281:
         lc      r0,0
-L1208:
+L1282:
         ceq     r0,z
-        brt     L1206
+        brt     L1280
         la      r0,_parse_var_decl
         jal     r1,(r0)
-        bra     L1205
-L1206:
-L1204:
+        bra     L1279
+L1280:
+L1278:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -11649,31 +12430,31 @@ _parse_param_list:
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L1211
+        brt     L1285
         lc      r0,0
-        la      r2,L1209
+        la      r2,L1283
         jmp     (r2)
-L1211:
+L1285:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,25
         ceq     r0,r1
-        brf     L1213
+        brf     L1287
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,0
-        la      r2,L1209
+        la      r2,L1283
         jmp     (r2)
-L1213:
-L1214:
+L1287:
+L1288:
         lc      r0,1
         ceq     r0,z
-        brf     L1233
-        la      r2,L1215
+        brf     L1307
+        la      r2,L1289
         jmp     (r2)
-L1233:
+L1307:
         la      r1,_sym_count
         lw      r0,0(r1)
         sw      r0,-9(fp)
@@ -11681,16 +12462,16 @@ L1233:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1217
-        la      r0,_S341
+        brt     L1291
+        la      r0,_S372
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
-        la      r2,L1209
+        la      r2,L1283
         jmp     (r2)
-L1217:
+L1291:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -11708,31 +12489,31 @@ L1217:
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1218:
+L1292:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1232
-        la      r2,L1219
+        brt     L1306
+        la      r2,L1293
         jmp     (r2)
-L1232:
+L1306:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1221
-        la      r0,_S342
+        brt     L1295
+        la      r0,_S373
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
-        la      r2,L1209
+        la      r2,L1283
         jmp     (r2)
-L1221:
+L1295:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -11750,9 +12531,9 @@ L1221:
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1218
+        la      r2,L1292
         jmp     (r2)
-L1219:
+L1293:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -11761,11 +12542,11 @@ L1219:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1223
+        brt     L1297
         lw      r0,-6(fp)
-        la      r2,L1209
+        la      r2,L1283
         jmp     (r2)
-L1223:
+L1297:
         lc      r0,-18
         add     r0,fp
         push    r0
@@ -11776,19 +12557,19 @@ L1223:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1225
+        brt     L1299
         lw      r0,-6(fp)
-        la      r2,L1209
+        la      r2,L1283
         jmp     (r2)
-L1225:
+L1299:
         lw      r0,-9(fp)
         sw      r0,-15(fp)
-L1226:
+L1300:
         lw      r0,-15(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L1227
+        brf     L1301
         la      r0,_sym_type_id
         push    r0
         lw      r0,-15(fp)
@@ -11804,20 +12585,20 @@ L1226:
         lc      r1,1
         add     r0,r1
         sw      r0,-15(fp)
-        bra     L1226
-L1227:
+        bra     L1300
+L1301:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brt     L1229
-        bra     L1215
-L1229:
+        brt     L1303
+        bra     L1289
+L1303:
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1214
+        la      r2,L1288
         jmp     (r2)
-L1215:
+L1289:
         lc      r0,25
         push    r0
         la      r0,_expect
@@ -11825,12 +12606,12 @@ L1215:
         add     sp,3
         lw      r0,-3(fp)
         sw      r0,-15(fp)
-L1230:
+L1304:
         lw      r0,-15(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L1231
+        brf     L1305
         lw      r0,-6(fp)
         lc      r1,1
         sub     r0,r1
@@ -11857,11 +12638,11 @@ L1230:
         lc      r1,1
         add     r0,r1
         sw      r0,-15(fp)
-        bra     L1230
-L1231:
+        bra     L1304
+L1305:
         lw      r0,-6(fp)
-        bra     L1209
-L1209:
+        bra     L1283
+L1283:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -11879,30 +12660,30 @@ _parse_local_vars:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1235:
+L1309:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1237
+        brt     L1311
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1237
+        brt     L1311
         lc      r0,1
-        bra     L1238
-L1237:
+        bra     L1312
+L1311:
         lc      r0,0
-L1238:
+L1312:
         ceq     r0,z
-        brf     L1253
-        la      r2,L1236
+        brf     L1327
+        la      r2,L1310
         jmp     (r2)
-L1253:
+L1327:
         la      r1,_sym_count
         lw      r0,0(r1)
         sw      r0,-3(fp)
@@ -11923,31 +12704,31 @@ L1253:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1239:
+L1313:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1252
-        la      r2,L1240
+        brt     L1326
+        la      r2,L1314
         jmp     (r2)
-L1252:
+L1326:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1242
-        la      r0,_S343
+        brt     L1316
+        la      r0,_S374
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lw      r0,-12(fp)
-        la      r2,L1234
+        la      r2,L1308
         jmp     (r2)
-L1242:
+L1316:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -11965,9 +12746,9 @@ L1242:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1239
+        la      r2,L1313
         jmp     (r2)
-L1240:
+L1314:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -11976,11 +12757,11 @@ L1240:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1244
+        brt     L1318
         lw      r0,-12(fp)
-        la      r2,L1234
+        la      r2,L1308
         jmp     (r2)
-L1244:
+L1318:
         lc      r0,-15
         add     r0,fp
         push    r0
@@ -11991,11 +12772,11 @@ L1244:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1246
+        brt     L1320
         lw      r0,-12(fp)
-        la      r2,L1234
+        la      r2,L1308
         jmp     (r2)
-L1246:
+L1320:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -12004,22 +12785,22 @@ L1246:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1248
+        brt     L1322
         lw      r0,-12(fp)
-        la      r2,L1234
+        la      r2,L1308
         jmp     (r2)
-L1248:
+L1322:
         lw      r0,-3(fp)
         sw      r0,-9(fp)
-L1249:
+L1323:
         lw      r0,-9(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1251
-        la      r2,L1250
+        brt     L1325
+        la      r2,L1324
         jmp     (r2)
-L1251:
+L1325:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -12042,6 +12823,17 @@ L1251:
         mov     r1,r0
         lw      r0,9(fp)
         sw      r0,0(r1)
+        la      r0,_sym_ptr_base
+        push    r0
+        lw      r0,-9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-15(fp)
+        sw      r0,0(r1)
         lw      r0,9(fp)
         lc      r1,1
         add     r0,r1
@@ -12050,15 +12842,15 @@ L1251:
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        la      r2,L1249
+        la      r2,L1323
         jmp     (r2)
-L1250:
-        la      r2,L1235
+L1324:
+        la      r2,L1309
         jmp     (r2)
-L1236:
+L1310:
         lw      r0,-12(fp)
-        bra     L1234
-L1234:
+        bra     L1308
+L1308:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -12071,23 +12863,23 @@ _parse_proc_or_func_decl:
         push    r2
         push    r1
         mov     fp,sp
-        sub     sp,135
+        sub     sp,138
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1256
-        la      r0,_S344
+        brt     L1330
+        la      r0,_S375
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1254
+        la      r2,L1328
         jmp     (r2)
-L1256:
+L1330:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -12098,7 +12890,7 @@ L1256:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r0,_S345
+        la      r0,_S376
         push    r0
         lc      r0,-64
         add     r0,fp
@@ -12160,10 +12952,10 @@ L1256:
         sw      r0,-79(fp)
         lw      r0,9(fp)
         ceq     r0,z
-        brf     L1298
-        la      r2,L1258
+        brf     L1379
+        la      r2,L1332
         jmp     (r2)
-L1298:
+L1379:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -12172,56 +12964,126 @@ L1298:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1260
+        brt     L1334
         lc      r0,0
-        la      r2,L1254
+        la      r2,L1328
         jmp     (r2)
-L1260:
+L1334:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1261
+        brf     L1335
         lc      r0,0
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1262
-L1261:
+        la      r2,L1336
+        jmp     (r2)
+L1335:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1263
+        brf     L1337
         lc      r0,1
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1264
-L1263:
+        la      r2,L1338
+        jmp     (r2)
+L1337:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1265
+        brf     L1339
         lc      r0,4
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1266
-L1265:
-        la      r0,_S346
+        la      r2,L1340
+        jmp     (r2)
+L1339:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,36
+        ceq     r0,r1
+        brt     L1378
+        la      r2,L1341
+        jmp     (r2)
+L1378:
+        la      r0,_tok_lexeme
+        push    r0
+        la      r0,_utype_lookup
+        jal     r1,(r0)
+        add     sp,3
+        la      r1,-132
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r1,-132
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,0
+        cls     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L1345
+        la      r0,_utype_kind
+        push    r0
+        la      r1,-132
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,5
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L1345
+        lc      r0,1
+        bra     L1346
+L1345:
+        lc      r0,0
+L1346:
+        ceq     r0,z
+        brt     L1343
+        lc      r0,5
+        sw      r0,-79(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        bra     L1344
+L1343:
+        la      r0,_S377
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1254
+        la      r2,L1328
         jmp     (r2)
-L1266:
-L1264:
-L1262:
-L1258:
+L1344:
+        bra     L1342
+L1341:
+        la      r0,_S378
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1328
+        jmp     (r2)
+L1342:
+L1340:
+L1338:
+L1336:
+L1332:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -12230,19 +13092,19 @@ L1258:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1268
+        brt     L1348
         lc      r0,0
-        la      r2,L1254
+        la      r2,L1328
         jmp     (r2)
-L1268:
+L1348:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,42
         ceq     r0,r1
-        brt     L1297
-        la      r2,L1270
+        brt     L1377
+        la      r2,L1350
         jmp     (r2)
-L1297:
+L1377:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,21
@@ -12269,7 +13131,7 @@ L1297:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1272
+        brt     L1352
         la      r0,_proc_is_user
         push    r0
         lw      r0,-67(fp)
@@ -12295,7 +13157,7 @@ L1297:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-L1272:
+L1352:
         la      r1,_scope_base
         lw      r0,0(r1)
         la      r1,_sym_count
@@ -12307,9 +13169,9 @@ L1272:
         la      r1,_scope_depth
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1254
+        la      r2,L1328
         jmp     (r2)
-L1270:
+L1350:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -12320,7 +13182,7 @@ L1270:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1273
+        brt     L1353
         la      r0,_proc_argc
         push    r0
         lw      r0,-67(fp)
@@ -12346,9 +13208,9 @@ L1270:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-        la      r2,L1274
+        la      r2,L1354
         jmp     (r2)
-L1273:
+L1353:
         lw      r0,-79(fp)
         push    r0
         lw      r0,9(fp)
@@ -12368,7 +13230,7 @@ L1273:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1276
+        brt     L1356
         la      r0,_proc_is_user
         push    r0
         lw      r0,-67(fp)
@@ -12394,8 +13256,8 @@ L1273:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-L1276:
-L1274:
+L1356:
+L1354:
         lc      r0,1
         la      r1,_in_proc
         sw      r0,0(r1)
@@ -12404,7 +13266,7 @@ L1274:
         sw      r0,0(r1)
         lw      r0,9(fp)
         ceq     r0,z
-        brt     L1277
+        brt     L1357
         lc      r0,0
         la      r1,_cur_func_local
         sw      r0,0(r1)
@@ -12418,8 +13280,8 @@ L1274:
         add     sp,6
         lc      r0,1
         sw      r0,-76(fp)
-        bra     L1278
-L1277:
+        bra     L1358
+L1357:
         lc      r0,1
         push    r0
         lc      r0,0
@@ -12435,31 +13297,31 @@ L1277:
         sb      r0,0(r1)
         lc      r0,0
         sw      r0,-76(fp)
-L1278:
+L1358:
         lc      r0,0
         sw      r0,-73(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,2
         ceq     r0,r1
-        brf     L1280
+        brf     L1360
         lw      r0,-76(fp)
         push    r0
         la      r0,_parse_local_vars
         jal     r1,(r0)
         add     sp,3
         sw      r0,-73(fp)
-L1280:
+L1360:
         lw      r0,-73(fp)
         push    r0
         lw      r0,9(fp)
         ceq     r0,z
-        brt     L1281
+        brt     L1361
         lc      r0,1
-        bra     L1282
-L1281:
+        bra     L1362
+L1361:
         lc      r0,0
-L1282:
+L1362:
         mov     r1,r0
         pop     r0
         add     r0,r1
@@ -12469,7 +13331,7 @@ L1282:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1284
+        brt     L1364
         la      r1,-129
         add     r1,fp
         lw      r0,0(r1)
@@ -12485,63 +13347,63 @@ L1282:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-L1284:
-L1285:
+L1364:
+L1365:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1289
+        brf     L1369
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1289
+        brf     L1369
         lc      r0,0
-        bra     L1290
-L1289:
+        bra     L1370
+L1369:
         lc      r0,1
-L1290:
+L1370:
         ceq     r0,z
-        brt     L1287
+        brt     L1367
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1287
+        brt     L1367
         lc      r0,1
-        bra     L1288
-L1287:
+        bra     L1368
+L1367:
         lc      r0,0
-L1288:
+L1368:
         ceq     r0,z
-        brt     L1286
+        brt     L1366
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
-        brf     L1291
+        brf     L1371
         lc      r0,0
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-        bra     L1292
-L1291:
+        bra     L1372
+L1371:
         lc      r0,1
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-L1292:
-        la      r2,L1285
+L1372:
+        la      r2,L1365
         jmp     (r2)
-L1286:
+L1366:
         la      r1,-129
         add     r1,fp
         lw      r0,0(r1)
@@ -12549,19 +13411,19 @@ L1286:
         lc      r0,-64
         add     r0,fp
         push    r0
-        la      r0,_S347
+        la      r0,_S379
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
         la      r1,_exit_label
         lw      r0,0(r1)
-        la      r1,-132
+        la      r1,-135
         add     r1,fp
         sw      r0,0(r1)
         la      r1,_label_count
         lw      r0,0(r1)
-        la      r1,-135
+        la      r1,-138
         add     r1,fp
         sw      r0,0(r1)
         la      r1,_label_count
@@ -12570,7 +13432,7 @@ L1286:
         add     r0,r1
         la      r1,_label_count
         sw      r0,0(r1)
-        la      r1,-135
+        la      r1,-138
         add     r1,fp
         lw      r0,0(r1)
         la      r1,_exit_label
@@ -12582,40 +13444,40 @@ L1286:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-        la      r1,-135
+        la      r1,-138
         add     r1,fp
         lw      r0,0(r1)
         push    r0
-        la      r0,_S348
+        la      r0,_S380
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,9(fp)
         ceq     r0,z
-        brt     L1294
+        brt     L1374
         la      r1,_cur_func_local
         lw      r0,0(r1)
         push    r0
-        la      r0,_S349
+        la      r0,_S381
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1294:
+L1374:
         lw      r0,-70(fp)
         push    r0
-        la      r0,_S350
+        la      r0,_S382
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S351
+        la      r0,_S383
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r1,-132
+        la      r1,-135
         add     r1,fp
         lw      r0,0(r1)
         la      r1,_exit_label
@@ -12623,10 +13485,10 @@ L1294:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1296
+        brt     L1376
         lc      r0,0
-        bra     L1254
-L1296:
+        bra     L1328
+L1376:
         la      r1,_scope_base
         lw      r0,0(r1)
         la      r1,_sym_count
@@ -12654,7 +13516,7 @@ L1296:
         la      r0,_str_copy
         jal     r1,(r0)
         add     sp,6
-L1254:
+L1328:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -12672,179 +13534,179 @@ _parse_block:
         lw      r0,0(r1)
         lc      r1,1
         ceq     r0,r1
-        brf     L1301
+        brf     L1382
         la      r0,_parse_const_section
         jal     r1,(r0)
-L1301:
+L1382:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,43
         ceq     r0,r1
-        brf     L1303
+        brf     L1384
         la      r0,_parse_type_section
         jal     r1,(r0)
-L1303:
+L1384:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,2
         ceq     r0,r1
-        brf     L1305
+        brf     L1386
         la      r0,_parse_var_section
         jal     r1,(r0)
-L1305:
+L1386:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1306
+        brf     L1387
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1306
+        brf     L1387
         lc      r0,0
-        bra     L1307
-L1306:
+        bra     L1388
+L1387:
         lc      r0,1
-L1307:
+L1388:
         sw      r0,-3(fp)
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L1310
+        brt     L1391
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1310
+        brt     L1391
         lc      r0,1
-        bra     L1311
-L1310:
+        bra     L1392
+L1391:
         lc      r0,0
-L1311:
+L1392:
         ceq     r0,z
-        brt     L1309
-        la      r0,_S352
+        brt     L1390
+        la      r0,_S384
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S353
+        la      r0,_S385
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S354
+        la      r0,_S386
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S355
+        la      r0,_S387
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1309:
-L1312:
+L1390:
+L1393:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1316
+        brf     L1397
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1316
+        brf     L1397
         lc      r0,0
-        bra     L1317
-L1316:
+        bra     L1398
+L1397:
         lc      r0,1
-L1317:
+L1398:
         ceq     r0,z
-        brt     L1314
+        brt     L1395
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1314
+        brt     L1395
         lc      r0,1
-        bra     L1315
-L1314:
+        bra     L1396
+L1395:
         lc      r0,0
-L1315:
+L1396:
         ceq     r0,z
-        brt     L1313
+        brt     L1394
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
-        brf     L1318
+        brf     L1399
         lc      r0,0
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-        bra     L1319
-L1318:
+        bra     L1400
+L1399:
         lc      r0,1
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-L1319:
-        la      r2,L1312
+L1400:
+        la      r2,L1393
         jmp     (r2)
-L1313:
+L1394:
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L1322
+        brt     L1403
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1322
+        brt     L1403
         lc      r0,1
-        bra     L1323
-L1322:
+        bra     L1404
+L1403:
         lc      r0,0
-L1323:
+L1404:
         ceq     r0,z
-        brt     L1320
-        la      r0,_S356
+        brt     L1401
+        la      r0,_S388
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1321
-L1320:
-        la      r0,_S357
+        bra     L1402
+L1401:
+        la      r0,_S389
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1321:
-        la      r0,_S358
+L1402:
+        la      r0,_S390
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S359
+        la      r0,_S391
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S360
+        la      r0,_S392
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -12865,41 +13727,41 @@ L1321:
         jal     r1,(r0)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S361
+        la      r0,_S393
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L1326
+        brt     L1407
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1326
+        brt     L1407
         lc      r0,1
-        bra     L1327
-L1326:
+        bra     L1408
+L1407:
         lc      r0,0
-L1327:
+L1408:
         ceq     r0,z
-        brt     L1324
-        la      r0,_S362
+        brt     L1405
+        la      r0,_S394
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1325
-L1324:
-        la      r0,_S363
+        bra     L1406
+L1405:
+        la      r0,_S395
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1325:
-        la      r0,_S364
+L1406:
+        la      r0,_S396
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -12911,7 +13773,7 @@ L1325:
         sub     r0,r1
         la      r1,_exit_label
         sw      r0,0(r1)
-L1299:
+L1380:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -12927,15 +13789,15 @@ _emit_string_data:
         add     sp,-9
         lc      r0,0
         sw      r0,-3(fp)
-L1329:
+L1410:
         lw      r0,-3(fp)
         la      r1,_str_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1335
-        la      r2,L1330
+        brt     L1416
+        la      r2,L1411
         jmp     (r2)
-L1335:
+L1416:
         lw      r0,-3(fp)
         push    r0
         la      r0,_str_data_at
@@ -12944,14 +13806,14 @@ L1335:
         sw      r0,-9(fp)
         lw      r0,-3(fp)
         push    r0
-        la      r0,_S365
+        la      r0,_S397
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lc      r0,0
         sw      r0,-6(fp)
-L1331:
+L1412:
         lw      r0,-6(fp)
         push    r0
         la      r0,_str_len
@@ -12966,23 +13828,23 @@ L1331:
         mov     r1,r0
         pop     r0
         cls     r0,r1
-        brf     L1332
+        brf     L1413
         lw      r0,-6(fp)
         lc      r1,0
         cls     r1,r0
-        brf     L1334
-        la      r0,_S366
+        brf     L1415
+        la      r0,_S398
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1334:
+L1415:
         lw      r0,-9(fp)
         lw      r1,-6(fp)
         add     r0,r1
         lbu     r0,0(r0)
         push    r0
-        la      r0,_S367
+        la      r0,_S399
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -12991,10 +13853,10 @@ L1334:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        la      r2,L1331
+        la      r2,L1412
         jmp     (r2)
-L1332:
-        la      r0,_S368
+L1413:
+        la      r0,_S400
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -13003,10 +13865,10 @@ L1332:
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        la      r2,L1329
+        la      r2,L1410
         jmp     (r2)
-L1330:
-L1328:
+L1411:
+L1409:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13095,7 +13957,7 @@ _parser_init:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-L1336:
+L1417:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13115,23 +13977,23 @@ _parse_uses_clause:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1339
-        la      r0,_S369
+        brt     L1420
+        la      r0,_S401
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1337
+        la      r2,L1418
         jmp     (r2)
-L1339:
-L1340:
+L1420:
+L1421:
         lc      r0,1
         ceq     r0,z
-        brf     L1350
-        la      r2,L1341
+        brf     L1431
+        la      r2,L1422
         jmp     (r2)
-L1350:
+L1431:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -13142,7 +14004,7 @@ L1350:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r0,_S370
+        la      r0,_S402
         push    r0
         lc      r0,-32
         add     r0,fp
@@ -13152,16 +14014,16 @@ L1350:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L1342
+        brf     L1423
         lc      r0,1
         la      r1,_unit_hardware
         sw      r0,0(r1)
         la      r0,_register_hardware_unit
         jal     r1,(r0)
-        la      r2,L1343
+        la      r2,L1424
         jmp     (r2)
-L1342:
-        la      r0,_S371
+L1423:
+        la      r0,_S403
         push    r0
         lc      r0,-32
         add     r0,fp
@@ -13171,19 +14033,19 @@ L1342:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L1344
+        brf     L1425
         lc      r0,1
         la      r1,_unit_mode
         sw      r0,0(r1)
-        bra     L1345
-L1344:
+        bra     L1426
+L1425:
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S372
+        la      r0,_S404
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -13192,40 +14054,40 @@ L1344:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        bra     L1337
-L1345:
-L1343:
+        bra     L1418
+L1426:
+L1424:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1347
-        bra     L1341
-L1347:
+        brt     L1428
+        bra     L1422
+L1428:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1349
-        la      r0,_S373
+        brt     L1430
+        la      r0,_S405
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1337
-L1349:
-        la      r2,L1340
+        bra     L1418
+L1430:
+        la      r2,L1421
         jmp     (r2)
-L1341:
+L1422:
         lc      r0,21
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1337:
+L1418:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13242,135 +14104,135 @@ _emit_externs:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brf     L1362
-        la      r2,L1352
+        brf     L1443
+        la      r2,L1433
         jmp     (r2)
-L1362:
-        la      r0,_S374
+L1443:
+        la      r0,_S406
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S375
+        la      r0,_S407
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S376
+        la      r0,_S408
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S377
+        la      r0,_S409
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S378
+        la      r0,_S410
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S379
+        la      r0,_S411
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S380
+        la      r0,_S412
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S381
+        la      r0,_S413
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S382
+        la      r0,_S414
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S383
+        la      r0,_S415
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S384
+        la      r0,_S416
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r2,L1353
+        la      r2,L1434
         jmp     (r2)
-L1352:
-        la      r0,_S385
+L1433:
+        la      r0,_S417
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S386
+        la      r0,_S418
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S387
+        la      r0,_S419
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S388
+        la      r0,_S420
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S389
+        la      r0,_S421
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S390
+        la      r0,_S422
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S391
+        la      r0,_S423
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S392
+        la      r0,_S424
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S393
+        la      r0,_S425
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S394
+        la      r0,_S426
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S395
+        la      r0,_S427
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1353:
+L1434:
         lc      r0,0
         sw      r0,-3(fp)
-L1354:
+L1435:
         lw      r0,-3(fp)
         la      r1,_proc_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1361
-        la      r2,L1355
+        brt     L1442
+        la      r2,L1436
         jmp     (r2)
-L1361:
+L1442:
         la      r0,_proc_is_user
         push    r0
         lw      r0,-3(fp)
@@ -13383,14 +14245,14 @@ L1361:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L1360
-        la      r2,L1357
+        brf     L1441
+        la      r2,L1438
         jmp     (r2)
-L1360:
+L1441:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1358
+        brt     L1439
         la      r0,_proc_argc
         push    r0
         lw      r0,-3(fp)
@@ -13407,34 +14269,34 @@ L1360:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S396
+        la      r0,_S428
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        bra     L1359
-L1358:
+        bra     L1440
+L1439:
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S397
+        la      r0,_S429
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1359:
-L1357:
+L1440:
+L1438:
         lw      r0,-3(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        la      r2,L1354
+        la      r2,L1435
         jmp     (r2)
-L1355:
-L1351:
+L1436:
+L1432:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13456,11 +14318,11 @@ _parse_program:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1365
+        brt     L1446
         lc      r0,0
-        la      r2,L1363
+        la      r2,L1444
         jmp     (r2)
-L1365:
+L1446:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -13477,11 +14339,11 @@ L1365:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1367
+        brt     L1448
         lc      r0,0
-        la      r2,L1363
+        la      r2,L1444
         jmp     (r2)
-L1367:
+L1448:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -13490,58 +14352,58 @@ L1367:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1369
+        brt     L1450
         lc      r0,0
-        la      r2,L1363
+        la      r2,L1444
         jmp     (r2)
-L1369:
+L1450:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,62
         ceq     r0,r1
-        brf     L1371
+        brf     L1452
         la      r0,_parse_uses_clause
         jal     r1,(r0)
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1373
+        brt     L1454
         lc      r0,0
-        la      r2,L1363
+        la      r2,L1444
         jmp     (r2)
-L1373:
-L1371:
+L1454:
+L1452:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1374
+        brt     L1455
         lc      r0,-32
         add     r0,fp
         push    r0
-        la      r0,_S398
+        la      r0,_S430
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S399
+        la      r0,_S431
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1375
-L1374:
+        bra     L1456
+L1455:
         lc      r0,-32
         add     r0,fp
         push    r0
-        la      r0,_S400
+        la      r0,_S432
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1375:
+L1456:
         la      r0,_emit_externs
         jal     r1,(r0)
-        la      r0,_S401
+        la      r0,_S433
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -13549,7 +14411,7 @@ L1375:
         lc      r0,-32
         add     r0,fp
         push    r0
-        la      r0,_S402
+        la      r0,_S434
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -13560,10 +14422,10 @@ L1375:
         lw      r0,0(r1)
         lc      r1,0
         cls     r1,r0
-        brf     L1377
+        brf     L1458
         la      r0,_emit_string_data
         jal     r1,(r0)
-L1377:
+L1458:
         lc      r0,22
         push    r0
         la      r0,_expect
@@ -13572,31 +14434,31 @@ L1377:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1378
-        la      r0,_S403
+        brt     L1459
+        la      r0,_S435
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1379
-L1378:
-        la      r0,_S404
+        bra     L1460
+L1459:
+        la      r0,_S436
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1379:
+L1460:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1381
-        la      r0,_S405
+        brt     L1462
+        la      r0,_S437
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1381:
-L1363:
+L1462:
+L1444:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13612,19 +14474,19 @@ _main:
         add     sp,-6
         lc      r0,0
         sw      r0,-6(fp)
-L1383:
+L1464:
         lw      r0,-6(fp)
         push    r0
-        la      r0,16384
+        la      r0,32768
         lc      r1,1
         sub     r0,r1
         mov     r1,r0
         pop     r0
         cls     r0,r1
-        brt     L1393
-        la      r2,L1384
+        brt     L1474
+        la      r2,L1465
         jmp     (r2)
-L1393:
+L1474:
         la      r0,_getchar
         jal     r1,(r0)
         sw      r0,-3(fp)
@@ -13633,7 +14495,7 @@ L1393:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1387
+        brf     L1468
         lw      r0,-3(fp)
         push    r0
         lc      r0,1
@@ -13646,16 +14508,16 @@ L1393:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1387
+        brf     L1468
         lc      r0,0
-        bra     L1388
-L1387:
+        bra     L1469
+L1468:
         lc      r0,1
-L1388:
+L1469:
         ceq     r0,z
-        brt     L1386
-        bra     L1384
-L1386:
+        brt     L1467
+        bra     L1465
+L1467:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -13666,9 +14528,9 @@ L1386:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        la      r2,L1383
+        la      r2,L1464
         jmp     (r2)
-L1384:
+L1465:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -13678,15 +14540,15 @@ L1384:
         lw      r0,-6(fp)
         lc      r1,0
         ceq     r0,r1
-        brf     L1390
-        la      r0,_S406
+        brf     L1471
+        la      r0,_S438
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        bra     L1382
-L1390:
+        bra     L1463
+L1471:
         lw      r0,-6(fp)
         push    r0
         la      r0,_input_buf
@@ -13699,23 +14561,23 @@ L1390:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1392
-        la      r0,_S407
+        brt     L1473
+        la      r0,_S439
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        bra     L1382
-L1392:
-        la      r0,_S408
+        bra     L1463
+L1473:
+        la      r0,_S440
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1382
-L1382:
+        bra     L1463
+L1463:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -14631,9 +15493,2249 @@ _sym_name:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .byte   0
         .byte   0
 _sym_kind:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -14763,7 +17865,391 @@ _sym_type_id:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _sym_value:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -14895,7 +18381,391 @@ _sym_arr_low:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _sym_arr_high:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -15025,7 +18895,391 @@ _sym_arr_elem:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _sym_arr_size:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -18431,8 +22685,2056 @@ _proc_pascal:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .byte   0
 _proc_extern:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -18808,6 +25110,102 @@ _proc_argc:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _proc_has_ret:
         .word   0
         .word   0
@@ -18841,7 +25239,199 @@ _proc_has_ret:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _proc_ret_type:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -18909,7 +25499,199 @@ _proc_is_user:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _proc_nlocals:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -18975,7 +25757,295 @@ _proc_depth:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _sym_depth:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -20614,7 +27684,715 @@ _field_size:
         .word   0
 _field_count:
         .word   0
+_field_arr_low:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_field_arr_high:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_field_arr_elem:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_field_arr_size:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _sym_ptr_base:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
         .word   0
         .word   0
         .word   0
@@ -26149,6 +33927,5468 @@ _input_buf:
         .word   0
         .word   0
         .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .byte   0
         .byte   0
 _S0:
         .byte   112,114,111,103,114,97,109,0
@@ -26521,179 +39761,179 @@ _S183:
 _S184:
         .byte   32,32,32,32,97,100,100,10,0
 _S185:
-        .byte   32,32,32,32,108,111,97,100,10,0
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
 _S186:
-        .byte   32,32,32,32,108,111,97,100,10,0
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
 _S187:
-        .byte   101,120,112,101,99,116,101,100,32,101,120,112,114,101,115,115,105,111,110,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S188:
-        .byte   42,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+        .byte   32,32,32,32,115,117,98,10,0
 _S189:
-        .byte   32,32,32,32,109,117,108,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S190:
-        .byte   100,105,118,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+        .byte   32,32,32,32,109,117,108,10,0
 _S191:
-        .byte   32,32,32,32,100,105,118,10,0
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
 _S192:
-        .byte   109,111,100,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+        .byte   32,32,32,32,97,100,100,10,0
 _S193:
-        .byte   32,32,32,32,109,111,100,10,0
+        .byte   32,32,32,32,108,111,97,100,98,10,0
 _S194:
-        .byte   97,110,100,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
+        .byte   32,32,32,32,108,111,97,100,10,0
 _S195:
-        .byte   32,32,32,32,97,110,100,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S196:
-        .byte   117,110,97,114,121,32,109,105,110,117,115,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,0
+        .byte   32,32,32,32,97,100,100,10,0
 _S197:
-        .byte   32,32,32,32,110,101,103,10,0
+        .byte   32,32,32,32,108,111,97,100,10,0
 _S198:
-        .byte   43,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+        .byte   32,32,32,32,108,111,97,100,10,0
 _S199:
-        .byte   32,32,32,32,97,100,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,101,120,112,114,101,115,115,105,111,110,0
 _S200:
-        .byte   45,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+        .byte   42,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
 _S201:
-        .byte   32,32,32,32,115,117,98,10,0
+        .byte   32,32,32,32,109,117,108,10,0
 _S202:
-        .byte   111,114,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
+        .byte   100,105,118,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
 _S203:
-        .byte   32,32,32,32,111,114,10,0
+        .byte   32,32,32,32,100,105,118,10,0
 _S204:
-        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,99,111,109,112,97,114,105,115,111,110,0
+        .byte   109,111,100,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
 _S205:
-        .byte   32,32,32,32,101,113,10,0
+        .byte   32,32,32,32,109,111,100,10,0
 _S206:
-        .byte   32,32,32,32,110,101,10,0
+        .byte   97,110,100,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
 _S207:
-        .byte   32,32,32,32,108,116,10,0
+        .byte   32,32,32,32,97,110,100,10,0
 _S208:
-        .byte   32,32,32,32,108,101,10,0
+        .byte   117,110,97,114,121,32,109,105,110,117,115,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,0
 _S209:
-        .byte   32,32,32,32,103,116,10,0
+        .byte   32,32,32,32,110,101,103,10,0
 _S210:
-        .byte   32,32,32,32,103,101,10,0
+        .byte   43,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
 _S211:
-        .byte   105,102,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
-_S212:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
-_S213:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
-_S214:
-        .byte   76,37,100,58,10,0
-_S215:
-        .byte   76,37,100,58,10,0
-_S216:
-        .byte   76,37,100,58,10,0
-_S217:
-        .byte   76,37,100,58,10,0
-_S218:
-        .byte   119,104,105,108,101,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
-_S219:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
-_S220:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
-_S221:
-        .byte   76,37,100,58,10,0
-_S222:
-        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,97,102,116,101,114,32,102,111,114,0
-_S223:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
-_S224:
-        .byte   102,111,114,32,118,97,114,105,97,98,108,101,32,109,117,115,116,32,98,101,32,97,32,118,97,114,0
-_S225:
-        .byte   76,37,100,58,10,0
-_S226:
-        .byte   32,32,32,32,103,101,10,0
-_S227:
-        .byte   32,32,32,32,108,101,10,0
-_S228:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
-_S229:
-        .byte   32,32,32,32,112,117,115,104,32,49,10,0
-_S230:
-        .byte   32,32,32,32,115,117,98,10,0
-_S231:
-        .byte   32,32,32,32,112,117,115,104,32,49,10,0
-_S232:
         .byte   32,32,32,32,97,100,100,10,0
-_S233:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
-_S234:
-        .byte   76,37,100,58,10,0
-_S235:
-        .byte   76,37,100,58,10,0
-_S236:
-        .byte   117,110,116,105,108,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
-_S237:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
-_S238:
-        .byte   99,97,115,101,32,115,101,108,101,99,116,111,114,32,109,117,115,116,32,98,101,32,105,110,116,101,103,101,114,32,111,114,32,98,111,111,108,101,97,110,0
-_S239:
-        .byte   32,32,32,32,100,117,112,10,0
-_S240:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S241:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S242:
-        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,32,97,102,116,101,114,32,109,105,110,117,115,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
-_S243:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S244:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
-_S245:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S246:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
-_S247:
+_S212:
+        .byte   45,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+_S213:
+        .byte   32,32,32,32,115,117,98,10,0
+_S214:
+        .byte   111,114,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
+_S215:
+        .byte   32,32,32,32,111,114,10,0
+_S216:
+        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,99,111,109,112,97,114,105,115,111,110,0
+_S217:
         .byte   32,32,32,32,101,113,10,0
-_S248:
+_S218:
+        .byte   32,32,32,32,110,101,10,0
+_S219:
+        .byte   32,32,32,32,108,116,10,0
+_S220:
+        .byte   32,32,32,32,108,101,10,0
+_S221:
+        .byte   32,32,32,32,103,116,10,0
+_S222:
+        .byte   32,32,32,32,103,101,10,0
+_S223:
+        .byte   105,102,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
+_S224:
         .byte   32,32,32,32,106,122,32,76,37,100,10,0
-_S249:
-        .byte   32,32,32,32,100,114,111,112,10,0
-_S250:
+_S225:
         .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
-_S251:
+_S226:
         .byte   76,37,100,58,10,0
-_S252:
-        .byte   32,32,32,32,100,114,111,112,10,0
-_S253:
+_S227:
         .byte   76,37,100,58,10,0
-_S254:
-        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,105,110,32,114,101,97,100,0
-_S255:
+_S228:
+        .byte   76,37,100,58,10,0
+_S229:
+        .byte   76,37,100,58,10,0
+_S230:
+        .byte   119,104,105,108,101,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
+_S231:
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+_S232:
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+_S233:
+        .byte   76,37,100,58,10,0
+_S234:
+        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,97,102,116,101,114,32,102,111,114,0
+_S235:
         .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+_S236:
+        .byte   102,111,114,32,118,97,114,105,97,98,108,101,32,109,117,115,116,32,98,101,32,97,32,118,97,114,0
+_S237:
+        .byte   76,37,100,58,10,0
+_S238:
+        .byte   32,32,32,32,103,101,10,0
+_S239:
+        .byte   32,32,32,32,108,101,10,0
+_S240:
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+_S241:
+        .byte   32,32,32,32,112,117,115,104,32,49,10,0
+_S242:
+        .byte   32,32,32,32,115,117,98,10,0
+_S243:
+        .byte   32,32,32,32,112,117,115,104,32,49,10,0
+_S244:
+        .byte   32,32,32,32,97,100,100,10,0
+_S245:
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+_S246:
+        .byte   76,37,100,58,10,0
+_S247:
+        .byte   76,37,100,58,10,0
+_S248:
+        .byte   117,110,116,105,108,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
+_S249:
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+_S250:
+        .byte   99,97,115,101,32,115,101,108,101,99,116,111,114,32,109,117,115,116,32,98,101,32,105,110,116,101,103,101,114,32,111,114,32,98,111,111,108,101,97,110,0
+_S251:
+        .byte   32,32,32,32,100,117,112,10,0
+_S252:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S253:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S254:
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,32,97,102,116,101,114,32,109,105,110,117,115,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
+_S255:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S256:
-        .byte   99,97,110,110,111,116,32,114,101,97,100,32,105,110,116,111,32,99,111,110,115,116,97,110,116,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
 _S257:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S258:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,105,110,116,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
 _S259:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,108,110,0
+        .byte   32,32,32,32,101,113,10,0
 _S260:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
 _S261:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
+        .byte   32,32,32,32,100,114,111,112,10,0
 _S262:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
 _S263:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
+        .byte   76,37,100,58,10,0
 _S264:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+        .byte   32,32,32,32,100,114,111,112,10,0
 _S265:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
+        .byte   76,37,100,58,10,0
 _S266:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
+        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,105,110,32,114,101,97,100,0
 _S267:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
 _S268:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+        .byte   99,97,110,110,111,116,32,114,101,97,100,32,105,110,116,111,32,99,111,110,115,116,97,110,116,0
 _S269:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,0
 _S270:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,105,110,116,0
 _S271:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,108,110,0
 _S272:
         .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
 _S273:
@@ -26703,268 +39943,332 @@ _S274:
 _S275:
         .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S276:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,108,110,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
 _S277:
-        .byte   110,101,119,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
 _S278:
-        .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S279:
-        .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S280:
-        .byte   110,101,119,32,114,101,113,117,105,114,101,115,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
 _S281:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
 _S282:
-        .byte   95,112,50,52,112,95,110,101,119,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S283:
-        .byte   100,105,115,112,111,115,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S284:
-        .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
 _S285:
-        .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
 _S286:
-        .byte   95,112,50,52,112,95,100,105,115,112,111,115,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S287:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,112,114,111,99,101,100,117,114,101,32,39,37,115,39,10,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S288:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,119,114,111,110,103,32,97,114,103,32,99,111,117,110,116,32,102,111,114,32,37,115,10,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,108,110,0
 _S289:
-        .byte   32,32,32,32,120,99,97,108,108,32,37,115,10,0
+        .byte   110,101,119,0
 _S290:
-        .byte   32,32,32,32,99,97,108,108,110,32,37,100,32,37,115,10,0
+        .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
 _S291:
-        .byte   32,32,32,32,99,97,108,108,32,37,115,10,0
+        .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
 _S292:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+        .byte   110,101,119,32,114,101,113,117,105,114,101,115,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
 _S293:
-        .byte   110,111,116,32,97,110,32,97,114,114,97,121,0
-_S294:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S295:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S296:
-        .byte   32,32,32,32,115,116,111,114,101,98,10,0
-_S297:
-        .byte   32,32,32,32,115,116,111,114,101,10,0
-_S298:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
-_S299:
-        .byte   110,111,116,32,97,32,112,111,105,110,116,101,114,0
-_S300:
-        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
-_S301:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,102,105,101,108,100,32,39,37,115,39,10,0
-_S302:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S294:
+        .byte   95,112,50,52,112,95,110,101,119,0
+_S295:
+        .byte   100,105,115,112,111,115,101,0
+_S296:
+        .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
+_S297:
+        .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
+_S298:
+        .byte   95,112,50,52,112,95,100,105,115,112,111,115,101,0
+_S299:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,112,114,111,99,101,100,117,114,101,32,39,37,115,39,10,0
+_S300:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,119,114,111,110,103,32,97,114,103,32,99,111,117,110,116,32,102,111,114,32,37,115,10,0
+_S301:
+        .byte   32,32,32,32,120,99,97,108,108,32,37,115,10,0
+_S302:
+        .byte   32,32,32,32,99,97,108,108,110,32,37,100,32,37,115,10,0
 _S303:
-        .byte   32,32,32,32,97,100,100,10,0
+        .byte   32,32,32,32,99,97,108,108,32,37,115,10,0
 _S304:
-        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
-_S305:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S306:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S307:
-        .byte   32,32,32,32,115,116,111,114,101,10,0
-_S308:
-        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
-_S309:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S310:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S311:
-        .byte   32,32,32,32,115,116,111,114,101,10,0
-_S312:
-        .byte   101,120,112,101,99,116,101,100,32,58,61,32,111,114,32,46,102,105,101,108,100,32,97,102,116,101,114,32,94,0
-_S313:
-        .byte   32,32,32,32,115,116,111,114,101,108,32,37,100,10,0
-_S314:
         .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
-_S315:
-        .byte   99,97,110,110,111,116,32,97,115,115,105,103,110,32,116,111,32,99,111,110,115,116,97,110,116,0
-_S316:
-        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,97,115,115,105,103,110,109,101,110,116,0
-_S317:
-        .byte   101,120,105,116,32,111,117,116,115,105,100,101,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,0
-_S318:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
-_S319:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,99,111,110,115,116,0
-_S320:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
-_S321:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
-_S322:
-        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,32,97,102,116,101,114,32,94,0
-_S323:
-        .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
-_S324:
+_S305:
+        .byte   110,111,116,32,97,110,32,97,114,114,97,121,0
+_S306:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S307:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S308:
+        .byte   32,32,32,32,115,116,111,114,101,98,10,0
+_S309:
+        .byte   32,32,32,32,115,116,111,114,101,10,0
+_S310:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+_S311:
+        .byte   110,111,116,32,97,32,112,111,105,110,116,101,114,0
+_S312:
         .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
-_S325:
-        .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
-_S326:
-        .byte   101,120,112,101,99,116,101,100,32,39,101,110,100,39,32,97,102,116,101,114,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
-_S327:
-        .byte   101,120,112,101,99,116,101,100,32,94,32,111,114,32,114,101,99,111,114,100,32,105,110,32,116,121,112,101,32,100,101,102,105,110,105,116,105,111,110,0
-_S328:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,118,97,114,0
-_S329:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
-_S330:
-        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
-_S331:
-        .byte   101,120,112,101,99,116,101,100,32,108,111,119,101,114,32,98,111,117,110,100,0
-_S332:
-        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
-_S333:
-        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
-_S334:
-        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
-_S335:
-        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
-_S336:
+_S313:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,102,105,101,108,100,32,39,37,115,39,10,0
+_S314:
         .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
+_S315:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S316:
+        .byte   32,32,32,32,97,100,100,10,0
+_S317:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S318:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S319:
+        .byte   32,32,32,32,115,117,98,10,0
+_S320:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S321:
+        .byte   32,32,32,32,109,117,108,10,0
+_S322:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S323:
+        .byte   32,32,32,32,97,100,100,10,0
+_S324:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S325:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S326:
+        .byte   32,32,32,32,115,116,111,114,101,98,10,0
+_S327:
+        .byte   32,32,32,32,115,116,111,114,101,10,0
+_S328:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S329:
+        .byte   32,32,32,32,97,100,100,10,0
+_S330:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S331:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S332:
+        .byte   32,32,32,32,115,116,111,114,101,10,0
+_S333:
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
+_S334:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S335:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S336:
+        .byte   32,32,32,32,115,116,111,114,101,10,0
 _S337:
-        .byte   46,103,108,111,98,97,108,32,37,115,32,37,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,58,61,32,111,114,32,46,102,105,101,108,100,32,97,102,116,101,114,32,94,0
 _S338:
-        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
+        .byte   32,32,32,32,115,116,111,114,101,108,32,37,100,10,0
 _S339:
-        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
 _S340:
-        .byte   46,103,108,111,98,97,108,32,37,115,32,49,10,0
+        .byte   99,97,110,110,111,116,32,97,115,115,105,103,110,32,116,111,32,99,111,110,115,116,97,110,116,0
 _S341:
-        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,0
+        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,97,115,115,105,103,110,109,101,110,116,0
 _S342:
-        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
+        .byte   101,120,105,116,32,111,117,116,115,105,100,101,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,0
 _S343:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
 _S344:
-        .byte   101,120,112,101,99,116,101,100,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,32,110,97,109,101,0
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,99,111,110,115,116,0
 _S345:
-        .byte   95,117,115,101,114,95,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
 _S346:
-        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
 _S347:
-        .byte   10,46,112,114,111,99,32,37,115,32,37,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,32,97,102,116,101,114,32,94,0
 _S348:
-        .byte   76,37,100,58,10,0
+        .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
 _S349:
-        .byte   32,32,32,32,108,111,97,100,108,32,37,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
 _S350:
-        .byte   32,32,32,32,114,101,116,32,37,100,10,0
+        .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
 _S351:
-        .byte   46,101,110,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S352:
-        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
+        .byte   101,120,112,101,99,116,101,100,32,108,111,119,101,114,32,98,111,117,110,100,0
 _S353:
-        .byte   32,32,32,32,99,97,108,108,32,95,112,50,52,112,95,109,97,105,110,10,0
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S354:
-        .byte   32,32,32,32,104,97,108,116,10,0
+        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
 _S355:
-        .byte   46,101,110,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
 _S356:
-        .byte   10,46,112,114,111,99,32,95,112,50,52,112,95,109,97,105,110,32,48,10,0
+        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
 _S357:
-        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
+        .byte   101,120,112,101,99,116,101,100,32,39,101,110,100,39,32,97,102,116,101,114,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
 _S358:
-        .byte   32,32,32,32,101,110,116,101,114,32,48,10,0
+        .byte   101,120,112,101,99,116,101,100,32,94,32,111,114,32,114,101,99,111,114,100,32,105,110,32,116,121,112,101,32,100,101,102,105,110,105,116,105,111,110,0
 _S359:
-        .byte   95,112,50,52,112,95,105,111,95,105,110,105,116,0
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,118,97,114,0
 _S360:
-        .byte   95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,0
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S361:
-        .byte   76,37,100,58,10,0
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S362:
-        .byte   32,32,32,32,114,101,116,32,48,10,0
+        .byte   101,120,112,101,99,116,101,100,32,108,111,119,101,114,32,98,111,117,110,100,0
 _S363:
-        .byte   32,32,32,32,104,97,108,116,10,0
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S364:
-        .byte   46,101,110,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
 _S365:
-        .byte   46,100,97,116,97,32,83,37,100,32,0
+        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
 _S366:
-        .byte   44,0
+        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
 _S367:
-        .byte   37,100,0
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
 _S368:
-        .byte   44,48,10,0
+        .byte   46,103,108,111,98,97,108,32,37,115,32,37,100,10,0
 _S369:
-        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,117,115,101,115,0
+        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
 _S370:
-        .byte   104,97,114,100,119,97,114,101,0
+        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
 _S371:
-        .byte   117,110,105,116,115,0
+        .byte   46,103,108,111,98,97,108,32,37,115,32,49,10,0
 _S372:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,117,110,105,116,32,39,37,115,39,10,0
+        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,0
 _S373:
-        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
+        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S374:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,32,49,10,0
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S375:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,32,49,10,0
+        .byte   101,120,112,101,99,116,101,100,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,32,110,97,109,101,0
 _S376:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,32,49,10,0
+        .byte   95,117,115,101,114,95,0
 _S377:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,32,48,10,0
+        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
 _S378:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,32,48,10,0
+        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
 _S379:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,32,48,10,0
+        .byte   10,46,112,114,111,99,32,37,115,32,37,100,10,0
 _S380:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,32,48,10,0
+        .byte   76,37,100,58,10,0
 _S381:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,32,48,10,0
+        .byte   32,32,32,32,108,111,97,100,108,32,37,100,10,0
 _S382:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,32,48,10,0
+        .byte   32,32,32,32,114,101,116,32,37,100,10,0
 _S383:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,32,49,10,0
+        .byte   46,101,110,100,10,0
 _S384:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,32,49,10,0
+        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
 _S385:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,10,0
+        .byte   32,32,32,32,99,97,108,108,32,95,112,50,52,112,95,109,97,105,110,10,0
 _S386:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,10,0
+        .byte   32,32,32,32,104,97,108,116,10,0
 _S387:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,10,0
+        .byte   46,101,110,100,10,0
 _S388:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,10,0
+        .byte   10,46,112,114,111,99,32,95,112,50,52,112,95,109,97,105,110,32,48,10,0
 _S389:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,10,0
+        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
 _S390:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,10,0
+        .byte   32,32,32,32,101,110,116,101,114,32,48,10,0
 _S391:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,10,0
+        .byte   95,112,50,52,112,95,105,111,95,105,110,105,116,0
 _S392:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,10,0
+        .byte   95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,0
 _S393:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,10,0
+        .byte   76,37,100,58,10,0
 _S394:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,10,0
+        .byte   32,32,32,32,114,101,116,32,48,10,0
 _S395:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,10,0
+        .byte   32,32,32,32,104,97,108,116,10,0
 _S396:
-        .byte   46,101,120,116,101,114,110,32,37,115,32,37,100,10,0
+        .byte   46,101,110,100,10,0
 _S397:
-        .byte   46,101,120,116,101,114,110,32,37,115,10,0
+        .byte   46,100,97,116,97,32,83,37,100,32,0
 _S398:
-        .byte   46,117,110,105,116,32,37,115,10,0
+        .byte   44,0
 _S399:
-        .byte   46,105,109,112,111,114,116,32,112,50,52,112,95,114,116,10,0
+        .byte   37,100,0
 _S400:
-        .byte   46,109,111,100,117,108,101,32,37,115,10,0
+        .byte   44,48,10,0
 _S401:
-        .byte   46,101,120,112,111,114,116,32,109,97,105,110,10,0
+        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,117,115,101,115,0
 _S402:
-        .byte   59,32,112,50,52,112,32,111,117,116,112,117,116,58,32,37,115,10,0
+        .byte   104,97,114,100,119,97,114,101,0
 _S403:
-        .byte   46,101,110,100,117,110,105,116,10,0
+        .byte   117,110,105,116,115,0
 _S404:
-        .byte   46,101,110,100,109,111,100,117,108,101,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,117,110,105,116,32,39,37,115,39,10,0
 _S405:
-        .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S406:
-        .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,32,49,10,0
 _S407:
-        .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,32,49,10,0
 _S408:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,32,49,10,0
+_S409:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,32,48,10,0
+_S410:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,32,48,10,0
+_S411:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,32,48,10,0
+_S412:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,32,48,10,0
+_S413:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,32,48,10,0
+_S414:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,32,48,10,0
+_S415:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,32,49,10,0
+_S416:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,32,49,10,0
+_S417:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,10,0
+_S418:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,10,0
+_S419:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,10,0
+_S420:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,10,0
+_S421:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,10,0
+_S422:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,10,0
+_S423:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,10,0
+_S424:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,10,0
+_S425:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,10,0
+_S426:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,10,0
+_S427:
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,10,0
+_S428:
+        .byte   46,101,120,116,101,114,110,32,37,115,32,37,100,10,0
+_S429:
+        .byte   46,101,120,116,101,114,110,32,37,115,10,0
+_S430:
+        .byte   46,117,110,105,116,32,37,115,10,0
+_S431:
+        .byte   46,105,109,112,111,114,116,32,112,50,52,112,95,114,116,10,0
+_S432:
+        .byte   46,109,111,100,117,108,101,32,37,115,10,0
+_S433:
+        .byte   46,101,120,112,111,114,116,32,109,97,105,110,10,0
+_S434:
+        .byte   59,32,112,50,52,112,32,111,117,116,112,117,116,58,32,37,115,10,0
+_S435:
+        .byte   46,101,110,100,117,110,105,116,10,0
+_S436:
+        .byte   46,101,110,100,109,111,100,117,108,101,10,0
+_S437:
+        .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
+_S438:
+        .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
+_S439:
+        .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
+_S440:
         .byte   59,32,79,75,10,0

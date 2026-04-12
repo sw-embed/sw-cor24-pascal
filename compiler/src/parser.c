@@ -475,7 +475,57 @@ int parse_factor(void) {
                 }
                 next_token();
 
-                /* address + offset, then load */
+                if (field_type[fld_idx] == TYPE_ARRAY) {
+                    /* p^.arrfield[i] — array field access */
+                    int fa_low;
+                    int fa_elem_size;
+
+                    /* compute base address of array field */
+                    if (field_offset[fld_idx] > 0) {
+                        printf("    push %d\n", field_offset[fld_idx] * 3);
+                        printf("    add\n");
+                    }
+                    /* now array base address is on stack */
+
+                    expect(TOK_LBRACKET);
+                    if (parse_error) return TYPE_INTEGER;
+
+                    /* Ensure scratch global exists */
+                    if (!has_arrays) {
+                        has_arrays = 1;
+                        printf(".global _p24p_tmp 1\n");
+                    }
+                    /* save base addr */
+                    printf("    storeg _p24p_tmp\n");
+
+                    parse_expression(); /* index */
+
+                    fa_low = field_arr_low[fld_idx];
+                    fa_elem_size = (field_arr_elem[fld_idx] == TYPE_CHAR) ? 1 : 3;
+
+                    if (fa_low != 0) {
+                        printf("    push %d\n", fa_low);
+                        printf("    sub\n");
+                    }
+                    if (fa_elem_size > 1) {
+                        printf("    push %d\n", fa_elem_size);
+                        printf("    mul\n");
+                    }
+                    printf("    loadg _p24p_tmp\n");
+                    printf("    add\n");
+
+                    expect(TOK_RBRACKET);
+                    if (parse_error) return TYPE_INTEGER;
+
+                    if (field_arr_elem[fld_idx] == TYPE_CHAR) {
+                        printf("    loadb\n");
+                    } else {
+                        printf("    load\n");
+                    }
+                    return field_arr_elem[fld_idx];
+                }
+
+                /* scalar field: address + offset, then load */
                 if (field_offset[fld_idx] > 0) {
                     printf("    push %d\n", field_offset[fld_idx] * 3);
                     printf("    add\n");
@@ -1155,26 +1205,77 @@ void parse_stmt(void) {
                 }
                 next_token();
 
-                expect(TOK_ASSIGN);
-                if (parse_error) return;
-
-                /* Compute address: load pointer, add field offset */
-                emit_load_sym(idx);
-                if (field_offset[fld_idx] > 0) {
-                    printf("    push %d\n", field_offset[fld_idx] * 3);
-                    printf("    add\n");
-                }
-                /* Save addr to scratch */
                 if (!has_arrays) {
                     has_arrays = 1;
                     printf(".global _p24p_tmp 1\n");
                 }
-                printf("    storeg _p24p_tmp\n");
 
-                etype = parse_expression();
+                if (field_type[fld_idx] == TYPE_ARRAY) {
+                    /* p^.arrfield[i] := expr */
+                    int fa_low;
+                    int fa_elem_size;
 
-                printf("    loadg _p24p_tmp\n");
-                printf("    store\n");
+                    expect(TOK_LBRACKET);
+                    if (parse_error) return;
+
+                    /* Compute array base address */
+                    emit_load_sym(idx);
+                    if (field_offset[fld_idx] > 0) {
+                        printf("    push %d\n", field_offset[fld_idx] * 3);
+                        printf("    add\n");
+                    }
+                    printf("    storeg _p24p_tmp\n");
+
+                    parse_expression(); /* index */
+
+                    fa_low = field_arr_low[fld_idx];
+                    fa_elem_size = (field_arr_elem[fld_idx] == TYPE_CHAR) ? 1 : 3;
+
+                    if (fa_low != 0) {
+                        printf("    push %d\n", fa_low);
+                        printf("    sub\n");
+                    }
+                    if (fa_elem_size > 1) {
+                        printf("    push %d\n", fa_elem_size);
+                        printf("    mul\n");
+                    }
+                    printf("    loadg _p24p_tmp\n");
+                    printf("    add\n");
+
+                    expect(TOK_RBRACKET);
+                    if (parse_error) return;
+
+                    /* Now element address is on stack, save it */
+                    printf("    storeg _p24p_tmp\n");
+
+                    expect(TOK_ASSIGN);
+                    if (parse_error) return;
+
+                    etype = parse_expression();
+
+                    printf("    loadg _p24p_tmp\n");
+                    if (field_arr_elem[fld_idx] == TYPE_CHAR) {
+                        printf("    storeb\n");
+                    } else {
+                        printf("    store\n");
+                    }
+                } else {
+                    /* p^.scalarfield := expr */
+                    expect(TOK_ASSIGN);
+                    if (parse_error) return;
+
+                    emit_load_sym(idx);
+                    if (field_offset[fld_idx] > 0) {
+                        printf("    push %d\n", field_offset[fld_idx] * 3);
+                        printf("    add\n");
+                    }
+                    printf("    storeg _p24p_tmp\n");
+
+                    etype = parse_expression();
+
+                    printf("    loadg _p24p_tmp\n");
+                    printf("    store\n");
+                }
 
             } else if (tok_type == TOK_ASSIGN) {
                 /* p^ := expr */
@@ -1428,18 +1529,106 @@ void parse_type_section(void) {
                 expect(TOK_COLON);
                 if (parse_error) return;
 
-                /* Field type */
-                fld_type = resolve_type_name(&fld_utype);
-                if (parse_error) return;
+                /* Field type — scalar or array */
+                if (tok_type == TOK_ARRAY) {
+                    /* array[low..high] of ElementType */
+                    int fa_low;
+                    int fa_high;
+                    int fa_elem;
+                    int fa_size;
+                    int fa_words;
 
-                /* Fix up field types and offsets */
-                fi = fld_first;
-                while (fi < field_count) {
-                    field_type[fi] = fld_type;
-                    field_offset[fi] = fld_offset;
-                    field_size[fi] = 1;  /* all types are 1 word */
-                    fld_offset = fld_offset + 1;
-                    fi = fi + 1;
+                    next_token();
+                    expect(TOK_LBRACKET);
+                    if (parse_error) return;
+
+                    fa_low = 0;
+                    if (tok_type == TOK_MINUS) {
+                        next_token();
+                        if (tok_type != TOK_INT_LIT) { error("expected integer"); return; }
+                        fa_low = 0 - tok_int_val;
+                        next_token();
+                    } else if (tok_type == TOK_INT_LIT) {
+                        fa_low = tok_int_val;
+                        next_token();
+                    } else {
+                        error("expected lower bound");
+                        return;
+                    }
+
+                    expect(TOK_DOTDOT);
+                    if (parse_error) return;
+
+                    fa_high = 0;
+                    if (tok_type == TOK_MINUS) {
+                        next_token();
+                        if (tok_type != TOK_INT_LIT) { error("expected integer"); return; }
+                        fa_high = 0 - tok_int_val;
+                        next_token();
+                    } else if (tok_type == TOK_INT_LIT) {
+                        fa_high = tok_int_val;
+                        next_token();
+                    } else {
+                        error("expected upper bound");
+                        return;
+                    }
+
+                    expect(TOK_RBRACKET);
+                    if (parse_error) return;
+                    expect(TOK_OF);
+                    if (parse_error) return;
+
+                    if (tok_type == TOK_INTEGER_KW) {
+                        fa_elem = TYPE_INTEGER;
+                        next_token();
+                    } else if (tok_type == TOK_BOOLEAN_KW) {
+                        fa_elem = TYPE_BOOLEAN;
+                        next_token();
+                    } else if (tok_type == TOK_CHAR_KW) {
+                        fa_elem = TYPE_CHAR;
+                        next_token();
+                    } else {
+                        error("expected element type");
+                        return;
+                    }
+
+                    fa_size = fa_high - fa_low + 1;
+                    if (fa_size <= 0) {
+                        error("array size must be positive");
+                        return;
+                    }
+
+                    if (fa_elem == TYPE_CHAR) {
+                        fa_words = (fa_size + 2) / 3;
+                    } else {
+                        fa_words = fa_size;
+                    }
+
+                    fi = fld_first;
+                    while (fi < field_count) {
+                        field_type[fi] = TYPE_ARRAY;
+                        field_offset[fi] = fld_offset;
+                        field_size[fi] = fa_words;
+                        field_arr_low[fi] = fa_low;
+                        field_arr_high[fi] = fa_high;
+                        field_arr_elem[fi] = fa_elem;
+                        field_arr_size[fi] = fa_size;
+                        fld_offset = fld_offset + fa_words;
+                        fi = fi + 1;
+                    }
+                } else {
+                    fld_type = resolve_type_name(&fld_utype);
+                    if (parse_error) return;
+
+                    /* Fix up field types and offsets */
+                    fi = fld_first;
+                    while (fi < field_count) {
+                        field_type[fi] = fld_type;
+                        field_offset[fi] = fld_offset;
+                        field_size[fi] = 1;
+                        fld_offset = fld_offset + 1;
+                        fi = fi + 1;
+                    }
                 }
 
                 /* Semicolon between fields, optional before end */
@@ -1762,18 +1951,19 @@ int parse_local_vars(int local_offset) {
             int utidx;
             type = resolve_type_name(&utidx);
             if (parse_error) return count;
-        }
 
-        expect(TOK_SEMI);
-        if (parse_error) return count;
+            expect(TOK_SEMI);
+            if (parse_error) return count;
 
-        /* Fix up types and local indices */
-        i = first;
-        while (i < sym_count) {
-            sym_type_id[i] = type;
-            sym_value[i] = local_offset;
-            local_offset = local_offset + 1;
-            i = i + 1;
+            /* Fix up types, local indices, and pointer metadata */
+            i = first;
+            while (i < sym_count) {
+                sym_type_id[i] = type;
+                sym_value[i] = local_offset;
+                sym_ptr_base[i] = utidx;
+                local_offset = local_offset + 1;
+                i = i + 1;
+            }
         }
     }
 
@@ -1837,6 +2027,16 @@ void parse_proc_or_func_decl(int is_func) {
         } else if (tok_type == TOK_CHAR_KW) {
             ret_type = TYPE_CHAR;
             next_token();
+        } else if (tok_type == TOK_IDENT) {
+            int rt_utidx;
+            rt_utidx = utype_lookup(tok_lexeme);
+            if (rt_utidx >= 0 && utype_kind[rt_utidx] == TYPE_POINTER) {
+                ret_type = TYPE_POINTER;
+                next_token();
+            } else {
+                error("expected return type");
+                return;
+            }
         } else {
             error("expected return type");
             return;
