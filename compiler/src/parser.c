@@ -1887,13 +1887,14 @@ int parse_param_list(int pidx) {
             int utidx;
             type = resolve_type_name(&utidx);
             if (parse_error) return param_count;
-        }
 
-        /* Fix up types for this group */
-        i = first;
-        while (i < sym_count) {
-            sym_type_id[i] = type;
-            i = i + 1;
+            /* Fix up types and pointer metadata for this group */
+            i = first;
+            while (i < sym_count) {
+                sym_type_id[i] = type;
+                sym_ptr_base[i] = utidx;
+                i = i + 1;
+            }
         }
 
         if (tok_type != TOK_SEMI) break;

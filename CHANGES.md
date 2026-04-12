@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-04-12 — Forward-declared pointer parameter fix
+
+### Compiler
+- **Forward-declared functions with pointer parameters** (issue #13): `sym_ptr_base`
+  metadata was not set for function/procedure parameters in `parse_param_list`,
+  so `p^.field` access failed with "unknown field" when the function was
+  forward-declared. Fixed by adding `sym_ptr_base[i] = utidx` to the parameter
+  fixup loop, matching the pattern already used for local and global variables.
+
+### Tests
+- t35_fwd_ptr_param — forward-declared function taking `PNode` parameter,
+  accesses `p^.value` in implementation body
+
+### Issues closed
+- #13 Forward-declared functions with pointer-type parameters lose field access
+
 ## 2026-04-12 — Compiler limits, record arrays, pointer returns
 
 ### Compiler

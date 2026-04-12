@@ -12581,6 +12581,17 @@ L1300:
         mov     r1,r0
         lw      r0,-12(fp)
         sw      r0,0(r1)
+        la      r0,_sym_ptr_base
+        push    r0
+        lw      r0,-15(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lw      r0,-18(fp)
+        sw      r0,0(r1)
         lw      r0,-15(fp)
         lc      r1,1
         add     r0,r1
