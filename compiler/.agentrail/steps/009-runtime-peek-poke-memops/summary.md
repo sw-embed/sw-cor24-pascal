@@ -1,0 +1,1 @@
+Added peek/poke/memcpy/memset runtime routines to runtime.spc and registered them in the compiler system unit. peek(addr) reads a byte via loadb, poke(addr,val) writes via storeb, memcpy and memset use byte-by-byte loops. All 21 tests pass. This completes all GitHub issues (#1-#5) and all saga steps.

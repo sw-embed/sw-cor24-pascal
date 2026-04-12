@@ -1,0 +1,11 @@
+{
+  "task_type": "cor24-c",
+  "state": {
+    "number": 14,
+    "step": "nested-procedures"
+  },
+  "action": "added sym_depth/scope_depth/proc_depth tracking, modified emit_load_sym/emit_store_sym for loadn/storen, added nested proc parsing in parse_proc_or_func_decl, calln emission in parse_proc_call, added t23_nested test",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-04-06T13:28:24"
+}

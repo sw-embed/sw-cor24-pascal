@@ -1,0 +1,9 @@
+number = 14
+slug = "nested-procedures"
+status = "completed"
+description = "Add nested procedure/function support to p24p (GitHub issue #8). Standard Pas..."
+role = "production"
+context_files = []
+created_at = "2026-04-06T10:54:59"
+completed_at = "2026-04-06T13:28:24"
+task_type = "cor24-c"

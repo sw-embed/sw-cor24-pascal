@@ -1,0 +1,1 @@
+Fixed read(ch) for char variables. Compiler now checks sym_type_id and emits _p24p_read_char for TYPE_CHAR vs _p24p_read_int for integers. Added _p24p_io_init runtime function to initialize lookahead buffer to -1 (was 0, causing stale NUL read). Extended test-all.sh to support .input files for UART-input tests. All 30 tests pass. Closed issue #4.

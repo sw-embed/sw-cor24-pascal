@@ -26,6 +26,16 @@ runtime/runtime.spc  -------------+
                                               pvm.s (COR24 VM)
 ```
 
+## Language Features
+
+- Integer, boolean, char types
+- Arrays, records, pointer types (`^T`)
+- `new` / `dispose` for heap allocation
+- Procedures and functions (nested, forward-declared)
+- Control flow: if/else, while, for, repeat/until, case, exit
+- Standard I/O: read, readln, write, writeln
+- 128 string literals (packed pool)
+
 ## Dependencies
 
 Sibling repos (cloned under `~/github/sw-embed/`):

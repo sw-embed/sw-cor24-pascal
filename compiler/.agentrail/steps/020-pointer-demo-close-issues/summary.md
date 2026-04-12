@@ -1,0 +1,1 @@
+Already completed as part of step 018. Demos: t30_pointer (linked list), demo_bst (BST), demo_exit (search with exit). All tests pass. Issue #7 closed.

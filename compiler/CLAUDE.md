@@ -61,6 +61,20 @@ Pascal compiler written in C (via tc24r) that emits .spc p-code assembler output
 - `docs/c-and-pascal-implementation.md` — Implementation strategy: what's in C vs Pascal, phase breakdown, runtime dogfooding plan
 - `docs/tc24r-bug-report-feature-request.md` — Known tc24r issues and workarounds
 
+## Why `p24p.s` is checked in
+
+`compiler/p24p.s` is a generated artifact (tc24r output from `src/main.c`) but is
+intentionally tracked in git. Reasons:
+
+- Downstream tools and tests run `cor24-run --run compiler/p24p.s` directly and
+  must not require a tc24r build to be available.
+- It serves as a known-good bootstrap snapshot of the compiler — reproducible
+  without re-running tc24r, which lives in a separate repo.
+
+**Never hand-edit `p24p.s`.** Edit `src/main.c` (or other C sources) and
+regenerate via `just build`. Hand-patches will be clobbered on the next rebuild
+and risk drifting out of sync with the C source of truth.
+
 ## Build & Test
 
 ```bash

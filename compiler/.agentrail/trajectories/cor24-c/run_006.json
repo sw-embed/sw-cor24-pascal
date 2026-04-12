@@ -1,0 +1,11 @@
+{
+  "task_type": "cor24-c",
+  "state": {
+    "number": 9,
+    "step": "runtime-peek-poke-memops"
+  },
+  "action": "added 4 .proc blocks to runtime/runtime.spc with .export directives, registered 4 procs in parser.c register_system_unit(), added t20_memops test, ran full test suite",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-04-04T20:34:05"
+}

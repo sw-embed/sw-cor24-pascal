@@ -1,0 +1,1 @@
+Raised MAX_STRINGS from 16 to 128 and refactored string storage from fixed-width 256-byte slots to a packed string pool with offset table. Added t24_strings_many.pas test with 23 string literals. All 25 tests pass. Closed GitHub issue #5.

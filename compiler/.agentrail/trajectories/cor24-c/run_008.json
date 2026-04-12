@@ -1,0 +1,11 @@
+{
+  "task_type": "cor24-c",
+  "state": {
+    "number": 11,
+    "step": "unit-mode-xcall-emit"
+  },
+  "action": "modified parser.h (unit_mode flag), parser.c (emit_rt_call, parse_uses_clause units, parse_program .unit/.endunit, parse_block trampoline rename, emit_externs with arg counts, parse_proc_call xcall, bulk-replaced call _p24p_ with emit_rt_call), fixed pa24r main-first check for unit mode",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-04-06T10:33:47"
+}

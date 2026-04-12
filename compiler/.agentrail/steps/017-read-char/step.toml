@@ -1,0 +1,10 @@
+number = 17
+slug = "read-char"
+status = "completed"
+description = "Fix read(ch) for char variables to read raw character byte instead of parsing integer (GitHub issue #4). Add _p24p_read_char runtime primitive."
+role = "production"
+context_files = []
+created_at = "2026-04-12T14:40:00"
+completed_at = "2026-04-12T15:20:53"
+task_type = "cor24-c"
+commits = ["73e34aab8df0c595e3c27d32c85be922edede040"]

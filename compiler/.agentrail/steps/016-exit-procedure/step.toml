@@ -1,0 +1,10 @@
+number = 16
+slug = "exit-procedure"
+status = "completed"
+description = "Add exit procedure for early return from procedures/functions (GitHub issue #6). Parse exit as a built-in, emit jump to procedure epilogue."
+role = "production"
+context_files = []
+created_at = "2026-04-12T14:40:00"
+completed_at = "2026-04-12T14:50:19"
+task_type = "cor24-c"
+commits = ["d1014b50e07e424dabb2f3da1116160b3afbfe6e"]

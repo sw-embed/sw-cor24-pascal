@@ -1,0 +1,1 @@
+Added run-pascal-unit.sh for full multi-unit pipeline: .pas → p24p (unit mode) → pa24r → p24-load → pvm.s. Key discovery: PVM must be pre-assembled (--assemble from vm/ dir), loaded via --load-binary + --patch, not --run. Added t22_unit_mode test. Updated test-all.sh with unit-mode loop. 23/23 pass (22 static + 1 unit).

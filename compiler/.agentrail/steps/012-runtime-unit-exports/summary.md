@@ -1,0 +1,1 @@
+Created runtime/runtime-unit.spc — unit version with .unit p24p_rt, .export directives with arg counts for all 36 procedures, dummy main for assembler. Assembles into runtime/p24p_rt.p24 (v2, 2420 bytes). Created runtime/runtime.spi interface file. Added build-runtime-unit justfile recipe. Original runtime.spc unchanged for static-link backward compat. 22/22 tests pass.

@@ -1,0 +1,10 @@
+number = 15
+slug = "raise-max-strings"
+status = "completed"
+description = "Raise MAX_STRINGS from 16 to 128 (GitHub issue #5). Quick fix in parser.h, plus a test program with 20+ string literals."
+role = "production"
+context_files = []
+created_at = "2026-04-12T14:40:00"
+completed_at = "2026-04-12T14:45:54"
+task_type = "cor24-c"
+commits = ["ebb434dc2d7d24e20f1337213e8d9077caf3ae2c"]

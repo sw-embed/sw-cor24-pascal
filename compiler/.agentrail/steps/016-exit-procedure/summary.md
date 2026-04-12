@@ -1,0 +1,1 @@
+Added exit keyword support. Lexer recognizes exit as TOK_EXIT. Parser emits jmp to a per-procedure epilogue label. Each proc/func/main gets a unique exit label before its ret/halt. Saves/restores exit_label for nested procs. 4 tests: proc, func, nested block, main. All 29 tests pass. Closed issue #6.
