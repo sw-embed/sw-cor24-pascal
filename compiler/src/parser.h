@@ -36,6 +36,9 @@ int sym_arr_size[MAX_SYMBOLS];   /* total words allocated */
 /* Label counter */
 int label_count;
 
+/* Exit label for current procedure/function/main (-1 if none) */
+int exit_label;
+
 /* String literal table (packed pool) */
 #define MAX_STRINGS 128
 #define MAX_STRING_BYTES 256

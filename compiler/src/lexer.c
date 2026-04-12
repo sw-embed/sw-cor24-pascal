@@ -105,6 +105,7 @@ int lex_keyword(char *id) {
     if (strcmp(id, "read") == 0) return TOK_READ;
     if (strcmp(id, "readln") == 0) return TOK_READLN;
     if (strcmp(id, "uses") == 0) return TOK_USES;
+    if (strcmp(id, "exit") == 0) return TOK_EXIT;
     return TOK_IDENT;
 }
 
@@ -352,6 +353,7 @@ char *token_name(int type) {
     if (type == TOK_CHAR_LIT) return "CHAR_LIT";
     if (type == TOK_STR_LIT) return "STR_LIT";
     if (type == TOK_USES) return "USES";
+    if (type == TOK_EXIT) return "EXIT";
     if (type == TOK_EOF) return "EOF";
     return "ERROR";
 }

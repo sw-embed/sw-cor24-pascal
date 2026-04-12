@@ -991,6 +991,13 @@ void parse_stmt(void) {
         parse_writeln_stmt();
     } else if (tok_type == TOK_BEGIN) {
         parse_compound_stmt();
+    } else if (tok_type == TOK_EXIT) {
+        next_token();
+        if (exit_label < 0) {
+            error("exit outside procedure/function");
+        } else {
+            printf("    jmp L%d\n", exit_label);
+        }
     }
     /* else: empty statement — valid per grammar */
 }
@@ -1513,17 +1520,30 @@ void parse_proc_or_func_decl(int is_func) {
     /* Emit .proc header (pa24r auto-generates enter from .proc N) */
     printf("\n.proc %s %d\n", extern_name, total_locals);
 
-    /* Parse body */
-    parse_compound_stmt();
-    expect(TOK_SEMI);  /* semicolon after procedure/function body */
-    if (parse_error) return;
+    /* Set up exit label for this procedure */
+    {
+        int saved_exit_label;
+        int my_exit_label;
+        saved_exit_label = exit_label;
+        my_exit_label = label_count;
+        label_count = label_count + 1;
+        exit_label = my_exit_label;
 
-    /* Emit return (pa24r auto-generates leave from .end) */
-    if (is_func) {
-        printf("    loadl %d\n", cur_func_local);  /* push return value */
+        /* Parse body */
+        parse_compound_stmt();
+        expect(TOK_SEMI);  /* semicolon after procedure/function body */
+
+        /* Emit exit label and return */
+        printf("L%d:\n", my_exit_label);
+        if (is_func) {
+            printf("    loadl %d\n", cur_func_local);  /* push return value */
+        }
+        printf("    ret %d\n", param_count);
+        printf(".end\n");
+
+        exit_label = saved_exit_label;
     }
-    printf("    ret %d\n", param_count);
-    printf(".end\n");
+    if (parse_error) return;
 
     /* Restore scope */
     sym_count = scope_base;
@@ -1569,14 +1589,23 @@ void parse_block(void) {
     }
     printf("    enter 0\n");
 
-    parse_compound_stmt();
+    {
+        int main_exit_label;
+        main_exit_label = label_count;
+        label_count = label_count + 1;
+        exit_label = main_exit_label;
 
-    if (has_procs && !unit_mode) {
-        printf("    ret 0\n");
-    } else {
-        printf("    halt\n");
+        parse_compound_stmt();
+
+        printf("L%d:\n", main_exit_label);
+        if (has_procs && !unit_mode) {
+            printf("    ret 0\n");
+        } else {
+            printf("    halt\n");
+        }
+        printf(".end\n");
+        exit_label = -1;
     }
-    printf(".end\n");
 }
 
 /* --- Public API --- */
@@ -1604,6 +1633,7 @@ void emit_string_data(void) {
 void parser_init(char *src, int len) {
     sym_count = 0;
     label_count = 0;
+    exit_label = -1;
     parse_error = 0;
     str_count = 0;
     str_data_used = 0;
