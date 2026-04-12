@@ -83,9 +83,7 @@ char *sym_name_at(int i) {
 }
 
 char *str_data_at(int i) {
-    int off;
-    off = i * MAX_STRING_BYTES;
-    return &str_data[off];
+    return &str_data[str_off[i]];
 }
 
 /* --- Procedure table --- */
@@ -312,8 +310,14 @@ int parse_factor(void) {
             error("too many string literals");
             return TYPE_STRING;
         }
-        str_copy(str_data_at(idx), tok_str_val);
+        if (str_data_used + tok_str_len + 1 > STR_DATA_SIZE) {
+            error("string data pool full");
+            return TYPE_STRING;
+        }
+        str_off[idx] = str_data_used;
+        str_copy(&str_data[str_data_used], tok_str_val);
         str_len[idx] = tok_str_len;
+        str_data_used = str_data_used + tok_str_len + 1;
         str_count = str_count + 1;
         printf("    push S%d\n", idx);
         next_token();
@@ -1602,6 +1606,7 @@ void parser_init(char *src, int len) {
     label_count = 0;
     parse_error = 0;
     str_count = 0;
+    str_data_used = 0;
     proc_count = 0;
     unit_hardware = 0;
     unit_mode = 0;

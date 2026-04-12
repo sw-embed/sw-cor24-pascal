@@ -36,12 +36,14 @@ int sym_arr_size[MAX_SYMBOLS];   /* total words allocated */
 /* Label counter */
 int label_count;
 
-/* String literal table */
-#define MAX_STRINGS 16
+/* String literal table (packed pool) */
+#define MAX_STRINGS 128
 #define MAX_STRING_BYTES 256
-#define STR_DATA_SIZE 4096
+#define STR_DATA_SIZE 8192
 char str_data[STR_DATA_SIZE];
+int str_off[MAX_STRINGS];
 int str_len[MAX_STRINGS];
+int str_data_used;
 int str_count;
 
 /* External procedure table */

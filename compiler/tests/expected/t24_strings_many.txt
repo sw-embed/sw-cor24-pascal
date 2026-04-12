@@ -1,0 +1,23 @@
+Token types:
+  0 = EOF
+  1 = INT
+  2 = IDENT
+  3 = STRING
+  4 = PLUS
+  5 = MINUS
+  6 = STAR
+  7 = SLASH
+  8 = LPAREN
+  9 = RPAREN
+ 10 = ASSIGN
+ 11 = SEMI
+ 12 = DOT
+ 13 = COMMA
+ 14 = COLON
+ 15 = EQ
+ 16 = NEQ
+ 17 = LT
+ 18 = GT
+ 19 = LTE
+ 20 = GTE
+Done: 21 token types listed
