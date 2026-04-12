@@ -14,7 +14,8 @@
 .export _p24p_write_bool_w 2
 .export _p24p_write_str_w 2
 
-; I/O — read
+; I/O — init and read
+.export _p24p_io_init 0
 .export _p24p_read_int 0
 .export _p24p_read_char 0
 .export _p24p_read_ln 0

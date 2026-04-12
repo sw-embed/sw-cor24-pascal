@@ -755,7 +755,11 @@ void parse_read_args(void) {
             return;
         }
 
-        emit_rt_call("_p24p_read_int");
+        if (sym_type_id[idx] == TYPE_CHAR) {
+            emit_rt_call("_p24p_read_char");
+        } else {
+            emit_rt_call("_p24p_read_int");
+        }
         emit_store_sym(idx);
 
         if (tok_type != TOK_COMMA) break;
@@ -1588,6 +1592,7 @@ void parse_block(void) {
         printf("\n.proc main 0\n");
     }
     printf("    enter 0\n");
+    emit_rt_call("_p24p_io_init");
 
     {
         int main_exit_label;
@@ -1697,14 +1702,18 @@ void emit_externs(void) {
         printf(".extern _p24p_write_bool 1\n");
         printf(".extern _p24p_write_str 1\n");
         printf(".extern _p24p_write_ln 0\n");
+        printf(".extern _p24p_io_init 0\n");
         printf(".extern _p24p_read_int 0\n");
+        printf(".extern _p24p_read_char 0\n");
         printf(".extern _p24p_read_ln 0\n");
     } else {
         printf(".extern _p24p_write_int\n");
         printf(".extern _p24p_write_bool\n");
         printf(".extern _p24p_write_str\n");
         printf(".extern _p24p_write_ln\n");
+        printf(".extern _p24p_io_init\n");
         printf(".extern _p24p_read_int\n");
+        printf(".extern _p24p_read_char\n");
         printf(".extern _p24p_read_ln\n");
     }
     /* Emit externs for non-user registered procedures */

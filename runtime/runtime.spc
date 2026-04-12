@@ -15,6 +15,7 @@
 .export _p24p_read_int
 .export _p24p_read_char
 .export _p24p_read_ln
+.export _p24p_io_init
 .export _p24p_heap_init
 .export _p24p_new
 .export _p24p_dispose
@@ -821,6 +822,16 @@ sw_emit:
 ; _io_ef = eof flag (0 = not eof, 1 = eof)
 .global _io_la 1
 .global _io_ef 1
+
+; _p24p_io_init ( -- )
+; Initialize I/O state. Must be called before any read operations.
+.proc _p24p_io_init 0
+    push -1
+    storeg _io_la
+    push 0
+    storeg _io_ef
+    ret 0
+.end
 
 ; _p24p_eof ( -- flag )
 ; Returns 1 if at end of input (EOT byte 0x04), 0 otherwise.

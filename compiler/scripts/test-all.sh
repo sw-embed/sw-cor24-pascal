@@ -80,14 +80,23 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
     continue
   fi
 
-  # Step 5: Execute
-  EXEC_OUTPUT=$(cor24-run --run "$PVM" \
-    --load-binary "$TMP/$NAME.bin@0x010000" \
-    --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
-    --terminal --speed 0 -n 50000000 2>&1)
+  # Step 5: Execute (with optional UART input from .input file)
+  INPUT_FILE="$P24P_DIR/tests/expected/${NAME}.input"
+  if [ -f "$INPUT_FILE" ]; then
+    EXEC_OUTPUT=$(cor24-run --run "$PVM" \
+      --load-binary "$TMP/$NAME.bin@0x010000" \
+      --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
+      -u "$(cat "$INPUT_FILE")" --speed 0 -n 50000000 2>&1)
+  else
+    EXEC_OUTPUT=$(cor24-run --run "$PVM" \
+      --load-binary "$TMP/$NAME.bin@0x010000" \
+      --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
+      --terminal --speed 0 -n 50000000 2>&1)
+  fi
 
   ACTUAL=$(echo "$EXEC_OUTPUT" | grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
-    grep -v '^Executed' | grep -v '^Loaded' | grep -v '^PVM OK' | grep -v '^$' | grep -v '^HALT$')
+    grep -v '^Executed' | grep -v '^Loaded' | grep -v 'PVM OK' | grep -v '^$' | \
+    grep -v '^HALT$' | grep -v '^CPU halted')
 
   HALTED=$(echo "$EXEC_OUTPUT" | grep -c 'CPU halted' || true)
 
