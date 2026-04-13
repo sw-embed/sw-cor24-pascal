@@ -64,6 +64,7 @@ int proc_count;
 
 /* User procedure extensions to proc table */
 int proc_is_user[MAX_PROCS];
+int proc_is_exported[MAX_PROCS]; /* 1 = declared in unit interface section */
 int proc_nlocals[MAX_PROCS];
 int proc_depth[MAX_PROCS];       /* nesting depth where proc was declared */
 

@@ -128,6 +128,7 @@ int proc_add(char *pascal_name, char *extern_name, int argc, int has_ret, int re
     proc_has_ret[idx] = has_ret;
     proc_ret_type[idx] = ret_type;
     proc_is_user[idx] = 0;
+    proc_is_exported[idx] = 0;
     proc_nlocals[idx] = 0;
     proc_depth[idx] = 0;
     proc_count = proc_count + 1;
@@ -2058,6 +2059,9 @@ void parse_proc_or_func_decl(int is_func) {
         if (pidx >= 0) {
             proc_is_user[pidx] = 1;
             proc_depth[pidx] = scope_depth;
+            if (in_interface) {
+                proc_is_exported[pidx] = 1;
+            }
         }
         /* Restore scope */
         sym_count = scope_base;
@@ -2407,12 +2411,6 @@ void parse_unit(void) {
         if (parse_error) return;
     }
 
-    /* Emit unit header */
-    printf(".unit %s\n", unit_name);
-    printf(".import p24p_rt\n");
-    emit_externs();
-    printf("; p24p unit: %s\n", unit_name);
-
     /* Expect 'interface' keyword */
     if (tok_type != TOK_INTERFACE) {
         error("expected 'interface' in unit");
@@ -2437,6 +2435,24 @@ void parse_unit(void) {
     }
 
     in_interface = 0;
+    if (parse_error) return;
+
+    /* Emit unit header now that we know all exports */
+    printf(".unit %s\n", unit_name);
+    printf(".import p24p_rt\n");
+    emit_externs();
+    /* Emit .export for each interface-declared procedure */
+    {
+        int i;
+        i = 0;
+        while (i < proc_count) {
+            if (proc_is_exported[i]) {
+                printf(".export %s %d\n", proc_extern_at(i), proc_argc[i]);
+            }
+            i = i + 1;
+        }
+    }
+    printf("; p24p unit: %s\n", unit_name);
 
     /* Expect 'implementation' keyword */
     if (tok_type != TOK_IMPLEMENTATION) {
