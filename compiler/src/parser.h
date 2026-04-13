@@ -117,6 +117,12 @@ int is_unit_compilation; /* 1 = compiling a 'unit', 0 = compiling a 'program' */
 int in_interface;        /* 1 = parsing interface section (proc headers are implicit forward) */
 char unit_name[MAX_NAME]; /* name of the unit being compiled */
 
+/* Imported user unit tracking */
+#define MAX_IMPORTS 16
+#define IMPORT_NAME_SIZE 512
+char import_name[IMPORT_NAME_SIZE]; /* packed unit names loaded from SPI */
+int import_count;
+
 /* Error flag */
 int parse_error;
 

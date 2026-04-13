@@ -13,6 +13,7 @@ char input_buf[INPUT_BUF_SIZE];
 int main() {
     int ch;
     int len;
+    int src_offset;
 
     len = 0;
     while (len < INPUT_BUF_SIZE - 1) {
@@ -30,7 +31,17 @@ int main() {
         return 1;
     }
 
-    parser_init(input_buf, len);
+    /* Find where SPI sections end and Pascal source begins */
+    src_offset = load_spi_sections(input_buf, len);
+
+    /* Initialize parser with the Pascal source (after SPI sections).
+       Note: parser_init resets proc_count, so SPI procs are loaded after. */
+    parser_init(&input_buf[src_offset], len - src_offset);
+
+    /* Re-load SPI sections to register imported procs (after system unit) */
+    if (src_offset > 0) {
+        load_spi_sections(input_buf, src_offset);
+    }
 
     if (tok_type == TOK_UNIT) {
         parse_unit();

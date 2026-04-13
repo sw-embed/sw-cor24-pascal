@@ -135,6 +135,148 @@ int proc_add(char *pascal_name, char *extern_name, int argc, int has_ret, int re
     return idx;
 }
 
+/* --- Import unit tracking --- */
+
+char *import_name_at(int i) {
+    int off;
+    off = i * MAX_NAME;
+    return &import_name[off];
+}
+
+int import_lookup(char *name) {
+    int i;
+    i = 0;
+    while (i < import_count) {
+        if (strcmp(import_name_at(i), name) == 0) return i;
+        i = i + 1;
+    }
+    return -1;
+}
+
+/* Parse SPI sections prepended to the input buffer.
+   Format: ";--- SPI <name> ---\n" ... ".export <extern> <argc>\n" ... ";--- END SPI ---\n"
+   Returns the offset where the actual Pascal source begins. */
+int load_spi_sections(char *buf, int len) {
+    int pos;
+    char line[256];
+    int llen;
+    char spi_name[MAX_NAME];
+    char ext_name[MAX_NAME];
+    char pascal_name[MAX_NAME];
+    int argc;
+    int pidx;
+    int ch;
+    int i;
+
+    pos = 0;
+    while (pos < len) {
+        /* Check for ";--- SPI " marker */
+        if (buf[pos] != ';' || pos + 9 >= len) break;
+        if (buf[pos+1] != '-' || buf[pos+2] != '-' || buf[pos+3] != '-') break;
+        if (buf[pos+4] != ' ' || buf[pos+5] != 'S' || buf[pos+6] != 'P' || buf[pos+7] != 'I') break;
+        if (buf[pos+8] != ' ') break;
+
+        /* Extract unit name from ";--- SPI <name> ---" */
+        pos = pos + 9;
+        i = 0;
+        while (pos < len && buf[pos] != ' ' && buf[pos] != '\n' && i < MAX_NAME - 1) {
+            spi_name[i] = buf[pos];
+            i = i + 1;
+            pos = pos + 1;
+        }
+        spi_name[i] = 0;
+
+        /* Skip to end of line */
+        while (pos < len && buf[pos] != '\n') pos = pos + 1;
+        if (pos < len) pos = pos + 1;
+
+        /* Register this unit name */
+        if (import_count < MAX_IMPORTS) {
+            str_copy(import_name_at(import_count), spi_name);
+            import_count = import_count + 1;
+        }
+
+        /* Parse lines until ";--- END SPI ---" */
+        while (pos < len) {
+            /* Read a line */
+            llen = 0;
+            while (pos < len && buf[pos] != '\n' && llen < 255) {
+                line[llen] = buf[pos];
+                llen = llen + 1;
+                pos = pos + 1;
+            }
+            line[llen] = 0;
+            if (pos < len) pos = pos + 1;
+
+            /* Check for end marker */
+            if (llen >= 15 && line[0] == ';' && line[1] == '-' && line[2] == '-' && line[3] == '-') {
+                break;
+            }
+
+            /* Parse ".export <extern_name> <argc> <has_ret> <ret_type>" */
+            if (llen > 8 && line[0] == '.' && line[1] == 'e' && line[2] == 'x' &&
+                line[3] == 'p' && line[4] == 'o' && line[5] == 'r' && line[6] == 't') {
+                int has_ret;
+                int ret_type;
+                /* Skip ".export " */
+                i = 8;
+                /* Read extern name */
+                llen = 0;
+                while (line[i] != 0 && line[i] != ' ' && llen < MAX_NAME - 1) {
+                    ext_name[llen] = line[i];
+                    llen = llen + 1;
+                    i = i + 1;
+                }
+                ext_name[llen] = 0;
+
+                /* Read argc */
+                argc = 0;
+                if (line[i] == ' ') {
+                    i = i + 1;
+                    while (line[i] >= '0' && line[i] <= '9') {
+                        argc = argc * 10 + (line[i] - '0');
+                        i = i + 1;
+                    }
+                }
+
+                /* Read has_ret (0 = procedure, 1 = function) */
+                has_ret = 0;
+                if (line[i] == ' ') {
+                    i = i + 1;
+                    has_ret = line[i] - '0';
+                    i = i + 1;
+                }
+
+                /* Read ret_type */
+                ret_type = TYPE_INTEGER;
+                if (line[i] == ' ') {
+                    i = i + 1;
+                    ret_type = 0;
+                    while (line[i] >= '0' && line[i] <= '9') {
+                        ret_type = ret_type * 10 + (line[i] - '0');
+                        i = i + 1;
+                    }
+                }
+
+                /* Derive Pascal name from extern: strip "_user_" prefix if present */
+                if (ext_name[0] == '_' && ext_name[1] == 'u' && ext_name[2] == 's' &&
+                    ext_name[3] == 'e' && ext_name[4] == 'r' && ext_name[5] == '_') {
+                    str_copy(pascal_name, &ext_name[6]);
+                } else {
+                    str_copy(pascal_name, ext_name);
+                }
+
+                /* Register as external procedure (not user, so xcall is used) */
+                pidx = proc_add(pascal_name, ext_name, argc, has_ret, ret_type);
+                if (pidx >= 0) {
+                    proc_is_user[pidx] = 0;
+                }
+            }
+        }
+    }
+    return pos;
+}
+
 /* --- User type table --- */
 
 char *utype_name_at(int i) {
@@ -2250,6 +2392,7 @@ void parser_init(char *src, int len) {
     is_unit_compilation = 0;
     in_interface = 0;
     unit_name[0] = 0;
+    import_count = 0;
     has_arrays = 0;
     scope_base = 0;
     scope_depth = 0;
@@ -2281,6 +2424,9 @@ void parse_uses_clause(void) {
             unit_hardware = 1;
             register_hardware_unit();
         } else if (strcmp(unit_name, "units") == 0) {
+            unit_mode = 1;
+        } else if (import_lookup(unit_name) >= 0) {
+            /* User-defined unit loaded via SPI — enable unit mode */
             unit_mode = 1;
         } else {
             printf("error line %d: unknown unit '%s'\n", tok_line, unit_name);
@@ -2361,8 +2507,15 @@ void parse_program(void) {
     }
 
     if (unit_mode) {
+        int ii;
         printf(".unit %s\n", prog_name);
         printf(".import p24p_rt\n");
+        /* Emit .import for each user unit */
+        ii = 0;
+        while (ii < import_count) {
+            printf(".import %s\n", import_name_at(ii));
+            ii = ii + 1;
+        }
     } else {
         printf(".module %s\n", prog_name);
     }
@@ -2447,7 +2600,8 @@ void parse_unit(void) {
         i = 0;
         while (i < proc_count) {
             if (proc_is_exported[i]) {
-                printf(".export %s %d\n", proc_extern_at(i), proc_argc[i]);
+                printf(".export %s %d", proc_extern_at(i), proc_argc[i]);
+                printf(" %d %d\n", proc_has_ret[i], proc_ret_type[i]);
             }
             i = i + 1;
         }
@@ -2496,7 +2650,8 @@ void parse_unit(void) {
         i = 0;
         while (i < proc_count) {
             if (proc_is_exported[i]) {
-                printf(".export %s %d\n", proc_extern_at(i), proc_argc[i]);
+                printf(".export %s %d", proc_extern_at(i), proc_argc[i]);
+                printf(" %d %d\n", proc_has_ret[i], proc_ret_type[i]);
             }
             i = i + 1;
         }
