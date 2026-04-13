@@ -1,8 +1,9 @@
 number = 3
 slug = "003-spi-generation"
-status = "pending"
+status = "completed"
 description = "Generate .spi interface files when compiling a unit. After successful compila..."
 role = "production"
 context_files = []
 created_at = "2026-04-13T10:36:04"
-commits = []
+completed_at = "2026-04-13T10:59:17"
+commits = ["79d705f1957e9284d2250a75a7c1d73a03125fcd"]

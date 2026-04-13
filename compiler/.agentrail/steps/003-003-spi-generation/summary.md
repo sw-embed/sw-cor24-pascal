@@ -1,0 +1,1 @@
+Compiler now emits ;--- SPI --- delimited section after .endunit with .spi interface data (.unit name + .export directives). Build script run-pascal-unit.sh extracts .spi file. test-all.sh updated to handle unit-declaration files with compile-only checks. 37 tests pass.

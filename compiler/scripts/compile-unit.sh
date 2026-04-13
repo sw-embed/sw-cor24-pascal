@@ -33,4 +33,4 @@ if echo "$SPC_OUTPUT" | grep -q '^;--- SPI ---'; then
     grep -v '^;---' > "$OUTDIR/$NAME.spi"
 fi
 
-echo "Compiled: $OUTDIR/$NAME.spc + $OUTDIR/$NAME.spi"
+echo "Compiled: $OUTDIR/$NAME.spc + $OUTDIR/$NAME.spi" >&2

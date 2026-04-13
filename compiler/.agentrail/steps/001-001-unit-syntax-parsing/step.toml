@@ -1,8 +1,9 @@
 number = 1
 slug = "001-unit-syntax-parsing"
-status = "in-progress"
+status = "completed"
 description = "Add unit declaration syntax to the lexer and parser. Add TOK_UNIT, TOK_INTERF..."
 role = "production"
 context_files = []
 created_at = "2026-04-13T10:35:51"
-commits = []
+completed_at = "2026-04-13T10:55:14"
+commits = ["a88ffd3add27bc4791e00e7c59a03f500b4230cd"]

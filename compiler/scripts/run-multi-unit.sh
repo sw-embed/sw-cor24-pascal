@@ -48,7 +48,7 @@ SPI_DATA=""
 P24_FILES=""
 for UNIT_PAS in "${UNIT_FILES[@]}"; do
   UNIT_NAME=$(basename "$UNIT_PAS" .pas)
-  bash "$P24P_DIR/scripts/compile-unit.sh" "$UNIT_PAS" "$TMP" >&2
+  bash "$P24P_DIR/scripts/compile-unit.sh" "$UNIT_PAS" "$TMP" 2>/dev/null
 
   # Collect SPI data for prepending to main
   if [ -f "$TMP/$UNIT_NAME.spi" ]; then

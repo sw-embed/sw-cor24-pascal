@@ -1,0 +1,1 @@
+Added proc_is_exported[] flag to procedure table. Interface-section procs are marked exported. parse_unit() now defers .spc header emission until after interface parsing, then emits .export directives for all exported procs. Verified t36_unit_decl.pas output includes .export _user_add 2 and .export _user_multiply 2. All 36 tests pass.
