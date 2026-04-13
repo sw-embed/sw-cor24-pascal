@@ -107,8 +107,18 @@ int field_arr_size[MAX_FIELDS];   /* element count (high - low + 1) */
 /* Pointer metadata for symbols */
 int sym_ptr_base[MAX_SYMBOLS];    /* for pointer vars: user type index of pointed-to type */
 
+/* Cross-unit imported globals */
+int sym_is_imported[MAX_SYMBOLS]; /* 1 = global from an imported unit */
+int sym_import_idx[MAX_SYMBOLS];  /* import unit index (into import_name[]) */
+int sym_import_off[MAX_SYMBOLS];  /* offset within that unit's globals */
+int sym_global_off[MAX_SYMBOLS];  /* global word offset (for SPI export) */
+int sym_is_exported_g[MAX_SYMBOLS]; /* 1 = global declared in unit interface */
+
 /* Array scratch global flag */
 int has_arrays;
+
+/* Global variable offset counter (for tracking unit global positions) */
+int global_offset;
 
 /* Unit flags */
 int unit_hardware;

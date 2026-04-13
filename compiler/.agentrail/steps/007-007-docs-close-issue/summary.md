@@ -1,0 +1,1 @@
+Updated CHANGES.md with full unit support changelog (unit declarations, export codegen, SPI files, SPI loader, multi-unit pipeline, tests, known limitations). Updated README with multi-unit pipeline diagram, unit feature in language list, and multi-unit quick start. Issue #14 closed.

@@ -4933,17 +4933,17 @@ _load_spi_sections:
         push    r2
         push    r1
         mov     fp,sp
-        sub     sp,376
+        sub     sp,385
         lc      r0,0
         sw      r0,-3(fp)
 L579:
         lw      r0,-3(fp)
         lw      r1,12(fp)
         cls     r0,r1
-        brt     L697
+        brt     L736
         la      r2,L580
         jmp     (r2)
-L697:
+L736:
         lw      r0,9(fp)
         lw      r1,-3(fp)
         add     r0,r1
@@ -5213,10 +5213,10 @@ L603:
         lc      r0,0
 L604:
         ceq     r0,z
-        brf     L696
+        brf     L735
         la      r2,L602
         jmp     (r2)
-L696:
+L735:
         lw      r0,9(fp)
         lw      r1,-3(fp)
         add     r0,r1
@@ -5330,10 +5330,10 @@ L617:
         lw      r0,-3(fp)
         lw      r1,12(fp)
         cls     r0,r1
-        brt     L695
+        brt     L734
         la      r2,L618
         jmp     (r2)
-L695:
+L734:
         lc      r0,0
         la      r1,-262
         add     r1,fp
@@ -5377,10 +5377,10 @@ L621:
         lc      r0,0
 L622:
         ceq     r0,z
-        brf     L694
+        brf     L733
         la      r2,L620
         jmp     (r2)
-L694:
+L733:
         lw      r0,9(fp)
         lw      r1,-3(fp)
         add     r0,r1
@@ -5641,10 +5641,10 @@ L639:
         lc      r0,0
 L640:
         ceq     r0,z
-        brf     L693
+        brf     L732
         la      r2,L638
         jmp     (r2)
-L693:
+L732:
         lc      r0,8
         la      r1,-370
         add     r1,fp
@@ -5714,10 +5714,10 @@ L655:
         lc      r0,0
 L656:
         ceq     r0,z
-        brf     L692
+        brf     L731
         la      r2,L654
         jmp     (r2)
-L692:
+L731:
         la      r0,-259
         add     r0,fp
         push    r0
@@ -5788,10 +5788,10 @@ L654:
         lbu     r0,0(r0)
         lc      r1,32
         ceq     r0,r1
-        brt     L691
+        brt     L730
         la      r2,L660
         jmp     (r2)
-L691:
+L730:
         la      r1,-370
         add     r1,fp
         lw      r0,0(r1)
@@ -5841,10 +5841,10 @@ L663:
         lc      r0,0
 L664:
         ceq     r0,z
-        brf     L690
+        brf     L729
         la      r2,L662
         jmp     (r2)
-L690:
+L729:
         la      r1,-361
         add     r1,fp
         lw      r0,0(r1)
@@ -5897,10 +5897,10 @@ L660:
         lbu     r0,0(r0)
         lc      r1,32
         ceq     r0,r1
-        brt     L689
+        brt     L728
         la      r2,L666
         jmp     (r2)
-L689:
+L728:
         la      r1,-370
         add     r1,fp
         lw      r0,0(r1)
@@ -5949,10 +5949,10 @@ L666:
         lbu     r0,0(r0)
         lc      r1,32
         ceq     r0,r1
-        brt     L688
+        brt     L727
         la      r2,L668
         jmp     (r2)
-L688:
+L727:
         la      r1,-370
         add     r1,fp
         lw      r0,0(r1)
@@ -6006,10 +6006,10 @@ L671:
         lc      r0,0
 L672:
         ceq     r0,z
-        brf     L687
+        brf     L726
         la      r2,L670
         jmp     (r2)
-L687:
+L726:
         la      r1,-376
         add     r1,fp
         lw      r0,0(r1)
@@ -6209,6 +6209,542 @@ L674:
         sw      r0,0(r1)
 L686:
 L638:
+        la      r1,-262
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,5
+        cls     r1,r0
+        mov     r0,c
+        ceq     r0,z
+        brt     L697
+        la      r0,-259
+        add     r0,fp
+        lc      r1,0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,46
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L697
+        lc      r0,1
+        bra     L698
+L697:
+        lc      r0,0
+L698:
+        ceq     r0,z
+        brt     L695
+        la      r0,-259
+        add     r0,fp
+        lc      r1,1
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,118
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L695
+        lc      r0,1
+        bra     L696
+L695:
+        lc      r0,0
+L696:
+        ceq     r0,z
+        brt     L693
+        la      r0,-259
+        add     r0,fp
+        lc      r1,2
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,97
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L693
+        lc      r0,1
+        bra     L694
+L693:
+        lc      r0,0
+L694:
+        ceq     r0,z
+        brt     L691
+        la      r0,-259
+        add     r0,fp
+        lc      r1,3
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,114
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L691
+        lc      r0,1
+        bra     L692
+L691:
+        lc      r0,0
+L692:
+        ceq     r0,z
+        brt     L689
+        la      r0,-259
+        add     r0,fp
+        lc      r1,4
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,32
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L689
+        lc      r0,1
+        bra     L690
+L689:
+        lc      r0,0
+L690:
+        ceq     r0,z
+        brf     L725
+        la      r2,L688
+        jmp     (r2)
+L725:
+        lc      r0,5
+        la      r1,-370
+        add     r1,fp
+        sw      r0,0(r1)
+        lc      r0,0
+        la      r1,-262
+        add     r1,fp
+        sw      r0,0(r1)
+L699:
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,0
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L703
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,32
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L703
+        lc      r0,1
+        bra     L704
+L703:
+        lc      r0,0
+L704:
+        ceq     r0,z
+        brt     L701
+        la      r1,-262
+        add     r1,fp
+        lw      r0,0(r1)
+        push    r0
+        lc      r0,32
+        lc      r1,1
+        sub     r0,r1
+        mov     r1,r0
+        pop     r0
+        cls     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L701
+        lc      r0,1
+        bra     L702
+L701:
+        lc      r0,0
+L702:
+        ceq     r0,z
+        brf     L724
+        la      r2,L700
+        jmp     (r2)
+L724:
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        push    r0
+        la      r0,-358
+        add     r0,fp
+        push    r0
+        la      r1,-262
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        pop     r0
+        sb      r0,0(r1)
+        la      r1,-262
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,-262
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,-370
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r2,L699
+        jmp     (r2)
+L700:
+        la      r0,-358
+        add     r0,fp
+        push    r0
+        la      r1,-262
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,0
+        sb      r0,0(r1)
+        lc      r0,0
+        la      r1,-379
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,32
+        ceq     r0,r1
+        brt     L723
+        la      r2,L706
+        jmp     (r2)
+L723:
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,-370
+        add     r1,fp
+        sw      r0,0(r1)
+L707:
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,48
+        cls     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L709
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,57
+        cls     r1,r0
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L709
+        lc      r0,1
+        bra     L710
+L709:
+        lc      r0,0
+L710:
+        ceq     r0,z
+        brf     L722
+        la      r2,L708
+        jmp     (r2)
+L722:
+        la      r1,-379
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,10
+        mul     r0,r1
+        push    r0
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,48
+        sub     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        la      r1,-379
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,-370
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r2,L707
+        jmp     (r2)
+L708:
+L706:
+        lc      r0,0
+        la      r1,-382
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,32
+        ceq     r0,r1
+        brt     L721
+        la      r2,L712
+        jmp     (r2)
+L721:
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,-370
+        add     r1,fp
+        sw      r0,0(r1)
+        lc      r0,0
+        la      r1,-382
+        add     r1,fp
+        sw      r0,0(r1)
+L713:
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,48
+        cls     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L715
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,57
+        cls     r1,r0
+        mov     r0,c
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brt     L715
+        lc      r0,1
+        bra     L716
+L715:
+        lc      r0,0
+L716:
+        ceq     r0,z
+        brf     L720
+        la      r2,L714
+        jmp     (r2)
+L720:
+        la      r1,-382
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,10
+        mul     r0,r1
+        push    r0
+        la      r0,-259
+        add     r0,fp
+        push    r0
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lbu     r0,0(r0)
+        lc      r1,48
+        sub     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        la      r1,-382
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r1,-370
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,-370
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r2,L713
+        jmp     (r2)
+L714:
+L712:
+        lc      r0,0
+        push    r0
+        la      r1,-382
+        add     r1,fp
+        lw      r0,0(r1)
+        push    r0
+        lc      r0,1
+        push    r0
+        la      r0,-358
+        add     r0,fp
+        push    r0
+        la      r0,_sym_add
+        jal     r1,(r0)
+        add     sp,12
+        la      r1,-385
+        add     r1,fp
+        sw      r0,0(r1)
+        la      r1,-385
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,0
+        cls     r0,r1
+        brf     L719
+        la      r2,L718
+        jmp     (r2)
+L719:
+        la      r0,_sym_is_imported
+        push    r0
+        la      r1,-385
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,1
+        sw      r0,0(r1)
+        la      r1,_import_count
+        lw      r0,0(r1)
+        push    r0
+        la      r0,_sym_import_idx
+        push    r0
+        la      r1,-385
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        pop     r0
+        sw      r0,0(r1)
+        la      r1,-379
+        add     r1,fp
+        lw      r0,0(r1)
+        push    r0
+        la      r0,_sym_import_off
+        push    r0
+        la      r1,-385
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        pop     r0
+        sw      r0,0(r1)
+        la      r1,-379
+        add     r1,fp
+        lw      r0,0(r1)
+        push    r0
+        la      r0,_sym_global_off
+        push    r0
+        la      r1,-385
+        add     r1,fp
+        lw      r0,0(r1)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        pop     r0
+        sw      r0,0(r1)
+L718:
+L688:
         la      r2,L617
         jmp     (r2)
 L618:
@@ -6238,8 +6774,8 @@ _utype_name_at:
         la      r0,_utype_name
         lw      r1,-3(fp)
         add     r0,r1
-        bra     L698
-L698:
+        bra     L737
+L737:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6260,8 +6796,8 @@ _field_name_at:
         la      r0,_field_name
         lw      r1,-3(fp)
         add     r0,r1
-        bra     L699
-L699:
+        bra     L738
+L738:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6277,12 +6813,12 @@ _utype_lookup:
         add     sp,-3
         lc      r0,0
         sw      r0,-3(fp)
-L701:
+L740:
         lw      r0,-3(fp)
         la      r1,_utype_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L702
+        brf     L741
         lw      r0,9(fp)
         push    r0
         lw      r0,-3(fp)
@@ -6296,23 +6832,23 @@ L701:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L704
+        brf     L743
         lw      r0,-3(fp)
-        bra     L700
-L704:
+        bra     L739
+L743:
         lw      r0,-3(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        bra     L701
-L702:
+        bra     L740
+L741:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-        bra     L700
-L700:
+        bra     L739
+L739:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6330,7 +6866,7 @@ _utype_add:
         lw      r0,0(r1)
         lc      r1,32
         cls     r0,r1
-        brt     L707
+        brt     L746
         la      r0,_S117
         push    r0
         la      r0,_error
@@ -6341,9 +6877,9 @@ _utype_add:
         lc      r0,0
         pop     r1
         sub     r0,r1
-        la      r2,L705
+        la      r2,L744
         jmp     (r2)
-L707:
+L746:
         la      r1,_utype_count
         lw      r0,0(r1)
         sw      r0,-3(fp)
@@ -6415,8 +6951,8 @@ L707:
         la      r1,_utype_count
         sw      r0,0(r1)
         lw      r0,-3(fp)
-        bra     L705
-L705:
+        bra     L744
+L744:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6452,11 +6988,11 @@ _field_lookup:
         sw      r0,-6(fp)
         lc      r0,0
         sw      r0,-9(fp)
-L709:
+L748:
         lw      r0,-9(fp)
         lw      r1,-6(fp)
         cls     r0,r1
-        brf     L710
+        brf     L749
         lw      r0,12(fp)
         push    r0
         lw      r0,-3(fp)
@@ -6472,25 +7008,25 @@ L709:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L712
+        brf     L751
         lw      r0,-3(fp)
         lw      r1,-9(fp)
         add     r0,r1
-        bra     L708
-L712:
+        bra     L747
+L751:
         lw      r0,-9(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        bra     L709
-L710:
+        bra     L748
+L749:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-        bra     L708
-L708:
+        bra     L747
+L747:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6518,40 +7054,40 @@ _resolve_type_name:
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L715
+        brf     L754
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,0
-        la      r2,L713
+        la      r2,L752
         jmp     (r2)
-L715:
+L754:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L717
+        brf     L756
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,1
-        la      r2,L713
+        la      r2,L752
         jmp     (r2)
-L717:
+L756:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L719
+        brf     L758
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,4
-        la      r2,L713
+        la      r2,L752
         jmp     (r2)
-L719:
+L758:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brf     L721
+        brf     L760
         la      r0,_tok_lexeme
         push    r0
         la      r0,_utype_lookup
@@ -6561,7 +7097,7 @@ L719:
         lw      r0,-3(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L723
+        brt     L762
         lw      r0,9(fp)
         mov     r1,r0
         lw      r0,-3(fp)
@@ -6577,17 +7113,17 @@ L719:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L713
-L723:
-L721:
+        bra     L752
+L762:
+L760:
         la      r0,_S118
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L713
-L713:
+        bra     L752
+L752:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6612,7 +7148,7 @@ _emit_load_sym:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L725
+        brf     L764
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -6628,9 +7164,9 @@ _emit_load_sym:
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r2,L726
+        la      r2,L765
         jmp     (r2)
-L725:
+L764:
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -6644,7 +7180,7 @@ L725:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L729
+        brf     L768
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -6658,17 +7194,17 @@ L725:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L729
+        brf     L768
         lc      r0,0
-        bra     L730
-L729:
+        bra     L769
+L768:
         lc      r0,1
-L730:
+L769:
         ceq     r0,z
-        brf     L735
-        la      r2,L727
+        brf     L776
+        la      r2,L766
         jmp     (r2)
-L735:
+L776:
         la      r1,_scope_depth
         lw      r0,0(r1)
         push    r0
@@ -6688,7 +7224,7 @@ L735:
         lw      r0,-3(fp)
         lc      r1,0
         cls     r1,r0
-        brf     L731
+        brf     L770
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -6706,9 +7242,9 @@ L735:
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        la      r2,L732
+        la      r2,L771
         jmp     (r2)
-L731:
+L770:
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -6720,7 +7256,7 @@ L731:
         lw      r0,0(r0)
         lc      r1,2
         ceq     r0,r1
-        brf     L733
+        brf     L772
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -6736,8 +7272,8 @@ L731:
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        bra     L734
-L733:
+        bra     L773
+L772:
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -6753,24 +7289,64 @@ L733:
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L734:
-L732:
-        bra     L728
-L727:
+L773:
+L771:
+        la      r2,L767
+        jmp     (r2)
+L766:
+        la      r0,_sym_is_imported
+        push    r0
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        ceq     r0,z
+        brt     L774
+        la      r0,_sym_import_off
+        push    r0
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        la      r0,_sym_import_idx
+        push    r0
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        la      r0,_S123
+        push    r0
+        la      r0,___tc24r_printf2
+        jal     r1,(r0)
+        add     sp,9
+        bra     L775
+L774:
         lw      r0,9(fp)
         push    r0
         la      r0,_sym_name_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S123
+        la      r0,_S124
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L728:
-L726:
-L724:
+L775:
+L767:
+L765:
+L763:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6797,7 +7373,7 @@ _emit_store_sym:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L739
+        brf     L780
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -6811,17 +7387,17 @@ _emit_store_sym:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L739
+        brf     L780
         lc      r0,0
-        bra     L740
-L739:
+        bra     L781
+L780:
         lc      r0,1
-L740:
+L781:
         ceq     r0,z
-        brf     L745
-        la      r2,L737
+        brf     L788
+        la      r2,L778
         jmp     (r2)
-L745:
+L788:
         la      r1,_scope_depth
         lw      r0,0(r1)
         push    r0
@@ -6841,7 +7417,7 @@ L745:
         lw      r0,-3(fp)
         lc      r1,0
         cls     r1,r0
-        brf     L741
+        brf     L782
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -6854,14 +7430,14 @@ L745:
         push    r0
         lw      r0,-3(fp)
         push    r0
-        la      r0,_S124
+        la      r0,_S125
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        la      r2,L742
+        la      r2,L783
         jmp     (r2)
-L741:
+L782:
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -6873,24 +7449,7 @@ L741:
         lw      r0,0(r0)
         lc      r1,2
         ceq     r0,r1
-        brf     L743
-        la      r0,_sym_value
-        push    r0
-        lw      r0,9(fp)
-        lc      r1,3
-        mul     r0,r1
-        mov     r1,r0
-        pop     r0
-        add     r0,r1
-        lw      r0,0(r0)
-        push    r0
-        la      r0,_S125
-        push    r0
-        la      r0,___tc24r_printf1
-        jal     r1,(r0)
-        add     sp,6
-        bra     L744
-L743:
+        brf     L784
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -6906,23 +7465,80 @@ L743:
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L744:
-L742:
-        bra     L738
-L737:
-        lw      r0,9(fp)
+        bra     L785
+L784:
+        la      r0,_sym_value
         push    r0
-        la      r0,_sym_name_at
-        jal     r1,(r0)
-        add     sp,3
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
         push    r0
         la      r0,_S127
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L738:
-L736:
+L785:
+L783:
+        la      r2,L779
+        jmp     (r2)
+L778:
+        la      r0,_sym_is_imported
+        push    r0
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        ceq     r0,z
+        brt     L786
+        la      r0,_sym_import_off
+        push    r0
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        la      r0,_sym_import_idx
+        push    r0
+        lw      r0,9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        la      r0,_S128
+        push    r0
+        la      r0,___tc24r_printf2
+        jal     r1,(r0)
+        add     sp,9
+        bra     L787
+L786:
+        lw      r0,9(fp)
+        push    r0
+        la      r0,_sym_name_at
+        jal     r1,(r0)
+        add     sp,3
+        push    r0
+        la      r0,_S129
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+L787:
+L779:
+L777:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -6959,35 +7575,18 @@ _emit_array_addr:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L747
+        brt     L790
         lc      r0,1
-        bra     L748
-L747:
+        bra     L791
+L790:
         lc      r0,3
-L748:
+L791:
         sw      r0,-6(fp)
         lw      r0,-3(fp)
         lc      r1,0
         ceq     r0,r1
-        brt     L750
+        brt     L793
         lw      r0,-3(fp)
-        push    r0
-        la      r0,_S128
-        push    r0
-        la      r0,___tc24r_printf1
-        jal     r1,(r0)
-        add     sp,6
-        la      r0,_S129
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-L750:
-        lw      r0,-6(fp)
-        lc      r1,1
-        cls     r1,r0
-        brf     L752
-        lw      r0,-6(fp)
         push    r0
         la      r0,_S130
         push    r0
@@ -6999,7 +7598,24 @@ L750:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L752:
+L793:
+        lw      r0,-6(fp)
+        lc      r1,1
+        cls     r1,r0
+        brf     L795
+        lw      r0,-6(fp)
+        push    r0
+        la      r0,_S132
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S133
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L795:
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -7011,21 +7627,21 @@ L752:
         lw      r0,0(r0)
         lc      r1,1
         ceq     r0,r1
-        brf     L753
+        brf     L796
         lw      r0,9(fp)
         push    r0
         la      r0,_sym_name_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S132
+        la      r0,_S134
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r2,L754
+        la      r2,L797
         jmp     (r2)
-L753:
+L796:
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -7037,7 +7653,7 @@ L753:
         lw      r0,0(r0)
         lc      r1,3
         ceq     r0,r1
-        brf     L755
+        brf     L798
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -7048,13 +7664,13 @@ L753:
         add     r0,r1
         lw      r0,0(r0)
         push    r0
-        la      r0,_S133
+        la      r0,_S135
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        bra     L756
-L755:
+        bra     L799
+L798:
         la      r0,_sym_kind
         push    r0
         lw      r0,9(fp)
@@ -7066,7 +7682,7 @@ L755:
         lw      r0,0(r0)
         lc      r1,2
         ceq     r0,r1
-        brf     L758
+        brf     L801
         la      r0,_sym_value
         push    r0
         lw      r0,9(fp)
@@ -7077,20 +7693,20 @@ L755:
         add     r0,r1
         lw      r0,0(r0)
         push    r0
-        la      r0,_S134
+        la      r0,_S136
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L758:
-L756:
-L754:
-        la      r0,_S135
+L801:
+L799:
+L797:
+        la      r0,_S137
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L746:
+L789:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7109,19 +7725,6 @@ _register_system_unit:
         push    r0
         lc      r0,1
         push    r0
-        la      r0,_S136
-        push    r0
-        la      r0,_S137
-        push    r0
-        la      r0,_proc_add
-        jal     r1,(r0)
-        add     sp,15
-        lc      r0,1
-        push    r0
-        lc      r0,1
-        push    r0
-        lc      r0,1
-        push    r0
         la      r0,_S138
         push    r0
         la      r0,_S139
@@ -7129,7 +7732,7 @@ _register_system_unit:
         la      r0,_proc_add
         jal     r1,(r0)
         add     sp,15
-        lc      r0,0
+        lc      r0,1
         push    r0
         lc      r0,1
         push    r0
@@ -7194,11 +7797,11 @@ _register_system_unit:
         la      r0,_proc_add
         jal     r1,(r0)
         add     sp,15
-        lc      r0,1
-        push    r0
-        lc      r0,1
-        push    r0
         lc      r0,0
+        push    r0
+        lc      r0,1
+        push    r0
+        lc      r0,1
         push    r0
         la      r0,_S150
         push    r0
@@ -7220,11 +7823,11 @@ _register_system_unit:
         la      r0,_proc_add
         jal     r1,(r0)
         add     sp,15
-        lc      r0,0
-        push    r0
-        lc      r0,0
+        lc      r0,1
         push    r0
         lc      r0,1
+        push    r0
+        lc      r0,0
         push    r0
         la      r0,_S154
         push    r0
@@ -7235,7 +7838,7 @@ _register_system_unit:
         add     sp,15
         lc      r0,0
         push    r0
-        lc      r0,1
+        lc      r0,0
         push    r0
         lc      r0,1
         push    r0
@@ -7248,9 +7851,9 @@ _register_system_unit:
         add     sp,15
         lc      r0,0
         push    r0
-        lc      r0,0
+        lc      r0,1
         push    r0
-        lc      r0,2
+        lc      r0,1
         push    r0
         la      r0,_S158
         push    r0
@@ -7263,7 +7866,7 @@ _register_system_unit:
         push    r0
         lc      r0,0
         push    r0
-        lc      r0,3
+        lc      r0,2
         push    r0
         la      r0,_S160
         push    r0
@@ -7285,7 +7888,20 @@ _register_system_unit:
         la      r0,_proc_add
         jal     r1,(r0)
         add     sp,15
-L759:
+        lc      r0,0
+        push    r0
+        lc      r0,0
+        push    r0
+        lc      r0,3
+        push    r0
+        la      r0,_S164
+        push    r0
+        la      r0,_S165
+        push    r0
+        la      r0,_proc_add
+        jal     r1,(r0)
+        add     sp,15
+L802:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7304,19 +7920,6 @@ _register_hardware_unit:
         push    r0
         lc      r0,0
         push    r0
-        la      r0,_S164
-        push    r0
-        la      r0,_S165
-        push    r0
-        la      r0,_proc_add
-        jal     r1,(r0)
-        add     sp,15
-        lc      r0,0
-        push    r0
-        lc      r0,0
-        push    r0
-        lc      r0,0
-        push    r0
         la      r0,_S166
         push    r0
         la      r0,_S167
@@ -7326,7 +7929,7 @@ _register_hardware_unit:
         add     sp,15
         lc      r0,0
         push    r0
-        lc      r0,1
+        lc      r0,0
         push    r0
         lc      r0,0
         push    r0
@@ -7337,7 +7940,20 @@ _register_hardware_unit:
         la      r0,_proc_add
         jal     r1,(r0)
         add     sp,15
-L760:
+        lc      r0,0
+        push    r0
+        lc      r0,1
+        push    r0
+        lc      r0,0
+        push    r0
+        la      r0,_S170
+        push    r0
+        la      r0,_S171
+        push    r0
+        la      r0,_proc_add
+        jal     r1,(r0)
+        add     sp,15
+L803:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7353,12 +7969,12 @@ _sym_lookup:
         add     sp,-3
         lc      r0,0
         sw      r0,-3(fp)
-L762:
+L805:
         lw      r0,-3(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L763
+        brf     L806
         lw      r0,9(fp)
         push    r0
         lw      r0,-3(fp)
@@ -7372,23 +7988,23 @@ L762:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L765
+        brf     L808
         lw      r0,-3(fp)
-        bra     L761
-L765:
+        bra     L804
+L808:
         lw      r0,-3(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        bra     L762
-L763:
+        bra     L805
+L806:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-        bra     L761
-L761:
+        bra     L804
+L804:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7409,13 +8025,13 @@ _sym_add:
         add     sp,3
         lc      r1,0
         cls     r0,r1
-        brt     L768
+        brt     L811
         lw      r0,9(fp)
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S170
+        la      r0,_S172
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -7428,15 +8044,15 @@ _sym_add:
         lc      r0,0
         pop     r1
         sub     r0,r1
-        la      r2,L766
+        la      r2,L809
         jmp     (r2)
-L768:
+L811:
         la      r1,_sym_count
         lw      r0,0(r1)
         la      r1,256
         cls     r0,r1
-        brt     L770
-        la      r0,_S171
+        brt     L813
+        la      r0,_S173
         push    r0
         la      r0,_error
         jal     r1,(r0)
@@ -7446,9 +8062,9 @@ L768:
         lc      r0,0
         pop     r1
         sub     r0,r1
-        la      r2,L766
+        la      r2,L809
         jmp     (r2)
-L770:
+L813:
         la      r1,_sym_count
         lw      r0,0(r1)
         sw      r0,-3(fp)
@@ -7510,6 +8126,61 @@ L770:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
+        la      r0,_sym_is_imported
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,0
+        sw      r0,0(r1)
+        la      r0,_sym_import_idx
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,0
+        sw      r0,0(r1)
+        la      r0,_sym_import_off
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,0
+        sw      r0,0(r1)
+        la      r0,_sym_global_off
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,0
+        sw      r0,0(r1)
+        la      r0,_sym_is_exported_g
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,0
+        sw      r0,0(r1)
         la      r1,_sym_count
         lw      r0,0(r1)
         lc      r1,1
@@ -7517,8 +8188,8 @@ L770:
         la      r1,_sym_count
         sw      r0,0(r1)
         lw      r0,-3(fp)
-        bra     L766
-L766:
+        bra     L809
+L809:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -7536,11 +8207,11 @@ _parse_factor:
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L773
+        brf     L816
         la      r1,_tok_int_val
         lw      r0,0(r1)
         push    r0
-        la      r0,_S172
+        la      r0,_S174
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7548,18 +8219,18 @@ _parse_factor:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L773:
+L816:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,60
         ceq     r0,r1
-        brf     L775
+        brf     L818
         la      r1,_tok_int_val
         lw      r0,0(r1)
         push    r0
-        la      r0,_S173
+        la      r0,_S175
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7567,46 +8238,14 @@ L773:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,4
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L775:
+L818:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,13
         ceq     r0,r1
-        brf     L777
-        la      r0,_S174
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r0,_next_token
-        jal     r1,(r0)
-        lc      r0,1
-        la      r2,L771
-        jmp     (r2)
-L777:
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,14
-        ceq     r0,r1
-        brf     L779
-        la      r0,_S175
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r0,_next_token
-        jal     r1,(r0)
-        lc      r0,1
-        la      r2,L771
-        jmp     (r2)
-L779:
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,64
-        ceq     r0,r1
-        brf     L781
+        brf     L820
         la      r0,_S176
         push    r0
         la      r0,___tc24r_printf0
@@ -7614,15 +8253,47 @@ L779:
         add     sp,3
         la      r0,_next_token
         jal     r1,(r0)
-        lc      r0,7
-        la      r2,L771
+        lc      r0,1
+        la      r2,L814
         jmp     (r2)
-L781:
+L820:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,14
+        ceq     r0,r1
+        brf     L822
+        la      r0,_S177
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_next_token
+        jal     r1,(r0)
+        lc      r0,1
+        la      r2,L814
+        jmp     (r2)
+L822:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,64
+        ceq     r0,r1
+        brf     L824
+        la      r0,_S178
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_next_token
+        jal     r1,(r0)
+        lc      r0,7
+        la      r2,L814
+        jmp     (r2)
+L824:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,19
         ceq     r0,r1
-        brf     L783
+        brf     L826
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_factor
@@ -7631,32 +8302,32 @@ L781:
         lw      r0,-6(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L785
-        la      r0,_S177
+        brt     L828
+        la      r0,_S179
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L785:
-        la      r0,_S178
+L828:
+        la      r0,_S180
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S179
+        la      r0,_S181
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L783:
+L826:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brf     L787
+        brf     L830
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -7668,33 +8339,33 @@ L783:
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L787:
+L830:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,61
         ceq     r0,r1
-        brt     L851
-        la      r2,L789
+        brt     L894
+        la      r2,L832
         jmp     (r2)
-L851:
+L894:
         la      r1,_str_count
         lw      r0,0(r1)
         sw      r0,-3(fp)
         lw      r0,-3(fp)
         la      r1,128
         cls     r0,r1
-        brt     L791
-        la      r0,_S180
+        brt     L834
+        la      r0,_S182
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,2
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L791:
+L834:
         la      r1,_str_data_used
         lw      r0,0(r1)
         la      r1,_tok_str_len
@@ -7704,16 +8375,16 @@ L791:
         add     r0,r1
         la      r1,8192
         cls     r1,r0
-        brf     L793
-        la      r0,_S181
+        brf     L836
+        la      r0,_S183
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,2
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L793:
+L836:
         la      r1,_str_data_used
         lw      r0,0(r1)
         push    r0
@@ -7769,7 +8440,7 @@ L793:
         sw      r0,0(r1)
         lw      r0,-3(fp)
         push    r0
-        la      r0,_S182
+        la      r0,_S184
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -7777,17 +8448,17 @@ L793:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,2
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L789:
+L832:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L850
-        la      r2,L795
+        brt     L893
+        la      r2,L838
         jmp     (r2)
-L850:
+L893:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-38
@@ -7812,7 +8483,7 @@ L850:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L798
+        brt     L841
         la      r0,_proc_has_ret
         push    r0
         lw      r0,-3(fp)
@@ -7823,14 +8494,14 @@ L850:
         add     r0,r1
         lw      r0,0(r0)
         ceq     r0,z
-        brt     L798
+        brt     L841
         lc      r0,1
-        bra     L799
-L798:
+        bra     L842
+L841:
         lc      r0,0
-L799:
+L842:
         ceq     r0,z
-        brt     L797
+        brt     L840
         lc      r0,-38
         add     r0,fp
         push    r0
@@ -7846,9 +8517,9 @@ L799:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L797:
+L840:
         lc      r0,-38
         add     r0,fp
         push    r0
@@ -7859,14 +8530,14 @@ L797:
         lw      r0,-3(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L801
+        brf     L844
         lc      r0,-38
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S183
+        la      r0,_S185
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -7875,9 +8546,9 @@ L797:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L801:
+L844:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-3(fp)
@@ -7891,24 +8562,24 @@ L801:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L804
+        brt     L847
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,57
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L804
+        brt     L847
         lc      r0,1
-        bra     L805
-L804:
+        bra     L848
+L847:
         lc      r0,0
-L805:
+L848:
         ceq     r0,z
-        brf     L849
-        la      r2,L803
+        brf     L892
+        la      r2,L846
         jmp     (r2)
-L849:
+L892:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -7934,20 +8605,20 @@ L849:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L806
-        la      r0,_S184
+        brf     L849
+        la      r0,_S186
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L807
-L806:
-        la      r0,_S185
+        bra     L850
+L849:
+        la      r0,_S187
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L807:
+L850:
         la      r0,_sym_arr_elem
         push    r0
         lw      r0,-3(fp)
@@ -7957,9 +8628,9 @@ L807:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L803:
+L846:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-3(fp)
@@ -7973,24 +8644,24 @@ L803:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L810
+        brt     L853
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,65
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L810
+        brt     L853
         lc      r0,1
-        bra     L811
-L810:
+        bra     L854
+L853:
         lc      r0,0
-L811:
+L854:
         ceq     r0,z
-        brf     L848
-        la      r2,L809
+        brf     L891
+        la      r2,L852
         jmp     (r2)
-L848:
+L891:
         lw      r0,-3(fp)
         push    r0
         la      r0,_emit_load_sym
@@ -8011,16 +8682,16 @@ L848:
         lw      r0,-44(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L813
-        la      r0,_S186
+        brf     L856
+        la      r0,_S188
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L813:
+L856:
         la      r0,_utype_base
         push    r0
         lw      r0,-44(fp)
@@ -8037,7 +8708,7 @@ L813:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L818
+        brt     L861
         lw      r0,-47(fp)
         lc      r1,0
         cls     r0,r1
@@ -8045,14 +8716,14 @@ L813:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L818
+        brt     L861
         lc      r0,1
-        bra     L819
-L818:
+        bra     L862
+L861:
         lc      r0,0
-L819:
+L862:
         ceq     r0,z
-        brt     L816
+        brt     L859
         la      r0,_utype_kind
         push    r0
         lw      r0,-47(fp)
@@ -8066,33 +8737,33 @@ L819:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L816
+        brt     L859
         lc      r0,1
-        bra     L817
-L816:
+        bra     L860
+L859:
         lc      r0,0
-L817:
+L860:
         ceq     r0,z
-        brf     L847
-        la      r2,L815
+        brf     L890
+        la      r2,L858
         jmp     (r2)
-L847:
+L890:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L821
-        la      r0,_S187
+        brt     L864
+        la      r0,_S189
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L821:
+L864:
         la      r0,_tok_lexeme
         push    r0
         lw      r0,-47(fp)
@@ -8104,13 +8775,13 @@ L821:
         lw      r0,-50(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L823
+        brf     L866
         la      r0,_tok_lexeme
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S188
+        la      r0,_S190
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -8119,9 +8790,9 @@ L821:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L823:
+L866:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_field_type
@@ -8135,10 +8806,10 @@ L823:
         lw      r0,0(r0)
         lc      r1,3
         ceq     r0,r1
-        brt     L846
-        la      r2,L825
+        brt     L889
+        la      r2,L868
         jmp     (r2)
-L846:
+L889:
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -8150,7 +8821,7 @@ L846:
         lw      r0,0(r0)
         lc      r1,0
         cls     r1,r0
-        brf     L827
+        brf     L870
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -8163,17 +8834,17 @@ L846:
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S189
+        la      r0,_S191
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S190
+        la      r0,_S192
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L827:
+L870:
         lc      r0,57
         push    r0
         la      r0,_expect
@@ -8182,27 +8853,27 @@ L827:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L829
+        brt     L872
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L829:
+L872:
         la      r1,_has_arrays
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L831
+        brt     L874
         lc      r0,1
         la      r1,_has_arrays
         sw      r0,0(r1)
-        la      r0,_S191
+        la      r0,_S193
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L831:
-        la      r0,_S192
+L874:
+        la      r0,_S194
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -8232,35 +8903,18 @@ L831:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L832
+        brt     L875
         lc      r0,1
-        bra     L833
-L832:
+        bra     L876
+L875:
         lc      r0,3
-L833:
+L876:
         sw      r0,-56(fp)
         lw      r0,-53(fp)
         lc      r1,0
         ceq     r0,r1
-        brt     L835
+        brt     L878
         lw      r0,-53(fp)
-        push    r0
-        la      r0,_S193
-        push    r0
-        la      r0,___tc24r_printf1
-        jal     r1,(r0)
-        add     sp,6
-        la      r0,_S194
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-L835:
-        lw      r0,-56(fp)
-        lc      r1,1
-        cls     r1,r0
-        brf     L837
-        lw      r0,-56(fp)
         push    r0
         la      r0,_S195
         push    r0
@@ -8272,13 +8926,30 @@ L835:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L837:
+L878:
+        lw      r0,-56(fp)
+        lc      r1,1
+        cls     r1,r0
+        brf     L880
+        lw      r0,-56(fp)
+        push    r0
         la      r0,_S197
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S198
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S198
+L880:
+        la      r0,_S199
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S200
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -8291,11 +8962,11 @@ L837:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L839
+        brt     L882
         lc      r0,0
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L839:
+L882:
         la      r0,_field_arr_elem
         push    r0
         lw      r0,-50(fp)
@@ -8307,20 +8978,20 @@ L839:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L840
-        la      r0,_S199
+        brf     L883
+        la      r0,_S201
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L841
-L840:
-        la      r0,_S200
+        bra     L884
+L883:
+        la      r0,_S202
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L841:
+L884:
         la      r0,_field_arr_elem
         push    r0
         lw      r0,-50(fp)
@@ -8330,9 +9001,9 @@ L841:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L825:
+L868:
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -8344,7 +9015,7 @@ L825:
         lw      r0,0(r0)
         lc      r1,0
         cls     r1,r0
-        brf     L843
+        brf     L886
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -8357,18 +9028,18 @@ L825:
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S201
+        la      r0,_S203
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S202
+        la      r0,_S204
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L843:
-        la      r0,_S203
+L886:
+        la      r0,_S205
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -8382,10 +9053,10 @@ L843:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        la      r2,L771
+        la      r2,L814
         jmp     (r2)
-L815:
-        la      r0,_S204
+L858:
+        la      r0,_S206
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -8393,7 +9064,7 @@ L815:
         lw      r0,-47(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L845
+        brt     L888
         la      r0,_utype_kind
         push    r0
         lw      r0,-47(fp)
@@ -8403,11 +9074,11 @@ L815:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L771
-L845:
+        bra     L814
+L888:
         lc      r0,0
-        bra     L771
-L809:
+        bra     L814
+L852:
         lw      r0,-3(fp)
         push    r0
         la      r0,_emit_load_sym
@@ -8422,16 +9093,16 @@ L809:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L771
-L795:
-        la      r0,_S205
+        bra     L814
+L838:
+        la      r0,_S207
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L771
-L771:
+        bra     L814
+L814:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8448,59 +9119,59 @@ _parse_term:
         la      r0,_parse_factor
         jal     r1,(r0)
         sw      r0,-3(fp)
-L853:
+L896:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,28
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L859
+        brf     L902
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,15
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L859
+        brf     L902
         lc      r0,0
-        bra     L860
-L859:
+        bra     L903
+L902:
         lc      r0,1
-L860:
+L903:
         ceq     r0,z
-        brf     L857
+        brf     L900
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,16
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L857
+        brf     L900
         lc      r0,0
-        bra     L858
-L857:
+        bra     L901
+L900:
         lc      r0,1
-L858:
+L901:
         ceq     r0,z
-        brf     L855
+        brf     L898
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,17
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L855
+        brf     L898
         lc      r0,0
-        bra     L856
-L855:
+        bra     L899
+L898:
         lc      r0,1
-L856:
+L899:
         ceq     r0,z
-        brf     L886
-        la      r2,L854
+        brf     L929
+        la      r2,L897
         jmp     (r2)
-L886:
+L929:
         la      r1,_tok_type
         lw      r0,0(r1)
         sw      r0,-6(fp)
@@ -8512,10 +9183,10 @@ L886:
         lw      r0,-6(fp)
         lc      r1,28
         ceq     r0,r1
-        brt     L885
-        la      r2,L861
+        brt     L928
+        la      r2,L904
         jmp     (r2)
-L885:
+L928:
         lw      r0,-3(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8524,7 +9195,7 @@ L885:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L865
+        brf     L908
         lw      r0,-9(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8533,68 +9204,20 @@ L885:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L865
+        brf     L908
         lc      r0,0
-        bra     L866
-L865:
+        bra     L909
+L908:
         lc      r0,1
-L866:
+L909:
         ceq     r0,z
-        brt     L864
-        la      r0,_S206
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-L864:
-        la      r0,_S207
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,0
-        sw      r0,-3(fp)
-        la      r2,L862
-        jmp     (r2)
-L861:
-        lw      r0,-6(fp)
-        lc      r1,15
-        ceq     r0,r1
-        brt     L884
-        la      r2,L867
-        jmp     (r2)
-L884:
-        lw      r0,-3(fp)
-        push    r0
-        la      r0,_is_ordinal
-        jal     r1,(r0)
-        add     sp,3
-        ceq     r0,z
-        mov     r0,c
-        ceq     r0,z
-        brf     L871
-        lw      r0,-9(fp)
-        push    r0
-        la      r0,_is_ordinal
-        jal     r1,(r0)
-        add     sp,3
-        ceq     r0,z
-        mov     r0,c
-        ceq     r0,z
-        brf     L871
-        lc      r0,0
-        bra     L872
-L871:
-        lc      r0,1
-L872:
-        ceq     r0,z
-        brt     L870
+        brt     L907
         la      r0,_S208
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L870:
+L907:
         la      r0,_S209
         push    r0
         la      r0,___tc24r_printf0
@@ -8602,16 +9225,16 @@ L870:
         add     sp,3
         lc      r0,0
         sw      r0,-3(fp)
-        la      r2,L868
+        la      r2,L905
         jmp     (r2)
-L867:
+L904:
         lw      r0,-6(fp)
-        lc      r1,16
+        lc      r1,15
         ceq     r0,r1
-        brt     L883
-        la      r2,L873
+        brt     L927
+        la      r2,L910
         jmp     (r2)
-L883:
+L927:
         lw      r0,-3(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8620,7 +9243,7 @@ L883:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L877
+        brf     L914
         lw      r0,-9(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8629,20 +9252,20 @@ L883:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L877
+        brf     L914
         lc      r0,0
-        bra     L878
-L877:
+        bra     L915
+L914:
         lc      r0,1
-L878:
+L915:
         ceq     r0,z
-        brt     L876
+        brt     L913
         la      r0,_S210
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L876:
+L913:
         la      r0,_S211
         push    r0
         la      r0,___tc24r_printf0
@@ -8650,9 +9273,57 @@ L876:
         add     sp,3
         lc      r0,0
         sw      r0,-3(fp)
-        la      r2,L874
+        la      r2,L911
         jmp     (r2)
-L873:
+L910:
+        lw      r0,-6(fp)
+        lc      r1,16
+        ceq     r0,r1
+        brt     L926
+        la      r2,L916
+        jmp     (r2)
+L926:
+        lw      r0,-3(fp)
+        push    r0
+        la      r0,_is_ordinal
+        jal     r1,(r0)
+        add     sp,3
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brf     L920
+        lw      r0,-9(fp)
+        push    r0
+        la      r0,_is_ordinal
+        jal     r1,(r0)
+        add     sp,3
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brf     L920
+        lc      r0,0
+        bra     L921
+L920:
+        lc      r0,1
+L921:
+        ceq     r0,z
+        brt     L919
+        la      r0,_S212
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+L919:
+        la      r0,_S213
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        sw      r0,-3(fp)
+        la      r2,L917
+        jmp     (r2)
+L916:
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
@@ -8660,7 +9331,7 @@ L873:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L881
+        brf     L924
         lw      r0,-9(fp)
         lc      r1,1
         ceq     r0,r1
@@ -8668,36 +9339,36 @@ L873:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L881
+        brf     L924
         lc      r0,0
-        bra     L882
-L881:
+        bra     L925
+L924:
         lc      r0,1
-L882:
+L925:
         ceq     r0,z
-        brt     L880
-        la      r0,_S212
+        brt     L923
+        la      r0,_S214
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L880:
-        la      r0,_S213
+L923:
+        la      r0,_S215
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
         sw      r0,-3(fp)
-L874:
-L868:
-L862:
-        la      r2,L853
+L917:
+L911:
+L905:
+        la      r2,L896
         jmp     (r2)
-L854:
+L897:
         lw      r0,-3(fp)
-        bra     L852
-L852:
+        bra     L895
+L895:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8717,28 +9388,28 @@ _parse_simple_expr:
         lw      r0,0(r1)
         lc      r1,26
         ceq     r0,r1
-        brf     L888
+        brf     L931
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L889
-L888:
+        bra     L932
+L931:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L891
+        brf     L934
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,1
         sw      r0,-3(fp)
-L891:
-L889:
+L934:
+L932:
         la      r0,_parse_term
         jal     r1,(r0)
         sw      r0,-6(fp)
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L893
+        brt     L936
         lw      r0,-6(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8747,60 +9418,60 @@ L889:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L895
-        la      r0,_S214
+        brt     L938
+        la      r0,_S216
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L895:
-        la      r0,_S215
+L938:
+        la      r0,_S217
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-6(fp)
-L893:
-L896:
+L936:
+L939:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,26
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L900
+        brf     L943
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L900
+        brf     L943
         lc      r0,0
-        bra     L901
-L900:
+        bra     L944
+L943:
         lc      r0,1
-L901:
+L944:
         ceq     r0,z
-        brf     L898
+        brf     L941
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,18
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L898
+        brf     L941
         lc      r0,0
-        bra     L899
-L898:
+        bra     L942
+L941:
         lc      r0,1
-L899:
+L942:
         ceq     r0,z
-        brf     L920
-        la      r2,L897
+        brf     L963
+        la      r2,L940
         jmp     (r2)
-L920:
+L963:
         la      r1,_tok_type
         lw      r0,0(r1)
         sw      r0,-9(fp)
@@ -8812,10 +9483,10 @@ L920:
         lw      r0,-9(fp)
         lc      r1,26
         ceq     r0,r1
-        brt     L919
-        la      r2,L902
+        brt     L962
+        la      r2,L945
         jmp     (r2)
-L919:
+L962:
         lw      r0,-6(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8824,7 +9495,7 @@ L919:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L906
+        brf     L949
         lw      r0,-12(fp)
         push    r0
         la      r0,_is_ordinal
@@ -8833,68 +9504,20 @@ L919:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L906
+        brf     L949
         lc      r0,0
-        bra     L907
-L906:
+        bra     L950
+L949:
         lc      r0,1
-L907:
+L950:
         ceq     r0,z
-        brt     L905
-        la      r0,_S216
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-L905:
-        la      r0,_S217
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,0
-        sw      r0,-6(fp)
-        la      r2,L903
-        jmp     (r2)
-L902:
-        lw      r0,-9(fp)
-        lc      r1,27
-        ceq     r0,r1
-        brt     L918
-        la      r2,L908
-        jmp     (r2)
-L918:
-        lw      r0,-6(fp)
-        push    r0
-        la      r0,_is_ordinal
-        jal     r1,(r0)
-        add     sp,3
-        ceq     r0,z
-        mov     r0,c
-        ceq     r0,z
-        brf     L912
-        lw      r0,-12(fp)
-        push    r0
-        la      r0,_is_ordinal
-        jal     r1,(r0)
-        add     sp,3
-        ceq     r0,z
-        mov     r0,c
-        ceq     r0,z
-        brf     L912
-        lc      r0,0
-        bra     L913
-L912:
-        lc      r0,1
-L913:
-        ceq     r0,z
-        brt     L911
+        brt     L948
         la      r0,_S218
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L911:
+L948:
         la      r0,_S219
         push    r0
         la      r0,___tc24r_printf0
@@ -8902,9 +9525,57 @@ L911:
         add     sp,3
         lc      r0,0
         sw      r0,-6(fp)
-        la      r2,L909
+        la      r2,L946
         jmp     (r2)
-L908:
+L945:
+        lw      r0,-9(fp)
+        lc      r1,27
+        ceq     r0,r1
+        brt     L961
+        la      r2,L951
+        jmp     (r2)
+L961:
+        lw      r0,-6(fp)
+        push    r0
+        la      r0,_is_ordinal
+        jal     r1,(r0)
+        add     sp,3
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brf     L955
+        lw      r0,-12(fp)
+        push    r0
+        la      r0,_is_ordinal
+        jal     r1,(r0)
+        add     sp,3
+        ceq     r0,z
+        mov     r0,c
+        ceq     r0,z
+        brf     L955
+        lc      r0,0
+        bra     L956
+L955:
+        lc      r0,1
+L956:
+        ceq     r0,z
+        brt     L954
+        la      r0,_S220
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+L954:
+        la      r0,_S221
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        sw      r0,-6(fp)
+        la      r2,L952
+        jmp     (r2)
+L951:
         lw      r0,-6(fp)
         lc      r1,1
         ceq     r0,r1
@@ -8912,7 +9583,7 @@ L908:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L916
+        brf     L959
         lw      r0,-12(fp)
         lc      r1,1
         ceq     r0,r1
@@ -8920,35 +9591,35 @@ L908:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L916
+        brf     L959
         lc      r0,0
-        bra     L917
-L916:
+        bra     L960
+L959:
         lc      r0,1
-L917:
+L960:
         ceq     r0,z
-        brt     L915
-        la      r0,_S220
+        brt     L958
+        la      r0,_S222
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L915:
-        la      r0,_S221
+L958:
+        la      r0,_S223
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
         sw      r0,-6(fp)
-L909:
-L903:
-        la      r2,L896
+L952:
+L946:
+        la      r2,L939
         jmp     (r2)
-L897:
+L940:
         lw      r0,-6(fp)
-        bra     L887
-L887:
+        bra     L930
+L930:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -8971,80 +9642,80 @@ _parse_expression:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L932
+        brf     L975
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,30
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L932
+        brf     L975
         lc      r0,0
-        bra     L933
-L932:
+        bra     L976
+L975:
         lc      r0,1
-L933:
+L976:
         ceq     r0,z
-        brf     L930
+        brf     L973
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,31
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L930
+        brf     L973
         lc      r0,0
-        bra     L931
-L930:
+        bra     L974
+L973:
         lc      r0,1
-L931:
+L974:
         ceq     r0,z
-        brf     L928
+        brf     L971
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,32
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L928
+        brf     L971
         lc      r0,0
-        bra     L929
-L928:
+        bra     L972
+L971:
         lc      r0,1
-L929:
+L972:
         ceq     r0,z
-        brf     L926
+        brf     L969
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,33
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L926
+        brf     L969
         lc      r0,0
-        bra     L927
-L926:
+        bra     L970
+L969:
         lc      r0,1
-L927:
+L970:
         ceq     r0,z
-        brf     L924
+        brf     L967
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,34
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L924
+        brf     L967
         lc      r0,0
-        bra     L925
-L924:
+        bra     L968
+L967:
         lc      r0,1
-L925:
+L968:
         ceq     r0,z
-        brf     L948
-        la      r2,L923
+        brf     L991
+        la      r2,L966
         jmp     (r2)
-L948:
+L991:
         la      r1,_tok_type
         lw      r0,0(r1)
         sw      r0,-6(fp)
@@ -9063,91 +9734,91 @@ L948:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L935
-        la      r0,_S222
+        brt     L978
+        la      r0,_S224
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L935:
+L978:
         lw      r0,-6(fp)
         lc      r1,29
         ceq     r0,r1
-        brf     L936
-        la      r0,_S223
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r2,L937
-        jmp     (r2)
-L936:
-        lw      r0,-6(fp)
-        lc      r1,30
-        ceq     r0,r1
-        brf     L938
-        la      r0,_S224
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r2,L939
-        jmp     (r2)
-L938:
-        lw      r0,-6(fp)
-        lc      r1,31
-        ceq     r0,r1
-        brf     L940
+        brf     L979
         la      r0,_S225
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L941
-L940:
+        la      r2,L980
+        jmp     (r2)
+L979:
         lw      r0,-6(fp)
-        lc      r1,32
+        lc      r1,30
         ceq     r0,r1
-        brf     L942
+        brf     L981
         la      r0,_S226
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L943
-L942:
+        la      r2,L982
+        jmp     (r2)
+L981:
         lw      r0,-6(fp)
-        lc      r1,33
+        lc      r1,31
         ceq     r0,r1
-        brf     L944
+        brf     L983
         la      r0,_S227
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L945
-L944:
+        bra     L984
+L983:
         lw      r0,-6(fp)
-        lc      r1,34
+        lc      r1,32
         ceq     r0,r1
-        brf     L947
+        brf     L985
         la      r0,_S228
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L947:
-L945:
-L943:
-L941:
-L939:
-L937:
+        bra     L986
+L985:
+        lw      r0,-6(fp)
+        lc      r1,33
+        ceq     r0,r1
+        brf     L987
+        la      r0,_S229
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        bra     L988
+L987:
+        lw      r0,-6(fp)
+        lc      r1,34
+        ceq     r0,r1
+        brf     L990
+        la      r0,_S230
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L990:
+L988:
+L986:
+L984:
+L982:
+L980:
         lc      r0,1
-        bra     L921
-L923:
+        bra     L964
+L966:
         lw      r0,-3(fp)
-        bra     L921
-L921:
+        bra     L964
+L964:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9167,24 +9838,24 @@ _parse_compound_stmt:
         add     sp,3
         la      r0,_parse_stmt
         jal     r1,(r0)
-L950:
+L993:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L951
+        brf     L994
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_stmt
         jal     r1,(r0)
-        bra     L950
-L951:
+        bra     L993
+L994:
         lc      r0,4
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L949:
+L992:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9206,13 +9877,13 @@ _parse_if_stmt:
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L954
-        la      r0,_S229
+        brt     L997
+        la      r0,_S231
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L954:
+L997:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-6(fp)
@@ -9221,7 +9892,7 @@ L954:
         sw      r0,-9(fp)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S230
+        la      r0,_S232
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9237,17 +9908,17 @@ L954:
         lw      r0,0(r1)
         lc      r1,7
         ceq     r0,r1
-        brf     L955
+        brf     L998
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S231
+        la      r0,_S233
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S232
+        la      r0,_S234
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9258,22 +9929,22 @@ L954:
         jal     r1,(r0)
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S233
+        la      r0,_S235
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        bra     L956
-L955:
+        bra     L999
+L998:
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S234
+        la      r0,_S236
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L956:
-L952:
+L999:
+L995:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9297,7 +9968,7 @@ _parse_while_stmt:
         sw      r0,-9(fp)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S235
+        la      r0,_S237
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9308,16 +9979,16 @@ _parse_while_stmt:
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L959
-        la      r0,_S236
+        brt     L1002
+        la      r0,_S238
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L959:
+L1002:
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S237
+        la      r0,_S239
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9331,19 +10002,19 @@ L959:
         jal     r1,(r0)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S238
+        la      r0,_S240
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S239
+        la      r0,_S241
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L957:
+L1000:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9363,16 +10034,16 @@ _parse_for_stmt:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L962
-        la      r0,_S240
+        brt     L1005
+        la      r0,_S242
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L960
+        la      r2,L1003
         jmp     (r2)
-L962:
+L1005:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -9393,14 +10064,14 @@ L962:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L964
+        brf     L1007
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S241
+        la      r0,_S243
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -9409,9 +10080,9 @@ L962:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L960
+        la      r2,L1003
         jmp     (r2)
-L964:
+L1007:
         la      r0,_sym_kind
         push    r0
         lw      r0,-35(fp)
@@ -9423,16 +10094,16 @@ L964:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L966
-        la      r0,_S242
+        brf     L1009
+        la      r0,_S244
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L960
+        la      r2,L1003
         jmp     (r2)
-L966:
+L1009:
         lc      r0,20
         push    r0
         la      r0,_expect
@@ -9441,11 +10112,11 @@ L966:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L968
+        brt     L1011
         lc      r0,0
-        la      r2,L960
+        la      r2,L1003
         jmp     (r2)
-L968:
+L1011:
         la      r0,_parse_expression
         jal     r1,(r0)
         lw      r0,-35(fp)
@@ -9459,13 +10130,13 @@ L968:
         lw      r0,0(r1)
         lc      r1,50
         ceq     r0,r1
-        brf     L969
+        brf     L1012
         lc      r0,1
         sw      r0,-44(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L970
-L969:
+        bra     L1013
+L1012:
         lc      r0,49
         push    r0
         la      r0,_expect
@@ -9474,12 +10145,12 @@ L969:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L972
+        brt     L1015
         lc      r0,0
-        la      r2,L960
+        la      r2,L1003
         jmp     (r2)
-L972:
-L970:
+L1015:
+L1013:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-38(fp)
@@ -9488,7 +10159,7 @@ L970:
         sw      r0,-41(fp)
         lw      r0,-38(fp)
         push    r0
-        la      r0,_S243
+        la      r0,_S245
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9502,23 +10173,23 @@ L970:
         jal     r1,(r0)
         lw      r0,-44(fp)
         ceq     r0,z
-        brt     L973
-        la      r0,_S244
+        brt     L1016
+        la      r0,_S246
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L974
-L973:
-        la      r0,_S245
+        bra     L1017
+L1016:
+        la      r0,_S247
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L974:
+L1017:
         lw      r0,-41(fp)
         push    r0
-        la      r0,_S246
+        la      r0,_S248
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9531,11 +10202,11 @@ L974:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L976
+        brt     L1019
         lc      r0,0
-        la      r2,L960
+        la      r2,L1003
         jmp     (r2)
-L976:
+L1019:
         la      r0,_parse_stmt
         jal     r1,(r0)
         lw      r0,-35(fp)
@@ -9545,19 +10216,7 @@ L976:
         add     sp,3
         lw      r0,-44(fp)
         ceq     r0,z
-        brt     L977
-        la      r0,_S247
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r0,_S248
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        bra     L978
-L977:
+        brt     L1020
         la      r0,_S249
         push    r0
         la      r0,___tc24r_printf0
@@ -9568,7 +10227,19 @@ L977:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L978:
+        bra     L1021
+L1020:
+        la      r0,_S251
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S252
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1021:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_store_sym
@@ -9576,19 +10247,19 @@ L978:
         add     sp,3
         lw      r0,-38(fp)
         push    r0
-        la      r0,_S251
+        la      r0,_S253
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-41(fp)
         push    r0
-        la      r0,_S252
+        la      r0,_S254
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L960:
+L1003:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9609,25 +10280,25 @@ _parse_repeat_stmt:
         sw      r0,-6(fp)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S253
+        la      r0,_S255
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_parse_stmt
         jal     r1,(r0)
-L980:
+L1023:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L981
+        brf     L1024
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_stmt
         jal     r1,(r0)
-        bra     L980
-L981:
+        bra     L1023
+L1024:
         lc      r0,52
         push    r0
         la      r0,_expect
@@ -9636,31 +10307,31 @@ L981:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L983
+        brt     L1026
         lc      r0,0
-        bra     L979
-L983:
+        bra     L1022
+L1026:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-3(fp)
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
-        brt     L985
-        la      r0,_S254
+        brt     L1028
+        la      r0,_S256
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L985:
+L1028:
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S255
+        la      r0,_S257
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L979:
+L1022:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -9686,7 +10357,7 @@ _parse_case_stmt:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L989
+        brt     L1032
         lw      r0,-3(fp)
         lc      r1,1
         ceq     r0,r1
@@ -9694,20 +10365,20 @@ _parse_case_stmt:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L989
+        brt     L1032
         lc      r0,1
-        bra     L990
-L989:
+        bra     L1033
+L1032:
         lc      r0,0
-L990:
+L1033:
         ceq     r0,z
-        brt     L988
-        la      r0,_S256
+        brt     L1031
+        la      r0,_S258
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L988:
+L1031:
         lc      r0,45
         push    r0
         la      r0,_expect
@@ -9716,15 +10387,15 @@ L988:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L992
+        brt     L1035
         lc      r0,0
-        la      r2,L986
+        la      r2,L1029
         jmp     (r2)
-L992:
+L1035:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-6(fp)
-L993:
+L1036:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,4
@@ -9733,7 +10404,7 @@ L993:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L997
+        brt     L1040
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,38
@@ -9742,34 +10413,34 @@ L993:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L997
+        brt     L1040
         lc      r0,1
-        bra     L998
-L997:
+        bra     L1041
+L1040:
         lc      r0,0
-L998:
+L1041:
         ceq     r0,z
-        brt     L995
+        brt     L1038
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L995
+        brt     L1038
         lc      r0,1
-        bra     L996
-L995:
+        bra     L1039
+L1038:
         lc      r0,0
-L996:
+L1039:
         ceq     r0,z
-        brf     L1018
-        la      r2,L994
+        brf     L1061
+        la      r2,L1037
         jmp     (r2)
-L1018:
+L1061:
         la      r0,_new_label
         jal     r1,(r0)
         sw      r0,-9(fp)
-        la      r0,_S257
+        la      r0,_S259
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -9778,67 +10449,29 @@ L1018:
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L999
+        brf     L1042
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-12(fp)
         lw      r0,-12(fp)
         push    r0
-        la      r0,_S258
+        la      r0,_S260
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1000
+        la      r2,L1043
         jmp     (r2)
-L999:
+L1042:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,60
         ceq     r0,r1
-        brf     L1001
+        brf     L1044
         la      r1,_tok_int_val
         lw      r0,0(r1)
-        sw      r0,-12(fp)
-        lw      r0,-12(fp)
-        push    r0
-        la      r0,_S259
-        push    r0
-        la      r0,___tc24r_printf1
-        jal     r1,(r0)
-        add     sp,6
-        la      r0,_next_token
-        jal     r1,(r0)
-        la      r2,L1002
-        jmp     (r2)
-L1001:
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,27
-        ceq     r0,r1
-        brf     L1003
-        la      r0,_next_token
-        jal     r1,(r0)
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,37
-        ceq     r0,r1
-        brt     L1006
-        la      r0,_S260
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,0
-        la      r2,L986
-        jmp     (r2)
-L1006:
-        lc      r0,0
-        la      r1,_tok_int_val
-        lw      r1,0(r1)
-        sub     r0,r1
         sw      r0,-12(fp)
         lw      r0,-12(fp)
         push    r0
@@ -9849,17 +10482,55 @@ L1006:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1004
+        la      r2,L1045
         jmp     (r2)
-L1003:
+L1044:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,27
+        ceq     r0,r1
+        brf     L1046
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,37
+        ceq     r0,r1
+        brt     L1049
+        la      r0,_S262
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1029
+        jmp     (r2)
+L1049:
+        lc      r0,0
+        la      r1,_tok_int_val
+        lw      r1,0(r1)
+        sub     r0,r1
+        sw      r0,-12(fp)
+        lw      r0,-12(fp)
+        push    r0
+        la      r0,_S263
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r2,L1047
+        jmp     (r2)
+L1046:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1017
-        la      r2,L1007
+        brt     L1060
+        la      r2,L1050
         jmp     (r2)
-L1017:
+L1060:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -9871,7 +10542,7 @@ L1017:
         cls     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1011
+        brf     L1054
         la      r0,_sym_kind
         push    r0
         lw      r0,-12(fp)
@@ -9887,23 +10558,23 @@ L1017:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L1011
+        brf     L1054
         lc      r0,0
-        bra     L1012
-L1011:
+        bra     L1055
+L1054:
         lc      r0,1
-L1012:
+L1055:
         ceq     r0,z
-        brt     L1010
-        la      r0,_S262
+        brt     L1053
+        la      r0,_S264
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L986
+        la      r2,L1029
         jmp     (r2)
-L1010:
+L1053:
         la      r0,_sym_value
         push    r0
         lw      r0,-12(fp)
@@ -9914,35 +10585,35 @@ L1010:
         add     r0,r1
         lw      r0,0(r0)
         push    r0
-        la      r0,_S263
+        la      r0,_S265
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1008
-L1007:
-        la      r0,_S264
+        bra     L1051
+L1050:
+        la      r0,_S266
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L986
+        la      r2,L1029
         jmp     (r2)
-L1008:
-L1004:
-L1002:
-L1000:
-        la      r0,_S265
+L1051:
+L1047:
+L1045:
+L1043:
+        la      r0,_S267
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S266
+        la      r0,_S268
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9955,12 +10626,12 @@ L1000:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1014
+        brt     L1057
         lc      r0,0
-        la      r2,L986
+        la      r2,L1029
         jmp     (r2)
-L1014:
-        la      r0,_S267
+L1057:
+        la      r0,_S269
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -9969,14 +10640,14 @@ L1014:
         jal     r1,(r0)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S268
+        la      r0,_S270
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-9(fp)
         push    r0
-        la      r0,_S269
+        la      r0,_S271
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -9985,21 +10656,21 @@ L1014:
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L1016
+        brf     L1059
         la      r0,_next_token
         jal     r1,(r0)
-L1016:
-        la      r2,L993
+L1059:
+        la      r2,L1036
         jmp     (r2)
-L994:
-        la      r0,_S270
+L1037:
+        la      r0,_S272
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S271
+        la      r0,_S273
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -10009,7 +10680,7 @@ L994:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L986:
+L1029:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10027,45 +10698,45 @@ _parse_read_args:
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L1021
+        brt     L1064
         lc      r0,0
-        la      r2,L1019
+        la      r2,L1062
         jmp     (r2)
-L1021:
+L1064:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,25
         ceq     r0,r1
-        brf     L1023
+        brf     L1066
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,0
-        la      r2,L1019
+        la      r2,L1062
         jmp     (r2)
-L1023:
-L1024:
+L1066:
+L1067:
         lc      r0,1
         ceq     r0,z
-        brf     L1036
-        la      r2,L1025
+        brf     L1079
+        la      r2,L1068
         jmp     (r2)
-L1036:
+L1079:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1027
-        la      r0,_S272
+        brt     L1070
+        la      r0,_S274
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1019
+        la      r2,L1062
         jmp     (r2)
-L1027:
+L1070:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -10086,14 +10757,14 @@ L1027:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1029
+        brf     L1072
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S273
+        la      r0,_S275
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -10102,9 +10773,9 @@ L1027:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1019
+        la      r2,L1062
         jmp     (r2)
-L1029:
+L1072:
         la      r0,_sym_kind
         push    r0
         lw      r0,-35(fp)
@@ -10116,16 +10787,16 @@ L1029:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L1031
-        la      r0,_S274
+        brf     L1074
+        la      r0,_S276
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1019
+        la      r2,L1062
         jmp     (r2)
-L1031:
+L1074:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-35(fp)
@@ -10137,20 +10808,20 @@ L1031:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L1032
-        la      r0,_S275
+        brf     L1075
+        la      r0,_S277
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        bra     L1033
-L1032:
-        la      r0,_S276
+        bra     L1076
+L1075:
+        la      r0,_S278
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1033:
+L1076:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_store_sym
@@ -10160,20 +10831,20 @@ L1033:
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1035
-        bra     L1025
-L1035:
+        brt     L1078
+        bra     L1068
+L1078:
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1024
+        la      r2,L1067
         jmp     (r2)
-L1025:
+L1068:
         lc      r0,25
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1019:
+L1062:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10190,7 +10861,7 @@ _parse_read_stmt:
         jal     r1,(r0)
         la      r0,_parse_read_args
         jal     r1,(r0)
-L1037:
+L1080:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10207,12 +10878,12 @@ _parse_readln_stmt:
         jal     r1,(r0)
         la      r0,_parse_read_args
         jal     r1,(r0)
-        la      r0,_S277
+        la      r0,_S279
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1038:
+L1081:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10232,10 +10903,10 @@ _parse_write_stmt:
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L1057
-        la      r2,L1041
+        brt     L1100
+        la      r2,L1084
         jmp     (r2)
-L1057:
+L1100:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -10244,53 +10915,53 @@ L1057:
         lw      r0,-3(fp)
         lc      r1,2
         ceq     r0,r1
-        brf     L1042
-        la      r0,_S278
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1043
-L1042:
-        lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        brf     L1044
-        la      r0,_S279
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1045
-L1044:
-        lw      r0,-3(fp)
-        lc      r1,4
-        ceq     r0,r1
-        brf     L1046
+        brf     L1085
         la      r0,_S280
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        bra     L1047
-L1046:
+        bra     L1086
+L1085:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        brf     L1087
         la      r0,_S281
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1047:
-L1045:
-L1043:
-L1048:
+        bra     L1088
+L1087:
+        lw      r0,-3(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L1089
+        la      r0,_S282
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L1090
+L1089:
+        la      r0,_S283
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L1090:
+L1088:
+L1086:
+L1091:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1056
-        la      r2,L1049
+        brt     L1099
+        la      r2,L1092
         jmp     (r2)
-L1056:
+L1099:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -10299,54 +10970,54 @@ L1056:
         lw      r0,-3(fp)
         lc      r1,2
         ceq     r0,r1
-        brf     L1050
-        la      r0,_S282
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1051
-L1050:
-        lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        brf     L1052
-        la      r0,_S283
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1053
-L1052:
-        lw      r0,-3(fp)
-        lc      r1,4
-        ceq     r0,r1
-        brf     L1054
+        brf     L1093
         la      r0,_S284
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        bra     L1055
-L1054:
+        bra     L1094
+L1093:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        brf     L1095
         la      r0,_S285
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1055:
-L1053:
-L1051:
-        la      r2,L1048
+        bra     L1096
+L1095:
+        lw      r0,-3(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L1097
+        la      r0,_S286
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L1098
+L1097:
+        la      r0,_S287
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L1098:
+L1096:
+L1094:
+        la      r2,L1091
         jmp     (r2)
-L1049:
+L1092:
         lc      r0,25
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1041:
-L1039:
+L1084:
+L1082:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10366,10 +11037,10 @@ _parse_writeln_stmt:
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L1076
-        la      r2,L1060
+        brt     L1119
+        la      r2,L1103
         jmp     (r2)
-L1076:
+L1119:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -10378,53 +11049,53 @@ L1076:
         lw      r0,-3(fp)
         lc      r1,2
         ceq     r0,r1
-        brf     L1061
-        la      r0,_S286
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1062
-L1061:
-        lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        brf     L1063
-        la      r0,_S287
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1064
-L1063:
-        lw      r0,-3(fp)
-        lc      r1,4
-        ceq     r0,r1
-        brf     L1065
+        brf     L1104
         la      r0,_S288
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        bra     L1066
-L1065:
+        bra     L1105
+L1104:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        brf     L1106
         la      r0,_S289
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1066:
-L1064:
-L1062:
-L1067:
+        bra     L1107
+L1106:
+        lw      r0,-3(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L1108
+        la      r0,_S290
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+        bra     L1109
+L1108:
+        la      r0,_S291
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L1109:
+L1107:
+L1105:
+L1110:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1075
-        la      r2,L1068
+        brt     L1118
+        la      r2,L1111
         jmp     (r2)
-L1075:
+L1118:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -10433,59 +11104,59 @@ L1075:
         lw      r0,-3(fp)
         lc      r1,2
         ceq     r0,r1
-        brf     L1069
-        la      r0,_S290
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1070
-L1069:
-        lw      r0,-3(fp)
-        lc      r1,1
-        ceq     r0,r1
-        brf     L1071
-        la      r0,_S291
-        push    r0
-        la      r0,_emit_rt_call
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1072
-L1071:
-        lw      r0,-3(fp)
-        lc      r1,4
-        ceq     r0,r1
-        brf     L1073
+        brf     L1112
         la      r0,_S292
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        bra     L1074
-L1073:
+        bra     L1113
+L1112:
+        lw      r0,-3(fp)
+        lc      r1,1
+        ceq     r0,r1
+        brf     L1114
         la      r0,_S293
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1074:
-L1072:
-L1070:
-        la      r2,L1067
-        jmp     (r2)
-L1068:
-        lc      r0,25
-        push    r0
-        la      r0,_expect
-        jal     r1,(r0)
-        add     sp,3
-L1060:
+        bra     L1115
+L1114:
+        lw      r0,-3(fp)
+        lc      r1,4
+        ceq     r0,r1
+        brf     L1116
         la      r0,_S294
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-L1058:
+        bra     L1117
+L1116:
+        la      r0,_S295
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L1117:
+L1115:
+L1113:
+        la      r2,L1110
+        jmp     (r2)
+L1111:
+        lc      r0,25
+        push    r0
+        la      r0,_expect
+        jal     r1,(r0)
+        add     sp,3
+L1103:
+        la      r0,_S296
+        push    r0
+        la      r0,_emit_rt_call
+        jal     r1,(r0)
+        add     sp,3
+L1101:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -10499,7 +11170,7 @@ _parse_proc_call:
         push    r1
         mov     fp,sp
         add     sp,-18
-        la      r0,_S295
+        la      r0,_S297
         push    r0
         lw      r0,9(fp)
         push    r0
@@ -10508,10 +11179,10 @@ _parse_proc_call:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brt     L1126
-        la      r2,L1079
+        brt     L1169
+        la      r2,L1122
         jmp     (r2)
-L1126:
+L1169:
         lc      r0,24
         push    r0
         la      r0,_expect
@@ -10520,25 +11191,25 @@ L1126:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1081
+        brt     L1124
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1081:
+L1124:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1083
-        la      r0,_S296
+        brt     L1126
+        la      r0,_S298
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1083:
+L1126:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -10548,16 +11219,16 @@ L1083:
         lw      r0,-9(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1085
-        la      r0,_S297
+        brf     L1128
+        la      r0,_S299
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1085:
+L1128:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -10569,16 +11240,16 @@ L1085:
         lw      r0,0(r0)
         lc      r1,5
         ceq     r0,r1
-        brt     L1087
-        la      r0,_S298
+        brt     L1130
+        la      r0,_S300
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1087:
+L1130:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,25
@@ -10589,11 +11260,11 @@ L1087:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1089
+        brt     L1132
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1089:
+L1132:
         la      r0,_sym_ptr_base
         push    r0
         lw      r0,-9(fp)
@@ -10611,7 +11282,7 @@ L1089:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1090
+        brt     L1133
         la      r0,_utype_base
         push    r0
         lw      r0,-12(fp)
@@ -10621,14 +11292,14 @@ L1089:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L1091
-L1090:
+        bra     L1134
+L1133:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-L1091:
+L1134:
         sw      r0,-15(fp)
         lw      r0,-15(fp)
         lc      r1,0
@@ -10637,7 +11308,7 @@ L1091:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1092
+        brt     L1135
         la      r0,_utype_size
         push    r0
         lw      r0,-15(fp)
@@ -10647,21 +11318,21 @@ L1091:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L1093
-L1092:
+        bra     L1136
+L1135:
         lc      r0,1
-L1093:
+L1136:
         sw      r0,-18(fp)
         lw      r0,-18(fp)
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S299
+        la      r0,_S301
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S300
+        la      r0,_S302
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -10672,10 +11343,10 @@ L1093:
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1079:
-        la      r0,_S301
+L1122:
+        la      r0,_S303
         push    r0
         lw      r0,9(fp)
         push    r0
@@ -10684,10 +11355,10 @@ L1079:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brt     L1125
-        la      r2,L1095
+        brt     L1168
+        la      r2,L1138
         jmp     (r2)
-L1125:
+L1168:
         lc      r0,24
         push    r0
         la      r0,_expect
@@ -10696,25 +11367,25 @@ L1125:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1097
+        brt     L1140
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1097:
+L1140:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1099
-        la      r0,_S302
+        brt     L1142
+        la      r0,_S304
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1099:
+L1142:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -10724,16 +11395,16 @@ L1099:
         lw      r0,-9(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1101
-        la      r0,_S303
+        brf     L1144
+        la      r0,_S305
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1101:
+L1144:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,25
@@ -10744,25 +11415,25 @@ L1101:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1103
+        brt     L1146
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1103:
+L1146:
         lw      r0,-9(fp)
         push    r0
         la      r0,_emit_load_sym
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S304
+        la      r0,_S306
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1095:
+L1138:
         lw      r0,9(fp)
         push    r0
         la      r0,_proc_lookup
@@ -10772,13 +11443,13 @@ L1095:
         lw      r0,-3(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1105
+        brf     L1148
         lw      r0,9(fp)
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S305
+        la      r0,_S307
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -10787,38 +11458,38 @@ L1095:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1105:
+L1148:
         lc      r0,0
         sw      r0,-6(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L1124
-        la      r2,L1107
+        brt     L1167
+        la      r2,L1150
         jmp     (r2)
-L1124:
+L1167:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,25
         ceq     r0,r1
-        brt     L1109
+        brt     L1152
         la      r0,_parse_expression
         jal     r1,(r0)
         lw      r0,-6(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-L1110:
+L1153:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brf     L1111
+        brf     L1154
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -10827,9 +11498,9 @@ L1110:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        bra     L1110
-L1111:
-L1109:
+        bra     L1153
+L1154:
+L1152:
         lc      r0,25
         push    r0
         la      r0,_expect
@@ -10838,12 +11509,12 @@ L1109:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1113
+        brt     L1156
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1113:
-L1107:
+L1156:
+L1150:
         lw      r0,-6(fp)
         push    r0
         la      r0,_proc_argc
@@ -10858,13 +11529,13 @@ L1107:
         mov     r1,r0
         pop     r0
         ceq     r0,r1
-        brt     L1115
+        brt     L1158
         lw      r0,9(fp)
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S306
+        la      r0,_S308
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -10873,13 +11544,13 @@ L1107:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1077
+        la      r2,L1120
         jmp     (r2)
-L1115:
+L1158:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1118
+        brt     L1161
         la      r0,_proc_is_user
         push    r0
         lw      r0,-3(fp)
@@ -10892,28 +11563,28 @@ L1115:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1118
+        brt     L1161
         lc      r0,1
-        bra     L1119
-L1118:
+        bra     L1162
+L1161:
         lc      r0,0
-L1119:
+L1162:
         ceq     r0,z
-        brt     L1116
+        brt     L1159
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S307
+        la      r0,_S309
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r2,L1117
+        la      r2,L1160
         jmp     (r2)
-L1116:
+L1159:
         la      r0,_proc_is_user
         push    r0
         lw      r0,-3(fp)
@@ -10924,7 +11595,7 @@ L1116:
         add     r0,r1
         lw      r0,0(r0)
         ceq     r0,z
-        brt     L1122
+        brt     L1165
         la      r0,_proc_depth
         push    r0
         lw      r0,-3(fp)
@@ -10938,14 +11609,14 @@ L1116:
         cls     r1,r0
         mov     r0,c
         ceq     r0,z
-        brt     L1122
+        brt     L1165
         lc      r0,1
-        bra     L1123
-L1122:
+        bra     L1166
+L1165:
         lc      r0,0
-L1123:
+L1166:
         ceq     r0,z
-        brt     L1120
+        brt     L1163
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
@@ -10970,27 +11641,27 @@ L1123:
         lc      r1,1
         add     r0,r1
         push    r0
-        la      r0,_S308
+        la      r0,_S310
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        bra     L1121
-L1120:
+        bra     L1164
+L1163:
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S309
+        la      r0,_S311
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1121:
-L1117:
-L1077:
+L1164:
+L1160:
+L1120:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -11008,10 +11679,10 @@ _parse_stmt:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1232
-        la      r2,L1128
+        brt     L1275
+        la      r2,L1171
         jmp     (r2)
-L1232:
+L1275:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -11026,10 +11697,10 @@ L1232:
         lw      r0,0(r1)
         lc      r1,57
         ceq     r0,r1
-        brt     L1231
-        la      r2,L1130
+        brt     L1274
+        la      r2,L1173
         jmp     (r2)
-L1231:
+L1274:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -11040,14 +11711,14 @@ L1231:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1133
+        brf     L1176
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S310
+        la      r0,_S312
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -11056,9 +11727,9 @@ L1231:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1133:
+L1176:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-35(fp)
@@ -11070,16 +11741,16 @@ L1133:
         lw      r0,0(r0)
         lc      r1,3
         ceq     r0,r1
-        brt     L1135
-        la      r0,_S311
+        brt     L1178
+        la      r0,_S313
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1135:
+L1178:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_parse_expression
@@ -11092,17 +11763,17 @@ L1135:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1137
+        brt     L1180
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1137:
+L1180:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_array_addr
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S312
+        la      r0,_S314
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11115,14 +11786,14 @@ L1137:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1139
+        brt     L1182
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1139:
+L1182:
         la      r0,_parse_expression
         jal     r1,(r0)
-        la      r0,_S313
+        la      r0,_S315
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11138,31 +11809,31 @@ L1139:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L1140
-        la      r0,_S314
+        brf     L1183
+        la      r0,_S316
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1141
-L1140:
-        la      r0,_S315
+        bra     L1184
+L1183:
+        la      r0,_S317
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1141:
-        la      r2,L1131
+L1184:
+        la      r2,L1174
         jmp     (r2)
-L1130:
+L1173:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,65
         ceq     r0,r1
-        brt     L1230
-        la      r2,L1142
+        brt     L1273
+        la      r2,L1185
         jmp     (r2)
-L1230:
+L1273:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -11173,14 +11844,14 @@ L1230:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1145
+        brf     L1188
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S316
+        la      r0,_S318
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -11189,9 +11860,9 @@ L1230:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1145:
+L1188:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-35(fp)
@@ -11203,16 +11874,16 @@ L1145:
         lw      r0,0(r0)
         lc      r1,5
         ceq     r0,r1
-        brt     L1147
-        la      r0,_S317
+        brt     L1190
+        la      r0,_S319
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1147:
+L1190:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_sym_ptr_base
@@ -11232,7 +11903,7 @@ L1147:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1148
+        brt     L1191
         la      r0,_utype_base
         push    r0
         lw      r0,-44(fp)
@@ -11242,14 +11913,14 @@ L1147:
         pop     r0
         add     r0,r1
         lw      r0,0(r0)
-        bra     L1149
-L1148:
+        bra     L1192
+L1191:
         lc      r0,1
         push    r0
         lc      r0,0
         pop     r1
         sub     r0,r1
-L1149:
+L1192:
         sw      r0,-47(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
@@ -11257,7 +11928,7 @@ L1149:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1154
+        brt     L1197
         lw      r0,-47(fp)
         lc      r1,0
         cls     r0,r1
@@ -11265,14 +11936,14 @@ L1149:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1154
+        brt     L1197
         lc      r0,1
-        bra     L1155
-L1154:
+        bra     L1198
+L1197:
         lc      r0,0
-L1155:
+L1198:
         ceq     r0,z
-        brt     L1152
+        brt     L1195
         la      r0,_utype_kind
         push    r0
         lw      r0,-47(fp)
@@ -11286,33 +11957,33 @@ L1155:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1152
+        brt     L1195
         lc      r0,1
-        bra     L1153
-L1152:
+        bra     L1196
+L1195:
         lc      r0,0
-L1153:
+L1196:
         ceq     r0,z
-        brf     L1229
-        la      r2,L1150
+        brf     L1272
+        la      r2,L1193
         jmp     (r2)
-L1229:
+L1272:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1157
-        la      r0,_S318
+        brt     L1200
+        la      r0,_S320
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1157:
+L1200:
         la      r0,_tok_lexeme
         push    r0
         lw      r0,-47(fp)
@@ -11324,13 +11995,13 @@ L1157:
         lw      r0,-50(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1159
+        brf     L1202
         la      r0,_tok_lexeme
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S319
+        la      r0,_S321
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -11339,9 +12010,9 @@ L1157:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1159:
+L1202:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_has_arrays
@@ -11349,16 +12020,16 @@ L1159:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1161
+        brt     L1204
         lc      r0,1
         la      r1,_has_arrays
         sw      r0,0(r1)
-        la      r0,_S320
+        la      r0,_S322
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1161:
+L1204:
         la      r0,_field_type
         push    r0
         lw      r0,-50(fp)
@@ -11370,10 +12041,10 @@ L1161:
         lw      r0,0(r0)
         lc      r1,3
         ceq     r0,r1
-        brt     L1228
-        la      r2,L1162
+        brt     L1271
+        la      r2,L1205
         jmp     (r2)
-L1228:
+L1271:
         lc      r0,57
         push    r0
         la      r0,_expect
@@ -11382,11 +12053,11 @@ L1228:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1165
+        brt     L1208
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1165:
+L1208:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_load_sym
@@ -11403,7 +12074,7 @@ L1165:
         lw      r0,0(r0)
         lc      r1,0
         cls     r1,r0
-        brf     L1167
+        brf     L1210
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -11416,18 +12087,18 @@ L1165:
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S321
+        la      r0,_S323
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S322
+        la      r0,_S324
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1167:
-        la      r0,_S323
+L1210:
+        la      r0,_S325
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11457,35 +12128,18 @@ L1167:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1168
+        brt     L1211
         lc      r0,1
-        bra     L1169
-L1168:
+        bra     L1212
+L1211:
         lc      r0,3
-L1169:
+L1212:
         sw      r0,-56(fp)
         lw      r0,-53(fp)
         lc      r1,0
         ceq     r0,r1
-        brt     L1171
+        brt     L1214
         lw      r0,-53(fp)
-        push    r0
-        la      r0,_S324
-        push    r0
-        la      r0,___tc24r_printf1
-        jal     r1,(r0)
-        add     sp,6
-        la      r0,_S325
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-L1171:
-        lw      r0,-56(fp)
-        lc      r1,1
-        cls     r1,r0
-        brf     L1173
-        lw      r0,-56(fp)
         push    r0
         la      r0,_S326
         push    r0
@@ -11497,13 +12151,30 @@ L1171:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1173:
+L1214:
+        lw      r0,-56(fp)
+        lc      r1,1
+        cls     r1,r0
+        brf     L1216
+        lw      r0,-56(fp)
+        push    r0
         la      r0,_S328
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        la      r0,_S329
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S329
+L1216:
+        la      r0,_S330
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S331
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11516,12 +12187,12 @@ L1173:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1175
+        brt     L1218
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1175:
-        la      r0,_S330
+L1218:
+        la      r0,_S332
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11534,15 +12205,15 @@ L1175:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1177
+        brt     L1220
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1177:
+L1220:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
-        la      r0,_S331
+        la      r0,_S333
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11558,23 +12229,23 @@ L1177:
         lw      r0,0(r0)
         lc      r1,4
         ceq     r0,r1
-        brf     L1178
-        la      r0,_S332
+        brf     L1221
+        la      r0,_S334
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        bra     L1179
-L1178:
-        la      r0,_S333
+        bra     L1222
+L1221:
+        la      r0,_S335
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1179:
-        la      r2,L1163
+L1222:
+        la      r2,L1206
         jmp     (r2)
-L1162:
+L1205:
         lc      r0,20
         push    r0
         la      r0,_expect
@@ -11583,11 +12254,11 @@ L1162:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1181
+        brt     L1224
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1181:
+L1224:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_load_sym
@@ -11604,7 +12275,7 @@ L1181:
         lw      r0,0(r0)
         lc      r1,0
         cls     r1,r0
-        brf     L1183
+        brf     L1226
         la      r0,_field_offset
         push    r0
         lw      r0,-50(fp)
@@ -11617,18 +12288,18 @@ L1181:
         lc      r1,3
         mul     r0,r1
         push    r0
-        la      r0,_S334
+        la      r0,_S336
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S335
+        la      r0,_S337
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1183:
-        la      r0,_S336
+L1226:
+        la      r0,_S338
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11636,28 +12307,28 @@ L1183:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
-        la      r0,_S337
+        la      r0,_S339
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S338
+        la      r0,_S340
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1163:
-        la      r2,L1151
+L1206:
+        la      r2,L1194
         jmp     (r2)
-L1150:
+L1193:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,20
         ceq     r0,r1
-        brt     L1227
-        la      r2,L1184
+        brt     L1270
+        la      r2,L1227
         jmp     (r2)
-L1227:
+L1270:
         la      r0,_next_token
         jal     r1,(r0)
         lw      r0,-35(fp)
@@ -11670,17 +12341,17 @@ L1227:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1187
+        brt     L1230
         lc      r0,1
         la      r1,_has_arrays
         sw      r0,0(r1)
-        la      r0,_S339
+        la      r0,_S341
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1187:
-        la      r0,_S340
+L1230:
+        la      r0,_S342
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -11688,42 +12359,42 @@ L1187:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
-        la      r0,_S341
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r0,_S342
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1185
-L1184:
         la      r0,_S343
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S344
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        bra     L1228
+L1227:
+        la      r0,_S345
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L1185:
-L1151:
-        la      r2,L1143
+L1228:
+L1194:
+        la      r2,L1186
         jmp     (r2)
-L1142:
+L1185:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,20
         ceq     r0,r1
-        brt     L1226
-        la      r2,L1188
+        brt     L1269
+        la      r2,L1231
         jmp     (r2)
-L1226:
+L1269:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_in_proc
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1194
+        brt     L1237
         la      r1,_cur_func_local
         lw      r0,0(r1)
         lc      r1,0
@@ -11732,14 +12403,14 @@ L1226:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1194
+        brt     L1237
         lc      r0,1
-        bra     L1195
-L1194:
+        bra     L1238
+L1237:
         lc      r0,0
-L1195:
+L1238:
         ceq     r0,z
-        brt     L1192
+        brt     L1235
         la      r0,_cur_func_name
         push    r0
         lc      r0,-32
@@ -11752,29 +12423,29 @@ L1195:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1192
+        brt     L1235
         lc      r0,1
-        bra     L1193
-L1192:
+        bra     L1236
+L1235:
         lc      r0,0
-L1193:
+L1236:
         ceq     r0,z
-        brt     L1191
+        brt     L1234
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
         la      r1,_cur_func_local
         lw      r0,0(r1)
         push    r0
-        la      r0,_S344
+        la      r0,_S346
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1191:
+L1234:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -11785,14 +12456,14 @@ L1191:
         lw      r0,-35(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1197
+        brf     L1240
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S345
+        la      r0,_S347
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -11801,9 +12472,9 @@ L1191:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1197:
+L1240:
         la      r0,_sym_kind
         push    r0
         lw      r0,-35(fp)
@@ -11815,16 +12486,16 @@ L1197:
         lw      r0,0(r0)
         lc      r1,0
         ceq     r0,r1
-        brf     L1199
-        la      r0,_S346
+        brf     L1242
+        la      r0,_S348
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1127
+        la      r2,L1170
         jmp     (r2)
-L1199:
+L1242:
         la      r0,_parse_expression
         jal     r1,(r0)
         sw      r0,-38(fp)
@@ -11846,172 +12517,172 @@ L1199:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1201
-        la      r0,_S347
+        brt     L1244
+        la      r0,_S349
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-L1201:
+L1244:
         lw      r0,-35(fp)
         push    r0
         la      r0,_emit_store_sym
         jal     r1,(r0)
         add     sp,3
-        bra     L1189
-L1188:
+        bra     L1232
+L1231:
         lc      r0,-32
         add     r0,fp
         push    r0
         la      r0,_parse_proc_call
         jal     r1,(r0)
         add     sp,3
-L1189:
-L1143:
-L1131:
-        la      r2,L1129
+L1232:
+L1186:
+L1174:
+        la      r2,L1172
         jmp     (r2)
-L1128:
+L1171:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,5
         ceq     r0,r1
-        brf     L1202
+        brf     L1245
         la      r0,_parse_if_stmt
         jal     r1,(r0)
-        la      r2,L1203
+        la      r2,L1246
         jmp     (r2)
-L1202:
+L1245:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,8
         ceq     r0,r1
-        brf     L1204
+        brf     L1247
         la      r0,_parse_while_stmt
         jal     r1,(r0)
-        la      r2,L1205
+        la      r2,L1248
         jmp     (r2)
-L1204:
+L1247:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,48
         ceq     r0,r1
-        brf     L1206
+        brf     L1249
         la      r0,_parse_for_stmt
         jal     r1,(r0)
-        la      r2,L1207
+        la      r2,L1250
         jmp     (r2)
-L1206:
+L1249:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,51
         ceq     r0,r1
-        brf     L1208
+        brf     L1251
         la      r0,_parse_repeat_stmt
         jal     r1,(r0)
-        la      r2,L1209
+        la      r2,L1252
         jmp     (r2)
-L1208:
+L1251:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,53
         ceq     r0,r1
-        brf     L1210
+        brf     L1253
         la      r0,_parse_case_stmt
         jal     r1,(r0)
-        la      r2,L1211
+        la      r2,L1254
         jmp     (r2)
-L1210:
+L1253:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,55
         ceq     r0,r1
-        brf     L1212
+        brf     L1255
         la      r0,_parse_read_stmt
         jal     r1,(r0)
-        la      r2,L1213
+        la      r2,L1256
         jmp     (r2)
-L1212:
+L1255:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,56
         ceq     r0,r1
-        brf     L1214
+        brf     L1257
         la      r0,_parse_readln_stmt
         jal     r1,(r0)
-        la      r2,L1215
+        la      r2,L1258
         jmp     (r2)
-L1214:
+L1257:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,54
         ceq     r0,r1
-        brf     L1216
+        brf     L1259
         la      r0,_parse_write_stmt
         jal     r1,(r0)
-        la      r2,L1217
+        la      r2,L1260
         jmp     (r2)
-L1216:
+L1259:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,10
         ceq     r0,r1
-        brf     L1218
+        brf     L1261
         la      r0,_parse_writeln_stmt
         jal     r1,(r0)
-        la      r2,L1219
+        la      r2,L1262
         jmp     (r2)
-L1218:
+L1261:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,3
         ceq     r0,r1
-        brf     L1220
+        brf     L1263
         la      r0,_parse_compound_stmt
         jal     r1,(r0)
-        bra     L1221
-L1220:
+        bra     L1264
+L1263:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,63
         ceq     r0,r1
-        brf     L1223
+        brf     L1266
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_exit_label
         lw      r0,0(r1)
         lc      r1,0
         cls     r0,r1
-        brf     L1224
-        la      r0,_S348
+        brf     L1267
+        la      r0,_S350
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
-        bra     L1225
-L1224:
+        bra     L1268
+L1267:
         la      r1,_exit_label
         lw      r0,0(r1)
         push    r0
-        la      r0,_S349
+        la      r0,_S351
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1225:
-L1223:
-L1221:
-L1219:
-L1217:
-L1215:
-L1213:
-L1211:
-L1209:
-L1207:
-L1205:
-L1203:
-L1129:
-L1127:
+L1268:
+L1266:
+L1264:
+L1262:
+L1260:
+L1258:
+L1256:
+L1254:
+L1252:
+L1250:
+L1248:
+L1246:
+L1172:
+L1170:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -12029,16 +12700,16 @@ _parse_const_def:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1235
-        la      r0,_S350
+        brt     L1278
+        la      r0,_S352
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1233
+        la      r2,L1276
         jmp     (r2)
-L1235:
+L1278:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -12057,92 +12728,92 @@ L1235:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1237
+        brt     L1280
         lc      r0,0
-        la      r2,L1233
+        la      r2,L1276
         jmp     (r2)
-L1237:
+L1280:
         lc      r0,0
         sw      r0,-41(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1238
+        brf     L1281
         lc      r0,1
         sw      r0,-41(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1239
-L1238:
+        bra     L1282
+L1281:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,26
         ceq     r0,r1
-        brf     L1241
+        brf     L1284
         la      r0,_next_token
         jal     r1,(r0)
-L1241:
-L1239:
+L1284:
+L1282:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1242
+        brf     L1285
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-35(fp)
         lw      r0,-41(fp)
         ceq     r0,z
-        brt     L1245
+        brt     L1288
         lc      r0,0
         lw      r1,-35(fp)
         sub     r0,r1
         sw      r0,-35(fp)
-L1245:
+L1288:
         lc      r0,0
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1243
+        la      r2,L1286
         jmp     (r2)
-L1242:
+L1285:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,13
         ceq     r0,r1
-        brf     L1246
+        brf     L1289
         lc      r0,1
         sw      r0,-35(fp)
         lc      r0,1
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1247
+        la      r2,L1290
         jmp     (r2)
-L1246:
+L1289:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,14
         ceq     r0,r1
-        brf     L1248
+        brf     L1291
         lc      r0,0
         sw      r0,-35(fp)
         lc      r0,1
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1249
+        la      r2,L1292
         jmp     (r2)
-L1248:
+L1291:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1258
-        la      r2,L1250
+        brt     L1301
+        la      r2,L1293
         jmp     (r2)
-L1258:
+L1301:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_sym_lookup
@@ -12154,7 +12825,7 @@ L1258:
         cls     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1254
+        brf     L1297
         la      r0,_sym_kind
         push    r0
         lw      r0,-44(fp)
@@ -12170,15 +12841,15 @@ L1258:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L1254
+        brf     L1297
         lc      r0,0
-        bra     L1255
-L1254:
+        bra     L1298
+L1297:
         lc      r0,1
-L1255:
+L1298:
         ceq     r0,z
-        brt     L1253
-        la      r0,_S351
+        brt     L1296
+        la      r0,_S353
         push    r0
         la      r0,_error
         jal     r1,(r0)
@@ -12191,9 +12862,9 @@ L1255:
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1233
+        la      r2,L1276
         jmp     (r2)
-L1253:
+L1296:
         la      r0,_sym_value
         push    r0
         lw      r0,-44(fp)
@@ -12206,12 +12877,12 @@ L1253:
         sw      r0,-35(fp)
         lw      r0,-41(fp)
         ceq     r0,z
-        brt     L1257
+        brt     L1300
         lc      r0,0
         lw      r1,-35(fp)
         sub     r0,r1
         sw      r0,-35(fp)
-L1257:
+L1300:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-44(fp)
@@ -12224,19 +12895,19 @@ L1257:
         sw      r0,-38(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1251
-L1250:
-        la      r0,_S352
+        bra     L1294
+L1293:
+        la      r0,_S354
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1233
-L1251:
-L1249:
-L1247:
-L1243:
+        bra     L1276
+L1294:
+L1292:
+L1290:
+L1286:
         lw      r0,-35(fp)
         push    r0
         lw      r0,-38(fp)
@@ -12254,7 +12925,7 @@ L1243:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1233:
+L1276:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -12271,32 +12942,32 @@ _parse_const_section:
         jal     r1,(r0)
         la      r0,_parse_const_def
         jal     r1,(r0)
-L1260:
+L1303:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1262
+        brt     L1305
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1262
+        brt     L1305
         lc      r0,1
-        bra     L1263
-L1262:
+        bra     L1306
+L1305:
         lc      r0,0
-L1263:
+L1306:
         ceq     r0,z
-        brt     L1261
+        brt     L1304
         la      r0,_parse_const_def
         jal     r1,(r0)
-        bra     L1260
-L1261:
-L1259:
+        bra     L1303
+L1304:
+L1302:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -12312,30 +12983,30 @@ _parse_type_section:
         add     sp,-106
         la      r0,_next_token
         jal     r1,(r0)
-L1265:
+L1308:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1267
+        brt     L1310
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1267
+        brt     L1310
         lc      r0,1
-        bra     L1268
-L1267:
+        bra     L1311
+L1310:
         lc      r0,0
-L1268:
+L1311:
         ceq     r0,z
-        brf     L1354
-        la      r2,L1266
+        brf     L1397
+        la      r2,L1309
         jmp     (r2)
-L1354:
+L1397:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -12354,35 +13025,35 @@ L1354:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1270
+        brt     L1313
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1270:
+L1313:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,65
         ceq     r0,r1
-        brt     L1353
-        la      r2,L1271
+        brt     L1396
+        la      r2,L1314
         jmp     (r2)
-L1353:
+L1396:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1274
-        la      r0,_S353
+        brt     L1317
+        la      r0,_S355
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1274:
+L1317:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-64
@@ -12403,7 +13074,7 @@ L1274:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1275
+        brf     L1318
         lc      r0,5
         push    r0
         lc      r0,-32
@@ -12413,8 +13084,8 @@ L1274:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-67(fp)
-        bra     L1276
-L1275:
+        bra     L1319
+L1318:
         la      r0,_utype_kind
         push    r0
         lw      r0,-67(fp)
@@ -12426,15 +13097,15 @@ L1275:
         mov     r1,r0
         lc      r0,5
         sw      r0,0(r1)
-L1276:
+L1319:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1278
+        brf     L1321
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1278:
+L1321:
         la      r0,_utype_size
         push    r0
         lw      r0,-67(fp)
@@ -12456,7 +13127,7 @@ L1278:
         lw      r0,-70(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1280
+        brf     L1323
         lc      r0,6
         push    r0
         lc      r0,-64
@@ -12466,7 +13137,7 @@ L1278:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-70(fp)
-L1280:
+L1323:
         la      r0,_utype_base
         push    r0
         lw      r0,-67(fp)
@@ -12478,17 +13149,17 @@ L1280:
         mov     r1,r0
         lw      r0,-70(fp)
         sw      r0,0(r1)
-        la      r2,L1272
+        la      r2,L1315
         jmp     (r2)
-L1271:
+L1314:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,46
         ceq     r0,r1
-        brt     L1352
-        la      r2,L1281
+        brt     L1395
+        la      r2,L1324
         jmp     (r2)
-L1352:
+L1395:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,-32
@@ -12501,7 +13172,7 @@ L1352:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1283
+        brf     L1326
         lc      r0,6
         push    r0
         lc      r0,-32
@@ -12511,8 +13182,8 @@ L1352:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-67(fp)
-        bra     L1284
-L1283:
+        bra     L1327
+L1326:
         la      r0,_utype_kind
         push    r0
         lw      r0,-67(fp)
@@ -12524,15 +13195,15 @@ L1283:
         mov     r1,r0
         lc      r0,6
         sw      r0,0(r1)
-L1284:
+L1327:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1286
+        brf     L1329
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1286:
+L1329:
         la      r1,_field_count
         lw      r0,0(r1)
         sw      r0,-73(fp)
@@ -12540,30 +13211,30 @@ L1286:
         sw      r0,-76(fp)
         lc      r0,0
         sw      r0,-79(fp)
-L1287:
+L1330:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1289
+        brt     L1332
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1289
+        brt     L1332
         lc      r0,1
-        bra     L1290
-L1289:
+        bra     L1333
+L1332:
         lc      r0,0
-L1290:
+L1333:
         ceq     r0,z
-        brf     L1351
-        la      r2,L1288
+        brf     L1394
+        la      r2,L1331
         jmp     (r2)
-L1351:
+L1394:
         la      r1,_field_count
         lw      r0,0(r1)
         sw      r0,-88(fp)
@@ -12571,79 +13242,16 @@ L1351:
         lw      r0,0(r1)
         la      r1,128
         cls     r0,r1
-        brt     L1292
-        la      r0,_S354
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,0
-        la      r2,L1264
-        jmp     (r2)
-L1292:
-        la      r0,_tok_lexeme
-        push    r0
-        la      r1,_field_count
-        lw      r0,0(r1)
-        push    r0
-        la      r0,_field_name_at
-        jal     r1,(r0)
-        add     sp,3
-        push    r0
-        la      r0,_str_copy
-        jal     r1,(r0)
-        add     sp,6
-        la      r1,_field_count
-        lw      r0,0(r1)
-        lc      r1,1
-        add     r0,r1
-        la      r1,_field_count
-        sw      r0,0(r1)
-        lw      r0,-76(fp)
-        lc      r1,1
-        add     r0,r1
-        sw      r0,-76(fp)
-        la      r0,_next_token
-        jal     r1,(r0)
-L1293:
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,23
-        ceq     r0,r1
-        brt     L1350
-        la      r2,L1294
-        jmp     (r2)
-L1350:
-        la      r0,_next_token
-        jal     r1,(r0)
-        la      r1,_tok_type
-        lw      r0,0(r1)
-        lc      r1,36
-        ceq     r0,r1
-        brt     L1296
-        la      r0,_S355
-        push    r0
-        la      r0,_error
-        jal     r1,(r0)
-        add     sp,3
-        lc      r0,0
-        la      r2,L1264
-        jmp     (r2)
-L1296:
-        la      r1,_field_count
-        lw      r0,0(r1)
-        la      r1,128
-        cls     r0,r1
-        brt     L1298
+        brt     L1335
         la      r0,_S356
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1298:
+L1335:
         la      r0,_tok_lexeme
         push    r0
         la      r1,_field_count
@@ -12668,9 +13276,72 @@ L1298:
         sw      r0,-76(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1293
+L1336:
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,23
+        ceq     r0,r1
+        brt     L1393
+        la      r2,L1337
         jmp     (r2)
-L1294:
+L1393:
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r1,_tok_type
+        lw      r0,0(r1)
+        lc      r1,36
+        ceq     r0,r1
+        brt     L1339
+        la      r0,_S357
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1307
+        jmp     (r2)
+L1339:
+        la      r1,_field_count
+        lw      r0,0(r1)
+        la      r1,128
+        cls     r0,r1
+        brt     L1341
+        la      r0,_S358
+        push    r0
+        la      r0,_error
+        jal     r1,(r0)
+        add     sp,3
+        lc      r0,0
+        la      r2,L1307
+        jmp     (r2)
+L1341:
+        la      r0,_tok_lexeme
+        push    r0
+        la      r1,_field_count
+        lw      r0,0(r1)
+        push    r0
+        la      r0,_field_name_at
+        jal     r1,(r0)
+        add     sp,3
+        push    r0
+        la      r0,_str_copy
+        jal     r1,(r0)
+        add     sp,6
+        la      r1,_field_count
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,_field_count
+        sw      r0,0(r1)
+        lw      r0,-76(fp)
+        lc      r1,1
+        add     r0,r1
+        sw      r0,-76(fp)
+        la      r0,_next_token
+        jal     r1,(r0)
+        la      r2,L1336
+        jmp     (r2)
+L1337:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -12679,19 +13350,19 @@ L1294:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1300
+        brt     L1343
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1300:
+L1343:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,44
         ceq     r0,r1
-        brt     L1349
-        la      r2,L1301
+        brt     L1392
+        la      r2,L1344
         jmp     (r2)
-L1349:
+L1392:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,57
@@ -12702,34 +13373,34 @@ L1349:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1304
+        brt     L1347
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1304:
+L1347:
         lc      r0,0
         sw      r0,-94(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1305
+        brf     L1348
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L1308
-        la      r0,_S357
+        brt     L1351
+        la      r0,_S359
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1308:
+L1351:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -12737,30 +13408,30 @@ L1308:
         sw      r0,-94(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1306
-L1305:
+        bra     L1349
+L1348:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1309
+        brf     L1352
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-94(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1310
-L1309:
-        la      r0,_S358
+        bra     L1353
+L1352:
+        la      r0,_S360
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1310:
-L1306:
+L1353:
+L1349:
         lc      r0,59
         push    r0
         la      r0,_expect
@@ -12769,34 +13440,34 @@ L1306:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1312
+        brt     L1355
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1312:
+L1355:
         lc      r0,0
         sw      r0,-97(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1313
+        brf     L1356
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L1316
-        la      r0,_S359
+        brt     L1359
+        la      r0,_S361
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1316:
+L1359:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -12804,30 +13475,30 @@ L1316:
         sw      r0,-97(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1314
-L1313:
+        bra     L1357
+L1356:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1317
+        brf     L1360
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-97(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1318
-L1317:
-        la      r0,_S360
+        bra     L1361
+L1360:
+        la      r0,_S362
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1318:
-L1314:
+L1361:
+L1357:
         lc      r0,58
         push    r0
         la      r0,_expect
@@ -12836,11 +13507,11 @@ L1314:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1320
+        brt     L1363
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1320:
+L1363:
         lc      r0,45
         push    r0
         la      r0,_expect
@@ -12849,55 +13520,55 @@ L1320:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1322
+        brt     L1365
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1322:
+L1365:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1323
+        brf     L1366
         lc      r0,0
         sw      r0,-100(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1324
-L1323:
+        bra     L1367
+L1366:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1325
+        brf     L1368
         lc      r0,1
         sw      r0,-100(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1326
-L1325:
+        bra     L1369
+L1368:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1327
+        brf     L1370
         lc      r0,4
         sw      r0,-100(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1328
-L1327:
-        la      r0,_S361
+        bra     L1371
+L1370:
+        la      r0,_S363
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1328:
-L1326:
-L1324:
+L1371:
+L1369:
+L1367:
         lw      r0,-97(fp)
         lw      r1,-94(fp)
         sub     r0,r1
@@ -12907,20 +13578,20 @@ L1324:
         lw      r0,-103(fp)
         lc      r1,0
         cls     r1,r0
-        brt     L1330
-        la      r0,_S362
+        brt     L1373
+        la      r0,_S364
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1330:
+L1373:
         lw      r0,-100(fp)
         lc      r1,4
         ceq     r0,r1
-        brf     L1331
+        brf     L1374
         lw      r0,-103(fp)
         lc      r1,2
         add     r0,r1
@@ -12931,22 +13602,22 @@ L1330:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-106(fp)
-        bra     L1332
-L1331:
+        bra     L1375
+L1374:
         lw      r0,-103(fp)
         sw      r0,-106(fp)
-L1332:
+L1375:
         lw      r0,-88(fp)
         sw      r0,-91(fp)
-L1333:
+L1376:
         lw      r0,-91(fp)
         la      r1,_field_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1348
-        la      r2,L1334
+        brt     L1391
+        la      r2,L1377
         jmp     (r2)
-L1348:
+L1391:
         la      r0,_field_type
         push    r0
         lw      r0,-91(fp)
@@ -13032,12 +13703,12 @@ L1348:
         lc      r1,1
         add     r0,r1
         sw      r0,-91(fp)
-        la      r2,L1333
+        la      r2,L1376
         jmp     (r2)
-L1334:
-        la      r2,L1302
+L1377:
+        la      r2,L1345
         jmp     (r2)
-L1301:
+L1344:
         lc      r0,-85
         add     r0,fp
         push    r0
@@ -13048,22 +13719,22 @@ L1301:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1336
+        brt     L1379
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1336:
+L1379:
         lw      r0,-88(fp)
         sw      r0,-91(fp)
-L1337:
+L1380:
         lw      r0,-91(fp)
         la      r1,_field_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1347
-        la      r2,L1338
+        brt     L1390
+        la      r2,L1381
         jmp     (r2)
-L1347:
+L1390:
         la      r0,_field_type
         push    r0
         lw      r0,-91(fp)
@@ -13105,42 +13776,42 @@ L1347:
         lc      r1,1
         add     r0,r1
         sw      r0,-91(fp)
-        la      r2,L1337
+        la      r2,L1380
         jmp     (r2)
-L1338:
-L1302:
+L1381:
+L1345:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brf     L1340
+        brf     L1383
         la      r0,_next_token
         jal     r1,(r0)
-L1340:
+L1383:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,4
         ceq     r0,r1
-        brf     L1342
-        bra     L1288
-L1342:
-        la      r2,L1287
+        brf     L1385
+        bra     L1331
+L1385:
+        la      r2,L1330
         jmp     (r2)
-L1288:
+L1331:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,4
         ceq     r0,r1
-        brt     L1344
-        la      r0,_S363
+        brt     L1387
+        la      r0,_S365
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1264
+        la      r2,L1307
         jmp     (r2)
-L1344:
+L1387:
         la      r0,_next_token
         jal     r1,(r0)
         la      r0,_utype_base
@@ -13176,17 +13847,17 @@ L1344:
         mov     r1,r0
         lw      r0,-79(fp)
         sw      r0,0(r1)
-        bra     L1282
-L1281:
-        la      r0,_S364
+        bra     L1325
+L1324:
+        la      r0,_S366
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1264
-L1282:
-L1272:
+        bra     L1307
+L1325:
+L1315:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -13195,14 +13866,14 @@ L1272:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1346
+        brt     L1389
         lc      r0,0
-        bra     L1264
-L1346:
-        la      r2,L1265
+        bra     L1307
+L1389:
+        la      r2,L1308
         jmp     (r2)
-L1266:
-L1264:
+L1309:
+L1307:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13223,16 +13894,16 @@ _parse_var_decl:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1357
-        la      r0,_S365
+        brt     L1400
+        la      r0,_S367
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1357:
+L1400:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -13246,28 +13917,28 @@ L1357:
         add     sp,12
         la      r0,_next_token
         jal     r1,(r0)
-L1358:
+L1401:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brf     L1359
+        brf     L1402
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1361
-        la      r0,_S366
+        brt     L1404
+        la      r0,_S368
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1361:
+L1404:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -13281,9 +13952,9 @@ L1361:
         add     sp,12
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1358
+        la      r2,L1401
         jmp     (r2)
-L1359:
+L1402:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -13292,19 +13963,19 @@ L1359:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1363
+        brt     L1406
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1363:
+L1406:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,44
         ceq     r0,r1
-        brt     L1415
-        la      r2,L1364
+        brt     L1462
+        la      r2,L1407
         jmp     (r2)
-L1415:
+L1462:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,57
@@ -13315,34 +13986,34 @@ L1415:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1367
+        brt     L1410
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1367:
+L1410:
         lc      r0,0
         sw      r0,-12(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1368
+        brf     L1411
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L1371
-        la      r0,_S367
+        brt     L1414
+        la      r0,_S369
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1371:
+L1414:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -13350,30 +14021,30 @@ L1371:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1369
-L1368:
+        bra     L1412
+L1411:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1372
+        brf     L1415
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1373
-L1372:
-        la      r0,_S368
+        bra     L1416
+L1415:
+        la      r0,_S370
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1373:
-L1369:
+L1416:
+L1412:
         lc      r0,59
         push    r0
         la      r0,_expect
@@ -13382,34 +14053,34 @@ L1369:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1375
+        brt     L1418
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1375:
+L1418:
         lc      r0,0
         sw      r0,-15(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,27
         ceq     r0,r1
-        brf     L1376
+        brf     L1419
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brt     L1379
-        la      r0,_S369
+        brt     L1422
+        la      r0,_S371
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1379:
+L1422:
         lc      r0,0
         la      r1,_tok_int_val
         lw      r1,0(r1)
@@ -13417,30 +14088,30 @@ L1379:
         sw      r0,-15(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1377
-L1376:
+        bra     L1420
+L1419:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,37
         ceq     r0,r1
-        brf     L1380
+        brf     L1423
         la      r1,_tok_int_val
         lw      r0,0(r1)
         sw      r0,-15(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1381
-L1380:
-        la      r0,_S370
+        bra     L1424
+L1423:
+        la      r0,_S372
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1381:
-L1377:
+L1424:
+L1420:
         lc      r0,58
         push    r0
         la      r0,_expect
@@ -13449,11 +14120,11 @@ L1377:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1383
+        brt     L1426
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1383:
+L1426:
         lc      r0,45
         push    r0
         la      r0,_expect
@@ -13462,55 +14133,55 @@ L1383:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1385
+        brt     L1428
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1385:
+L1428:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1386
+        brf     L1429
         lc      r0,0
         sw      r0,-18(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1387
-L1386:
+        bra     L1430
+L1429:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1388
+        brf     L1431
         lc      r0,1
         sw      r0,-18(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1389
-L1388:
+        bra     L1432
+L1431:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1390
+        brf     L1433
         lc      r0,4
         sw      r0,-18(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1391
-L1390:
-        la      r0,_S371
+        bra     L1434
+L1433:
+        la      r0,_S373
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1391:
-L1389:
-L1387:
+L1434:
+L1432:
+L1430:
         lw      r0,-15(fp)
         lw      r1,-12(fp)
         sub     r0,r1
@@ -13520,16 +14191,16 @@ L1387:
         lw      r0,-21(fp)
         lc      r1,0
         cls     r1,r0
-        brt     L1393
-        la      r0,_S372
+        brt     L1436
+        la      r0,_S374
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1393:
+L1436:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -13540,27 +14211,33 @@ L1393:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1395
+        brt     L1438
         lc      r0,1
         la      r1,_has_arrays
         sw      r0,0(r1)
-        la      r0,_S373
+        la      r1,_global_offset
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,_global_offset
+        sw      r0,0(r1)
+        la      r0,_S375
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1395:
+L1438:
         lw      r0,-3(fp)
         sw      r0,-9(fp)
-L1396:
+L1439:
         lw      r0,-9(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1414
-        la      r2,L1397
+        brt     L1461
+        la      r2,L1440
         jmp     (r2)
-L1414:
+L1461:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -13619,7 +14296,7 @@ L1414:
         lw      r0,-18(fp)
         lc      r1,4
         ceq     r0,r1
-        brf     L1398
+        brf     L1441
         lw      r0,-21(fp)
         lc      r1,2
         add     r0,r1
@@ -13630,11 +14307,47 @@ L1414:
         jal     r1,(r0)
         add     sp,6
         sw      r0,-24(fp)
-        bra     L1399
-L1398:
+        bra     L1442
+L1441:
         lw      r0,-21(fp)
         sw      r0,-24(fp)
-L1399:
+L1442:
+        la      r1,_global_offset
+        lw      r0,0(r1)
+        push    r0
+        la      r0,_sym_global_off
+        push    r0
+        lw      r0,-9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        pop     r0
+        sw      r0,0(r1)
+        la      r1,_in_interface
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1444
+        la      r0,_sym_is_exported_g
+        push    r0
+        lw      r0,-9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,1
+        sw      r0,0(r1)
+L1444:
+        la      r1,_global_offset
+        lw      r0,0(r1)
+        lw      r1,-24(fp)
+        add     r0,r1
+        la      r1,_global_offset
+        sw      r0,0(r1)
         lw      r0,-24(fp)
         push    r0
         lw      r0,-9(fp)
@@ -13643,7 +14356,7 @@ L1399:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S374
+        la      r0,_S376
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -13652,12 +14365,12 @@ L1399:
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        la      r2,L1396
+        la      r2,L1439
         jmp     (r2)
-L1397:
-        la      r2,L1365
+L1440:
+        la      r2,L1408
         jmp     (r2)
-L1364:
+L1407:
         lc      r0,1
         push    r0
         lc      r0,0
@@ -13668,46 +14381,46 @@ L1364:
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1400
+        brf     L1445
         lc      r0,0
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1401
+        la      r2,L1446
         jmp     (r2)
-L1400:
+L1445:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1402
+        brf     L1447
         lc      r0,1
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1403
+        la      r2,L1448
         jmp     (r2)
-L1402:
+L1447:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1404
+        brf     L1449
         lc      r0,4
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1405
+        la      r2,L1450
         jmp     (r2)
-L1404:
+L1449:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1413
-        la      r2,L1406
+        brt     L1460
+        la      r2,L1451
         jmp     (r2)
-L1413:
+L1460:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_utype_lookup
@@ -13717,7 +14430,7 @@ L1413:
         lw      r0,-27(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1408
+        brt     L1453
         la      r0,_utype_kind
         push    r0
         lw      r0,-27(fp)
@@ -13730,31 +14443,31 @@ L1413:
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1409
-L1408:
-        la      r0,_S375
+        bra     L1454
+L1453:
+        la      r0,_S377
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1409:
-        bra     L1407
-L1406:
-        la      r0,_S376
+L1454:
+        bra     L1452
+L1451:
+        la      r0,_S378
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1355
+        la      r2,L1398
         jmp     (r2)
-L1407:
-L1405:
-L1403:
-L1401:
+L1452:
+L1450:
+L1448:
+L1446:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -13762,15 +14475,15 @@ L1401:
         add     sp,3
         lw      r0,-3(fp)
         sw      r0,-9(fp)
-L1410:
+L1455:
         lw      r0,-9(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1412
-        la      r2,L1411
+        brt     L1459
+        la      r2,L1456
         jmp     (r2)
-L1412:
+L1459:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -13793,13 +14506,49 @@ L1412:
         mov     r1,r0
         lw      r0,-27(fp)
         sw      r0,0(r1)
+        la      r1,_global_offset
+        lw      r0,0(r1)
+        push    r0
+        la      r0,_sym_global_off
+        push    r0
+        lw      r0,-9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        pop     r0
+        sw      r0,0(r1)
+        la      r1,_in_interface
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1458
+        la      r0,_sym_is_exported_g
+        push    r0
+        lw      r0,-9(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        mov     r1,r0
+        lc      r0,1
+        sw      r0,0(r1)
+L1458:
+        la      r1,_global_offset
+        lw      r0,0(r1)
+        lc      r1,1
+        add     r0,r1
+        la      r1,_global_offset
+        sw      r0,0(r1)
         lw      r0,-9(fp)
         push    r0
         la      r0,_sym_name_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S377
+        la      r0,_S379
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -13808,11 +14557,11 @@ L1412:
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        la      r2,L1410
+        la      r2,L1455
         jmp     (r2)
-L1411:
-L1365:
-L1355:
+L1456:
+L1408:
+L1398:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13829,32 +14578,32 @@ _parse_var_section:
         jal     r1,(r0)
         la      r0,_parse_var_decl
         jal     r1,(r0)
-L1417:
+L1464:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1419
+        brt     L1466
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1419
+        brt     L1466
         lc      r0,1
-        bra     L1420
-L1419:
+        bra     L1467
+L1466:
         lc      r0,0
-L1420:
+L1467:
         ceq     r0,z
-        brt     L1418
+        brt     L1465
         la      r0,_parse_var_decl
         jal     r1,(r0)
-        bra     L1417
-L1418:
-L1416:
+        bra     L1464
+L1465:
+L1463:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -13877,31 +14626,31 @@ _parse_param_list:
         lw      r0,0(r1)
         lc      r1,24
         ceq     r0,r1
-        brt     L1423
+        brt     L1470
         lc      r0,0
-        la      r2,L1421
+        la      r2,L1468
         jmp     (r2)
-L1423:
+L1470:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,25
         ceq     r0,r1
-        brf     L1425
+        brf     L1472
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,0
-        la      r2,L1421
+        la      r2,L1468
         jmp     (r2)
-L1425:
-L1426:
+L1472:
+L1473:
         lc      r0,1
         ceq     r0,z
-        brf     L1445
-        la      r2,L1427
+        brf     L1492
+        la      r2,L1474
         jmp     (r2)
-L1445:
+L1492:
         la      r1,_sym_count
         lw      r0,0(r1)
         sw      r0,-9(fp)
@@ -13909,16 +14658,16 @@ L1445:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1429
-        la      r0,_S378
+        brt     L1476
+        la      r0,_S380
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
-        la      r2,L1421
+        la      r2,L1468
         jmp     (r2)
-L1429:
+L1476:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -13936,31 +14685,31 @@ L1429:
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1430:
+L1477:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1444
-        la      r2,L1431
+        brt     L1491
+        la      r2,L1478
         jmp     (r2)
-L1444:
+L1491:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1433
-        la      r0,_S379
+        brt     L1480
+        la      r0,_S381
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lw      r0,-6(fp)
-        la      r2,L1421
+        la      r2,L1468
         jmp     (r2)
-L1433:
+L1480:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -13978,9 +14727,9 @@ L1433:
         sw      r0,-6(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1430
+        la      r2,L1477
         jmp     (r2)
-L1431:
+L1478:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -13989,11 +14738,11 @@ L1431:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1435
+        brt     L1482
         lw      r0,-6(fp)
-        la      r2,L1421
+        la      r2,L1468
         jmp     (r2)
-L1435:
+L1482:
         lc      r0,-18
         add     r0,fp
         push    r0
@@ -14004,19 +14753,19 @@ L1435:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1437
+        brt     L1484
         lw      r0,-6(fp)
-        la      r2,L1421
+        la      r2,L1468
         jmp     (r2)
-L1437:
+L1484:
         lw      r0,-9(fp)
         sw      r0,-15(fp)
-L1438:
+L1485:
         lw      r0,-15(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L1439
+        brf     L1486
         la      r0,_sym_type_id
         push    r0
         lw      r0,-15(fp)
@@ -14043,20 +14792,20 @@ L1438:
         lc      r1,1
         add     r0,r1
         sw      r0,-15(fp)
-        bra     L1438
-L1439:
+        bra     L1485
+L1486:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,21
         ceq     r0,r1
-        brt     L1441
-        bra     L1427
-L1441:
+        brt     L1488
+        bra     L1474
+L1488:
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1426
+        la      r2,L1473
         jmp     (r2)
-L1427:
+L1474:
         lc      r0,25
         push    r0
         la      r0,_expect
@@ -14064,12 +14813,12 @@ L1427:
         add     sp,3
         lw      r0,-3(fp)
         sw      r0,-15(fp)
-L1442:
+L1489:
         lw      r0,-15(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L1443
+        brf     L1490
         lw      r0,-6(fp)
         lc      r1,1
         sub     r0,r1
@@ -14096,11 +14845,11 @@ L1442:
         lc      r1,1
         add     r0,r1
         sw      r0,-15(fp)
-        bra     L1442
-L1443:
+        bra     L1489
+L1490:
         lw      r0,-6(fp)
-        bra     L1421
-L1421:
+        bra     L1468
+L1468:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -14118,30 +14867,30 @@ _parse_local_vars:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1447:
+L1494:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1449
+        brt     L1496
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1449
+        brt     L1496
         lc      r0,1
-        bra     L1450
-L1449:
+        bra     L1497
+L1496:
         lc      r0,0
-L1450:
+L1497:
         ceq     r0,z
-        brf     L1465
-        la      r2,L1448
+        brf     L1512
+        la      r2,L1495
         jmp     (r2)
-L1465:
+L1512:
         la      r1,_sym_count
         lw      r0,0(r1)
         sw      r0,-3(fp)
@@ -14162,31 +14911,31 @@ L1465:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-L1451:
+L1498:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1464
-        la      r2,L1452
+        brt     L1511
+        la      r2,L1499
         jmp     (r2)
-L1464:
+L1511:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1454
-        la      r0,_S380
+        brt     L1501
+        la      r0,_S382
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lw      r0,-12(fp)
-        la      r2,L1446
+        la      r2,L1493
         jmp     (r2)
-L1454:
+L1501:
         lc      r0,0
         push    r0
         lc      r0,0
@@ -14204,9 +14953,9 @@ L1454:
         sw      r0,-12(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1451
+        la      r2,L1498
         jmp     (r2)
-L1452:
+L1499:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -14215,11 +14964,11 @@ L1452:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1456
+        brt     L1503
         lw      r0,-12(fp)
-        la      r2,L1446
+        la      r2,L1493
         jmp     (r2)
-L1456:
+L1503:
         lc      r0,-15
         add     r0,fp
         push    r0
@@ -14230,11 +14979,11 @@ L1456:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1458
+        brt     L1505
         lw      r0,-12(fp)
-        la      r2,L1446
+        la      r2,L1493
         jmp     (r2)
-L1458:
+L1505:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -14243,22 +14992,22 @@ L1458:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1460
+        brt     L1507
         lw      r0,-12(fp)
-        la      r2,L1446
+        la      r2,L1493
         jmp     (r2)
-L1460:
+L1507:
         lw      r0,-3(fp)
         sw      r0,-9(fp)
-L1461:
+L1508:
         lw      r0,-9(fp)
         la      r1,_sym_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1463
-        la      r2,L1462
+        brt     L1510
+        la      r2,L1509
         jmp     (r2)
-L1463:
+L1510:
         la      r0,_sym_type_id
         push    r0
         lw      r0,-9(fp)
@@ -14300,15 +15049,15 @@ L1463:
         lc      r1,1
         add     r0,r1
         sw      r0,-9(fp)
-        la      r2,L1461
+        la      r2,L1508
         jmp     (r2)
-L1462:
-        la      r2,L1447
+L1509:
+        la      r2,L1494
         jmp     (r2)
-L1448:
+L1495:
         lw      r0,-12(fp)
-        bra     L1446
-L1446:
+        bra     L1493
+L1493:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -14328,16 +15077,16 @@ _parse_proc_or_func_decl:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1468
-        la      r0,_S381
+        brt     L1515
+        la      r0,_S383
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1466
+        la      r2,L1513
         jmp     (r2)
-L1468:
+L1515:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -14348,7 +15097,7 @@ L1468:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r0,_S382
+        la      r0,_S384
         push    r0
         lc      r0,-64
         add     r0,fp
@@ -14410,10 +15159,10 @@ L1468:
         sw      r0,-79(fp)
         lw      r0,9(fp)
         ceq     r0,z
-        brf     L1524
-        la      r2,L1470
+        brf     L1571
+        la      r2,L1517
         jmp     (r2)
-L1524:
+L1571:
         lc      r0,35
         push    r0
         la      r0,_expect
@@ -14422,55 +15171,55 @@ L1524:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1472
+        brt     L1519
         lc      r0,0
-        la      r2,L1466
+        la      r2,L1513
         jmp     (r2)
-L1472:
+L1519:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,11
         ceq     r0,r1
-        brf     L1473
+        brf     L1520
         lc      r0,0
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1474
+        la      r2,L1521
         jmp     (r2)
-L1473:
+L1520:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,12
         ceq     r0,r1
-        brf     L1475
+        brf     L1522
         lc      r0,1
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1476
+        la      r2,L1523
         jmp     (r2)
-L1475:
+L1522:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,47
         ceq     r0,r1
-        brf     L1477
+        brf     L1524
         lc      r0,4
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        la      r2,L1478
+        la      r2,L1525
         jmp     (r2)
-L1477:
+L1524:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1523
-        la      r2,L1479
+        brt     L1570
+        la      r2,L1526
         jmp     (r2)
-L1523:
+L1570:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_utype_lookup
@@ -14488,7 +15237,7 @@ L1523:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1483
+        brt     L1530
         la      r0,_utype_kind
         push    r0
         la      r1,-132
@@ -14504,44 +15253,44 @@ L1523:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brt     L1483
+        brt     L1530
         lc      r0,1
-        bra     L1484
-L1483:
+        bra     L1531
+L1530:
         lc      r0,0
-L1484:
+L1531:
         ceq     r0,z
-        brt     L1481
+        brt     L1528
         lc      r0,5
         sw      r0,-79(fp)
         la      r0,_next_token
         jal     r1,(r0)
-        bra     L1482
-L1481:
-        la      r0,_S383
+        bra     L1529
+L1528:
+        la      r0,_S385
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1466
+        la      r2,L1513
         jmp     (r2)
-L1482:
-        bra     L1480
-L1479:
-        la      r0,_S384
+L1529:
+        bra     L1527
+L1526:
+        la      r0,_S386
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1466
+        la      r2,L1513
         jmp     (r2)
-L1480:
-L1478:
-L1476:
-L1474:
-L1470:
+L1527:
+L1525:
+L1523:
+L1521:
+L1517:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -14550,37 +15299,37 @@ L1470:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1486
+        brt     L1533
         lc      r0,0
-        la      r2,L1466
+        la      r2,L1513
         jmp     (r2)
-L1486:
+L1533:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,42
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1489
+        brf     L1536
         la      r1,_in_interface
         lw      r0,0(r1)
         ceq     r0,z
-        brf     L1489
+        brf     L1536
         lc      r0,0
-        bra     L1490
-L1489:
+        bra     L1537
+L1536:
         lc      r0,1
-L1490:
+L1537:
         ceq     r0,z
-        brf     L1522
-        la      r2,L1488
+        brf     L1569
+        la      r2,L1535
         jmp     (r2)
-L1522:
+L1569:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,42
         ceq     r0,r1
-        brf     L1492
+        brf     L1539
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,21
@@ -14588,7 +15337,7 @@ L1522:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1492:
+L1539:
         lw      r0,-79(fp)
         push    r0
         lw      r0,9(fp)
@@ -14608,10 +15357,10 @@ L1492:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brf     L1521
-        la      r2,L1494
+        brf     L1568
+        la      r2,L1541
         jmp     (r2)
-L1521:
+L1568:
         la      r0,_proc_is_user
         push    r0
         lw      r0,-67(fp)
@@ -14640,7 +15389,7 @@ L1521:
         la      r1,_in_interface
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1496
+        brt     L1543
         la      r0,_proc_is_exported
         push    r0
         lw      r0,-67(fp)
@@ -14652,8 +15401,8 @@ L1521:
         mov     r1,r0
         lc      r0,1
         sw      r0,0(r1)
-L1496:
-L1494:
+L1543:
+L1541:
         la      r1,_scope_base
         lw      r0,0(r1)
         la      r1,_sym_count
@@ -14665,9 +15414,9 @@ L1494:
         la      r1,_scope_depth
         sw      r0,0(r1)
         lc      r0,0
-        la      r2,L1466
+        la      r2,L1513
         jmp     (r2)
-L1488:
+L1535:
         lc      r0,-32
         add     r0,fp
         push    r0
@@ -14678,7 +15427,7 @@ L1488:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1497
+        brt     L1544
         la      r0,_proc_argc
         push    r0
         lw      r0,-67(fp)
@@ -14704,9 +15453,9 @@ L1488:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-        la      r2,L1498
+        la      r2,L1545
         jmp     (r2)
-L1497:
+L1544:
         lw      r0,-79(fp)
         push    r0
         lw      r0,9(fp)
@@ -14726,7 +15475,7 @@ L1497:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1500
+        brt     L1547
         la      r0,_proc_is_user
         push    r0
         lw      r0,-67(fp)
@@ -14752,8 +15501,8 @@ L1497:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-L1500:
-L1498:
+L1547:
+L1545:
         lc      r0,1
         la      r1,_in_proc
         sw      r0,0(r1)
@@ -14762,7 +15511,7 @@ L1498:
         sw      r0,0(r1)
         lw      r0,9(fp)
         ceq     r0,z
-        brt     L1501
+        brt     L1548
         lc      r0,0
         la      r1,_cur_func_local
         sw      r0,0(r1)
@@ -14776,8 +15525,8 @@ L1498:
         add     sp,6
         lc      r0,1
         sw      r0,-76(fp)
-        bra     L1502
-L1501:
+        bra     L1549
+L1548:
         lc      r0,1
         push    r0
         lc      r0,0
@@ -14793,31 +15542,31 @@ L1501:
         sb      r0,0(r1)
         lc      r0,0
         sw      r0,-76(fp)
-L1502:
+L1549:
         lc      r0,0
         sw      r0,-73(fp)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,2
         ceq     r0,r1
-        brf     L1504
+        brf     L1551
         lw      r0,-76(fp)
         push    r0
         la      r0,_parse_local_vars
         jal     r1,(r0)
         add     sp,3
         sw      r0,-73(fp)
-L1504:
+L1551:
         lw      r0,-73(fp)
         push    r0
         lw      r0,9(fp)
         ceq     r0,z
-        brt     L1505
+        brt     L1552
         lc      r0,1
-        bra     L1506
-L1505:
+        bra     L1553
+L1552:
         lc      r0,0
-L1506:
+L1553:
         mov     r1,r0
         pop     r0
         add     r0,r1
@@ -14827,7 +15576,7 @@ L1506:
         lw      r0,-67(fp)
         lc      r1,0
         cls     r0,r1
-        brt     L1508
+        brt     L1555
         la      r1,-129
         add     r1,fp
         lw      r0,0(r1)
@@ -14843,63 +15592,63 @@ L1506:
         mov     r1,r0
         pop     r0
         sw      r0,0(r1)
-L1508:
-L1509:
+L1555:
+L1556:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1513
+        brf     L1560
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1513
+        brf     L1560
         lc      r0,0
-        bra     L1514
-L1513:
+        bra     L1561
+L1560:
         lc      r0,1
-L1514:
+L1561:
         ceq     r0,z
-        brt     L1511
+        brt     L1558
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1511
+        brt     L1558
         lc      r0,1
-        bra     L1512
-L1511:
+        bra     L1559
+L1558:
         lc      r0,0
-L1512:
+L1559:
         ceq     r0,z
-        brt     L1510
+        brt     L1557
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
-        brf     L1515
+        brf     L1562
         lc      r0,0
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-        bra     L1516
-L1515:
+        bra     L1563
+L1562:
         lc      r0,1
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-L1516:
-        la      r2,L1509
+L1563:
+        la      r2,L1556
         jmp     (r2)
-L1510:
+L1557:
         la      r1,-129
         add     r1,fp
         lw      r0,0(r1)
@@ -14907,7 +15656,7 @@ L1510:
         lc      r0,-64
         add     r0,fp
         push    r0
-        la      r0,_S385
+        la      r0,_S387
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -14944,31 +15693,31 @@ L1510:
         add     r1,fp
         lw      r0,0(r1)
         push    r0
-        la      r0,_S386
+        la      r0,_S388
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,9(fp)
         ceq     r0,z
-        brt     L1518
+        brt     L1565
         la      r1,_cur_func_local
         lw      r0,0(r1)
         push    r0
-        la      r0,_S387
+        la      r0,_S389
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1518:
+L1565:
         lw      r0,-70(fp)
         push    r0
-        la      r0,_S388
+        la      r0,_S390
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S389
+        la      r0,_S391
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -14981,10 +15730,10 @@ L1518:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1520
+        brt     L1567
         lc      r0,0
-        bra     L1466
-L1520:
+        bra     L1513
+L1567:
         la      r1,_scope_base
         lw      r0,0(r1)
         la      r1,_sym_count
@@ -15012,7 +15761,7 @@ L1520:
         la      r0,_str_copy
         jal     r1,(r0)
         add     sp,6
-L1466:
+L1513:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -15030,72 +15779,62 @@ _parse_block:
         lw      r0,0(r1)
         lc      r1,1
         ceq     r0,r1
-        brf     L1527
+        brf     L1574
         la      r0,_parse_const_section
         jal     r1,(r0)
-L1527:
+L1574:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,43
         ceq     r0,r1
-        brf     L1529
+        brf     L1576
         la      r0,_parse_type_section
         jal     r1,(r0)
-L1529:
+L1576:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,2
         ceq     r0,r1
-        brf     L1531
+        brf     L1578
         la      r0,_parse_var_section
         jal     r1,(r0)
-L1531:
+L1578:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1532
+        brf     L1579
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1532
+        brf     L1579
         lc      r0,0
-        bra     L1533
-L1532:
+        bra     L1580
+L1579:
         lc      r0,1
-L1533:
+L1580:
         sw      r0,-3(fp)
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L1536
+        brt     L1583
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1536
+        brt     L1583
         lc      r0,1
-        bra     L1537
-L1536:
+        bra     L1584
+L1583:
         lc      r0,0
-L1537:
+L1584:
         ceq     r0,z
-        brt     L1535
-        la      r0,_S390
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r0,_S391
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
+        brt     L1582
         la      r0,_S392
         push    r0
         la      r0,___tc24r_printf0
@@ -15106,103 +15845,113 @@ L1537:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1535:
-L1538:
+        la      r0,_S394
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S395
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1582:
+L1585:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1542
+        brf     L1589
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1542
+        brf     L1589
         lc      r0,0
-        bra     L1543
-L1542:
+        bra     L1590
+L1589:
         lc      r0,1
-L1543:
+L1590:
         ceq     r0,z
-        brt     L1540
+        brt     L1587
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1540
+        brt     L1587
         lc      r0,1
-        bra     L1541
-L1540:
+        bra     L1588
+L1587:
         lc      r0,0
-L1541:
+L1588:
         ceq     r0,z
-        brt     L1539
+        brt     L1586
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
-        brf     L1544
+        brf     L1591
         lc      r0,0
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-        bra     L1545
-L1544:
+        bra     L1592
+L1591:
         lc      r0,1
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-L1545:
-        la      r2,L1538
+L1592:
+        la      r2,L1585
         jmp     (r2)
-L1539:
+L1586:
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L1548
+        brt     L1595
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1548
+        brt     L1595
         lc      r0,1
-        bra     L1549
-L1548:
+        bra     L1596
+L1595:
         lc      r0,0
-L1549:
+L1596:
         ceq     r0,z
-        brt     L1546
-        la      r0,_S394
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1547
-L1546:
-        la      r0,_S395
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-L1547:
+        brt     L1593
         la      r0,_S396
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
+        bra     L1594
+L1593:
         la      r0,_S397
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1594:
+        la      r0,_S398
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S399
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S398
+        la      r0,_S400
         push    r0
         la      r0,_emit_rt_call
         jal     r1,(r0)
@@ -15223,41 +15972,41 @@ L1547:
         jal     r1,(r0)
         lw      r0,-6(fp)
         push    r0
-        la      r0,_S399
+        la      r0,_S401
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lw      r0,-3(fp)
         ceq     r0,z
-        brt     L1552
+        brt     L1599
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1552
+        brt     L1599
         lc      r0,1
-        bra     L1553
-L1552:
+        bra     L1600
+L1599:
         lc      r0,0
-L1553:
+L1600:
         ceq     r0,z
-        brt     L1550
-        la      r0,_S400
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1551
-L1550:
-        la      r0,_S401
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-L1551:
+        brt     L1597
         la      r0,_S402
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        bra     L1598
+L1597:
+        la      r0,_S403
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1598:
+        la      r0,_S404
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -15269,7 +16018,7 @@ L1551:
         sub     r0,r1
         la      r1,_exit_label
         sw      r0,0(r1)
-L1525:
+L1572:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -15285,15 +16034,15 @@ _emit_string_data:
         add     sp,-9
         lc      r0,0
         sw      r0,-3(fp)
-L1555:
+L1602:
         lw      r0,-3(fp)
         la      r1,_str_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1561
-        la      r2,L1556
+        brt     L1608
+        la      r2,L1603
         jmp     (r2)
-L1561:
+L1608:
         lw      r0,-3(fp)
         push    r0
         la      r0,_str_data_at
@@ -15302,14 +16051,14 @@ L1561:
         sw      r0,-9(fp)
         lw      r0,-3(fp)
         push    r0
-        la      r0,_S403
+        la      r0,_S405
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lc      r0,0
         sw      r0,-6(fp)
-L1557:
+L1604:
         lw      r0,-6(fp)
         push    r0
         la      r0,_str_len
@@ -15324,23 +16073,23 @@ L1557:
         mov     r1,r0
         pop     r0
         cls     r0,r1
-        brf     L1558
+        brf     L1605
         lw      r0,-6(fp)
         lc      r1,0
         cls     r1,r0
-        brf     L1560
-        la      r0,_S404
+        brf     L1607
+        la      r0,_S406
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1560:
+L1607:
         lw      r0,-9(fp)
         lw      r1,-6(fp)
         add     r0,r1
         lbu     r0,0(r0)
         push    r0
-        la      r0,_S405
+        la      r0,_S407
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -15349,10 +16098,10 @@ L1560:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        la      r2,L1557
+        la      r2,L1604
         jmp     (r2)
-L1558:
-        la      r0,_S406
+L1605:
+        la      r0,_S408
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -15361,10 +16110,10 @@ L1558:
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        la      r2,L1555
+        la      r2,L1602
         jmp     (r2)
-L1556:
-L1554:
+L1603:
+L1601:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -15433,6 +16182,9 @@ _parser_init:
         la      r1,_has_arrays
         sw      r0,0(r1)
         lc      r0,0
+        la      r1,_global_offset
+        sw      r0,0(r1)
+        lc      r0,0
         la      r1,_scope_base
         sw      r0,0(r1)
         lc      r0,0
@@ -15468,7 +16220,7 @@ _parser_init:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-L1562:
+L1609:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -15488,23 +16240,23 @@ _parse_uses_clause:
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1565
-        la      r0,_S407
+        brt     L1612
+        la      r0,_S409
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1563
+        la      r2,L1610
         jmp     (r2)
-L1565:
-L1566:
+L1612:
+L1613:
         lc      r0,1
         ceq     r0,z
-        brf     L1578
-        la      r2,L1567
+        brf     L1625
+        la      r2,L1614
         jmp     (r2)
-L1578:
+L1625:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_unit_name
@@ -15514,7 +16266,7 @@ L1578:
         add     sp,6
         la      r0,_next_token
         jal     r1,(r0)
-        la      r0,_S408
+        la      r0,_S410
         push    r0
         la      r0,_unit_name
         push    r0
@@ -15523,16 +16275,16 @@ L1578:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L1568
+        brf     L1615
         lc      r0,1
         la      r1,_unit_hardware
         sw      r0,0(r1)
         la      r0,_register_hardware_unit
         jal     r1,(r0)
-        la      r2,L1569
+        la      r2,L1616
         jmp     (r2)
-L1568:
-        la      r0,_S409
+L1615:
+        la      r0,_S411
         push    r0
         la      r0,_unit_name
         push    r0
@@ -15541,12 +16293,12 @@ L1568:
         add     sp,6
         lc      r1,0
         ceq     r0,r1
-        brf     L1570
+        brf     L1617
         lc      r0,1
         la      r1,_unit_mode
         sw      r0,0(r1)
-        bra     L1571
-L1570:
+        bra     L1618
+L1617:
         la      r0,_unit_name
         push    r0
         la      r0,_import_lookup
@@ -15554,18 +16306,18 @@ L1570:
         add     sp,3
         lc      r1,0
         cls     r0,r1
-        brt     L1572
+        brt     L1619
         lc      r0,1
         la      r1,_unit_mode
         sw      r0,0(r1)
-        bra     L1573
-L1572:
+        bra     L1620
+L1619:
         la      r0,_unit_name
         push    r0
         la      r1,_tok_line
         lw      r0,0(r1)
         push    r0
-        la      r0,_S410
+        la      r0,_S412
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -15574,41 +16326,41 @@ L1572:
         la      r1,_parse_error
         sw      r0,0(r1)
         lc      r0,0
-        bra     L1563
-L1573:
-L1571:
-L1569:
+        bra     L1610
+L1620:
+L1618:
+L1616:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,23
         ceq     r0,r1
-        brt     L1575
-        bra     L1567
-L1575:
+        brt     L1622
+        bra     L1614
+L1622:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,36
         ceq     r0,r1
-        brt     L1577
-        la      r0,_S411
+        brt     L1624
+        la      r0,_S413
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1563
-L1577:
-        la      r2,L1566
+        bra     L1610
+L1624:
+        la      r2,L1613
         jmp     (r2)
-L1567:
+L1614:
         lc      r0,21
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-L1563:
+L1610:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -15625,20 +16377,10 @@ _emit_externs:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brf     L1590
-        la      r2,L1580
+        brf     L1637
+        la      r2,L1627
         jmp     (r2)
-L1590:
-        la      r0,_S412
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        la      r0,_S413
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
+L1637:
         la      r0,_S414
         push    r0
         la      r0,___tc24r_printf0
@@ -15684,9 +16426,6 @@ L1590:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r2,L1581
-        jmp     (r2)
-L1580:
         la      r0,_S423
         push    r0
         la      r0,___tc24r_printf0
@@ -15697,6 +16436,9 @@ L1580:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
+        la      r2,L1628
+        jmp     (r2)
+L1627:
         la      r0,_S425
         push    r0
         la      r0,___tc24r_printf0
@@ -15742,18 +16484,28 @@ L1580:
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1581:
+        la      r0,_S434
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_S435
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1628:
         lc      r0,0
         sw      r0,-3(fp)
-L1582:
+L1629:
         lw      r0,-3(fp)
         la      r1,_proc_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1589
-        la      r2,L1583
+        brt     L1636
+        la      r2,L1630
         jmp     (r2)
-L1589:
+L1636:
         la      r0,_proc_is_user
         push    r0
         lw      r0,-3(fp)
@@ -15766,14 +16518,14 @@ L1589:
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brf     L1588
-        la      r2,L1585
+        brf     L1635
+        la      r2,L1632
         jmp     (r2)
-L1588:
+L1635:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1586
+        brt     L1633
         la      r0,_proc_argc
         push    r0
         lw      r0,-3(fp)
@@ -15790,34 +16542,34 @@ L1588:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S434
+        la      r0,_S436
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        bra     L1587
-L1586:
+        bra     L1634
+L1633:
         lw      r0,-3(fp)
         push    r0
         la      r0,_proc_extern_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S435
+        la      r0,_S437
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1587:
-L1585:
+L1634:
+L1632:
         lw      r0,-3(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        la      r2,L1582
+        la      r2,L1629
         jmp     (r2)
-L1583:
-L1579:
+L1630:
+L1626:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -15839,11 +16591,11 @@ _parse_program:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1593
+        brt     L1640
         lc      r0,0
-        la      r2,L1591
+        la      r2,L1638
         jmp     (r2)
-L1593:
+L1640:
         la      r0,_tok_lexeme
         push    r0
         lc      r0,-32
@@ -15860,11 +16612,11 @@ L1593:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1595
+        brt     L1642
         lc      r0,0
-        la      r2,L1591
+        la      r2,L1638
         jmp     (r2)
-L1595:
+L1642:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -15873,62 +16625,62 @@ L1595:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1597
+        brt     L1644
         lc      r0,0
-        la      r2,L1591
+        la      r2,L1638
         jmp     (r2)
-L1597:
+L1644:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,62
         ceq     r0,r1
-        brf     L1599
+        brf     L1646
         la      r0,_parse_uses_clause
         jal     r1,(r0)
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1601
+        brt     L1648
         lc      r0,0
-        la      r2,L1591
+        la      r2,L1638
         jmp     (r2)
-L1601:
-L1599:
+L1648:
+L1646:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brf     L1612
-        la      r2,L1602
+        brf     L1659
+        la      r2,L1649
         jmp     (r2)
-L1612:
+L1659:
         lc      r0,-32
         add     r0,fp
         push    r0
-        la      r0,_S436
+        la      r0,_S438
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S437
+        la      r0,_S439
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
         sw      r0,-35(fp)
-L1604:
+L1651:
         lw      r0,-35(fp)
         la      r1,_import_count
         lw      r1,0(r1)
         cls     r0,r1
-        brf     L1605
+        brf     L1652
         lw      r0,-35(fp)
         push    r0
         la      r0,_import_name_at
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S438
+        la      r0,_S440
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -15937,22 +16689,22 @@ L1604:
         lc      r1,1
         add     r0,r1
         sw      r0,-35(fp)
-        bra     L1604
-L1605:
-        bra     L1603
-L1602:
+        bra     L1651
+L1652:
+        bra     L1650
+L1649:
         lc      r0,-32
         add     r0,fp
         push    r0
-        la      r0,_S439
+        la      r0,_S441
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-L1603:
+L1650:
         la      r0,_emit_externs
         jal     r1,(r0)
-        la      r0,_S440
+        la      r0,_S442
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -15960,7 +16712,7 @@ L1603:
         lc      r0,-32
         add     r0,fp
         push    r0
-        la      r0,_S441
+        la      r0,_S443
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -15971,10 +16723,10 @@ L1603:
         lw      r0,0(r1)
         lc      r1,0
         cls     r1,r0
-        brf     L1607
+        brf     L1654
         la      r0,_emit_string_data
         jal     r1,(r0)
-L1607:
+L1654:
         lc      r0,22
         push    r0
         la      r0,_expect
@@ -15983,31 +16735,31 @@ L1607:
         la      r1,_unit_mode
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1608
-        la      r0,_S442
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-        bra     L1609
-L1608:
-        la      r0,_S443
-        push    r0
-        la      r0,___tc24r_printf0
-        jal     r1,(r0)
-        add     sp,3
-L1609:
-        la      r1,_parse_error
-        lw      r0,0(r1)
-        ceq     r0,z
-        brt     L1611
+        brt     L1655
         la      r0,_S444
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1611:
-L1591:
+        bra     L1656
+L1655:
+        la      r0,_S445
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1656:
+        la      r1,_parse_error
+        lw      r0,0(r1)
+        ceq     r0,z
+        brt     L1658
+        la      r0,_S446
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+L1658:
+L1638:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -16029,11 +16781,11 @@ _parse_unit:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1615
+        brt     L1662
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1615:
+L1662:
         la      r0,_tok_lexeme
         push    r0
         la      r0,_unit_name
@@ -16049,11 +16801,11 @@ L1615:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1617
+        brt     L1664
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1617:
+L1664:
         lc      r0,21
         push    r0
         la      r0,_expect
@@ -16062,11 +16814,11 @@ L1617:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1619
+        brt     L1666
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1619:
+L1666:
         lc      r0,1
         la      r1,_is_unit_compilation
         sw      r0,0(r1)
@@ -16077,32 +16829,32 @@ L1619:
         lw      r0,0(r1)
         lc      r1,62
         ceq     r0,r1
-        brf     L1621
+        brf     L1668
         la      r0,_parse_uses_clause
         jal     r1,(r0)
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1623
+        brt     L1670
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1623:
-L1621:
+L1670:
+L1668:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,67
         ceq     r0,r1
-        brt     L1625
-        la      r0,_S445
+        brt     L1672
+        la      r0,_S447
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1625:
+L1672:
         la      r0,_next_token
         jal     r1,(r0)
         lc      r0,1
@@ -16112,101 +16864,101 @@ L1625:
         lw      r0,0(r1)
         lc      r1,1
         ceq     r0,r1
-        brf     L1627
+        brf     L1674
         la      r0,_parse_const_section
         jal     r1,(r0)
-L1627:
+L1674:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,43
         ceq     r0,r1
-        brf     L1629
+        brf     L1676
         la      r0,_parse_type_section
         jal     r1,(r0)
-L1629:
+L1676:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,2
         ceq     r0,r1
-        brf     L1631
+        brf     L1678
         la      r0,_parse_var_section
         jal     r1,(r0)
-L1631:
-L1632:
+L1678:
+L1679:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1636
+        brf     L1683
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1636
+        brf     L1683
         lc      r0,0
-        bra     L1637
-L1636:
+        bra     L1684
+L1683:
         lc      r0,1
-L1637:
+L1684:
         ceq     r0,z
-        brt     L1634
+        brt     L1681
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1634
+        brt     L1681
         lc      r0,1
-        bra     L1635
-L1634:
+        bra     L1682
+L1681:
         lc      r0,0
-L1635:
+L1682:
         ceq     r0,z
-        brt     L1633
+        brt     L1680
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
-        brf     L1638
+        brf     L1685
         lc      r0,0
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-        bra     L1639
-L1638:
+        bra     L1686
+L1685:
         lc      r0,1
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-L1639:
-        la      r2,L1632
+L1686:
+        la      r2,L1679
         jmp     (r2)
-L1633:
+L1680:
         lc      r0,0
         la      r1,_in_interface
         sw      r0,0(r1)
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1641
+        brt     L1688
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1641:
+L1688:
         la      r0,_unit_name
         push    r0
-        la      r0,_S446
+        la      r0,_S448
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
-        la      r0,_S447
+        la      r0,_S449
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -16215,15 +16967,15 @@ L1641:
         jal     r1,(r0)
         lc      r0,0
         sw      r0,-3(fp)
-L1642:
+L1689:
         lw      r0,-3(fp)
         la      r1,_proc_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1674
-        la      r2,L1643
+        brt     L1736
+        la      r2,L1690
         jmp     (r2)
-L1674:
+L1736:
         la      r0,_proc_is_exported
         push    r0
         lw      r0,-3(fp)
@@ -16234,7 +16986,7 @@ L1674:
         add     r0,r1
         lw      r0,0(r0)
         ceq     r0,z
-        brt     L1645
+        brt     L1692
         la      r0,_proc_argc
         push    r0
         lw      r0,-3(fp)
@@ -16251,22 +17003,84 @@ L1674:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S448
+        la      r0,_S450
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-L1645:
+L1692:
         lw      r0,-3(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        la      r2,L1642
+        la      r2,L1689
         jmp     (r2)
-L1643:
+L1690:
+        lc      r0,0
+        sw      r0,-3(fp)
+L1693:
+        lw      r0,-3(fp)
+        la      r1,_sym_count
+        lw      r1,0(r1)
+        cls     r0,r1
+        brt     L1735
+        la      r2,L1694
+        jmp     (r2)
+L1735:
+        la      r0,_sym_kind
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,1
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L1697
+        la      r0,_sym_is_exported_g
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        ceq     r0,z
+        brt     L1697
+        lc      r0,1
+        bra     L1698
+L1697:
+        lc      r0,0
+L1698:
+        ceq     r0,z
+        brt     L1696
+        lw      r0,-3(fp)
+        push    r0
+        la      r0,_sym_name_at
+        jal     r1,(r0)
+        add     sp,3
+        push    r0
+        la      r0,_S451
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+L1696:
+        lw      r0,-3(fp)
+        lc      r1,1
+        add     r0,r1
+        sw      r0,-3(fp)
+        la      r2,L1693
+        jmp     (r2)
+L1694:
         la      r0,_unit_name
         push    r0
-        la      r0,_S449
+        la      r0,_S452
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -16275,106 +17089,106 @@ L1643:
         lw      r0,0(r1)
         lc      r1,68
         ceq     r0,r1
-        brt     L1647
-        la      r0,_S450
+        brt     L1700
+        la      r0,_S453
         push    r0
         la      r0,_error
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1647:
+L1700:
         la      r0,_next_token
         jal     r1,(r0)
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,1
         ceq     r0,r1
-        brf     L1649
+        brf     L1702
         la      r0,_parse_const_section
         jal     r1,(r0)
-L1649:
+L1702:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,43
         ceq     r0,r1
-        brf     L1651
+        brf     L1704
         la      r0,_parse_type_section
         jal     r1,(r0)
-L1651:
+L1704:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,2
         ceq     r0,r1
-        brf     L1653
+        brf     L1706
         la      r0,_parse_var_section
         jal     r1,(r0)
-L1653:
-L1654:
+L1706:
+L1707:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1658
+        brf     L1711
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,41
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1658
+        brf     L1711
         lc      r0,0
-        bra     L1659
-L1658:
+        bra     L1712
+L1711:
         lc      r0,1
-L1659:
+L1712:
         ceq     r0,z
-        brt     L1656
+        brt     L1709
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
         mov     r0,c
         ceq     r0,z
-        brt     L1656
+        brt     L1709
         lc      r0,1
-        bra     L1657
-L1656:
+        bra     L1710
+L1709:
         lc      r0,0
-L1657:
+L1710:
         ceq     r0,z
-        brt     L1655
+        brt     L1708
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,40
         ceq     r0,r1
-        brf     L1660
+        brf     L1713
         lc      r0,0
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-        bra     L1661
-L1660:
+        bra     L1714
+L1713:
         lc      r0,1
         push    r0
         la      r0,_parse_proc_or_func_decl
         jal     r1,(r0)
         add     sp,3
-L1661:
-        la      r2,L1654
+L1714:
+        la      r2,L1707
         jmp     (r2)
-L1655:
+L1708:
         la      r1,_str_count
         lw      r0,0(r1)
         lc      r1,0
         cls     r1,r0
-        brf     L1663
+        brf     L1716
         la      r0,_emit_string_data
         jal     r1,(r0)
-L1663:
+L1716:
         lc      r0,4
         push    r0
         la      r0,_expect
@@ -16383,17 +17197,17 @@ L1663:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1665
+        brt     L1718
         lc      r0,0
-        la      r2,L1613
+        la      r2,L1660
         jmp     (r2)
-L1665:
+L1718:
         lc      r0,22
         push    r0
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S451
+        la      r0,_S454
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -16401,38 +17215,38 @@ L1665:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1666
-        la      r0,_S452
+        brt     L1719
+        la      r0,_S455
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-        la      r2,L1667
+        la      r2,L1720
         jmp     (r2)
-L1666:
-        la      r0,_S453
+L1719:
+        la      r0,_S456
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         la      r0,_unit_name
         push    r0
-        la      r0,_S454
+        la      r0,_S457
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
         add     sp,6
         lc      r0,0
         sw      r0,-3(fp)
-L1668:
+L1721:
         lw      r0,-3(fp)
         la      r1,_proc_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1673
-        la      r2,L1669
+        brt     L1734
+        la      r2,L1722
         jmp     (r2)
-L1673:
+L1734:
         la      r0,_proc_is_exported
         push    r0
         lw      r0,-3(fp)
@@ -16443,10 +17257,10 @@ L1673:
         add     r0,r1
         lw      r0,0(r0)
         ceq     r0,z
-        brf     L1672
-        la      r2,L1671
+        brf     L1733
+        la      r2,L1724
         jmp     (r2)
-L1672:
+L1733:
         la      r0,_proc_argc
         push    r0
         lw      r0,-3(fp)
@@ -16463,7 +17277,7 @@ L1672:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S455
+        la      r0,_S458
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -16488,26 +17302,116 @@ L1672:
         add     r0,r1
         lw      r0,0(r0)
         push    r0
-        la      r0,_S456
+        la      r0,_S459
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-L1671:
+L1724:
         lw      r0,-3(fp)
         lc      r1,1
         add     r0,r1
         sw      r0,-3(fp)
-        la      r2,L1668
+        la      r2,L1721
         jmp     (r2)
-L1669:
-        la      r0,_S457
+L1722:
+        lc      r0,0
+        sw      r0,-3(fp)
+L1725:
+        lw      r0,-3(fp)
+        la      r1,_sym_count
+        lw      r1,0(r1)
+        cls     r0,r1
+        brt     L1732
+        la      r2,L1726
+        jmp     (r2)
+L1732:
+        la      r0,_sym_kind
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        lc      r1,1
+        ceq     r0,r1
+        mov     r0,c
+        ceq     r0,z
+        brt     L1729
+        la      r0,_sym_is_exported_g
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        ceq     r0,z
+        brt     L1729
+        lc      r0,1
+        bra     L1730
+L1729:
+        lc      r0,0
+L1730:
+        ceq     r0,z
+        brf     L1731
+        la      r2,L1728
+        jmp     (r2)
+L1731:
+        la      r0,_sym_global_off
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        lw      r0,-3(fp)
+        push    r0
+        la      r0,_sym_name_at
+        jal     r1,(r0)
+        add     sp,3
+        push    r0
+        la      r0,_S460
+        push    r0
+        la      r0,___tc24r_printf2
+        jal     r1,(r0)
+        add     sp,9
+        la      r0,_sym_type_id
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        la      r0,_S461
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+L1728:
+        lw      r0,-3(fp)
+        lc      r1,1
+        add     r0,r1
+        sw      r0,-3(fp)
+        la      r2,L1725
+        jmp     (r2)
+L1726:
+        la      r0,_S462
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
-L1667:
-L1613:
+L1720:
+L1660:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -16523,7 +17427,7 @@ _main:
         add     sp,-9
         lc      r0,0
         sw      r0,-6(fp)
-L1676:
+L1738:
         lw      r0,-6(fp)
         push    r0
         la      r0,32768
@@ -16532,10 +17436,10 @@ L1676:
         mov     r1,r0
         pop     r0
         cls     r0,r1
-        brt     L1690
-        la      r2,L1677
+        brt     L1752
+        la      r2,L1739
         jmp     (r2)
-L1690:
+L1752:
         la      r0,_getchar
         jal     r1,(r0)
         sw      r0,-3(fp)
@@ -16544,7 +17448,7 @@ L1690:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1680
+        brf     L1742
         lw      r0,-3(fp)
         push    r0
         lc      r0,1
@@ -16557,16 +17461,16 @@ L1690:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1680
+        brf     L1742
         lc      r0,0
-        bra     L1681
-L1680:
+        bra     L1743
+L1742:
         lc      r0,1
-L1681:
+L1743:
         ceq     r0,z
-        brt     L1679
-        bra     L1677
-L1679:
+        brt     L1741
+        bra     L1739
+L1741:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -16577,9 +17481,9 @@ L1679:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        la      r2,L1676
+        la      r2,L1738
         jmp     (r2)
-L1677:
+L1739:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -16589,16 +17493,16 @@ L1677:
         lw      r0,-6(fp)
         lc      r1,0
         ceq     r0,r1
-        brf     L1683
-        la      r0,_S458
+        brf     L1745
+        la      r0,_S463
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        la      r2,L1675
+        la      r2,L1737
         jmp     (r2)
-L1683:
+L1745:
         lw      r0,-6(fp)
         push    r0
         la      r0,_input_buf
@@ -16621,7 +17525,7 @@ L1683:
         lw      r0,-9(fp)
         lc      r1,0
         cls     r1,r0
-        brf     L1685
+        brf     L1747
         lw      r0,-9(fp)
         push    r0
         la      r0,_input_buf
@@ -16629,39 +17533,39 @@ L1683:
         la      r0,_load_spi_sections
         jal     r1,(r0)
         add     sp,6
-L1685:
+L1747:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,66
         ceq     r0,r1
-        brf     L1686
+        brf     L1748
         la      r0,_parse_unit
         jal     r1,(r0)
-        bra     L1687
-L1686:
+        bra     L1749
+L1748:
         la      r0,_parse_program
         jal     r1,(r0)
-L1687:
+L1749:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1689
-        la      r0,_S459
+        brt     L1751
+        la      r0,_S464
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        bra     L1675
-L1689:
-        la      r0,_S460
+        bra     L1737
+L1751:
+        la      r0,_S465
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1675
-L1675:
+        bra     L1737
+L1737:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -30670,7 +31574,1294 @@ _sym_ptr_base:
         .word   0
         .word   0
         .word   0
+_sym_is_imported:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_sym_import_idx:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_sym_import_off:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_sym_global_off:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+_sym_is_exported_g:
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
+        .word   0
 _has_arrays:
+        .word   0
+_global_offset:
         .word   0
 _unit_hardware:
         .word   0
@@ -42042,678 +44233,688 @@ _S121:
 _S122:
         .byte   32,32,32,32,108,111,97,100,108,32,37,100,10,0
 _S123:
-        .byte   32,32,32,32,108,111,97,100,103,32,37,115,10,0
+        .byte   32,32,32,32,120,108,111,97,100,103,32,37,100,32,37,100,10,0
 _S124:
-        .byte   32,32,32,32,115,116,111,114,101,110,32,37,100,32,37,100,10,0
+        .byte   32,32,32,32,108,111,97,100,103,32,37,115,10,0
 _S125:
-        .byte   32,32,32,32,115,116,111,114,101,97,32,37,100,10,0
+        .byte   32,32,32,32,115,116,111,114,101,110,32,37,100,32,37,100,10,0
 _S126:
-        .byte   32,32,32,32,115,116,111,114,101,108,32,37,100,10,0
+        .byte   32,32,32,32,115,116,111,114,101,97,32,37,100,10,0
 _S127:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,37,115,10,0
+        .byte   32,32,32,32,115,116,111,114,101,108,32,37,100,10,0
 _S128:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   32,32,32,32,120,115,116,111,114,101,103,32,37,100,32,37,100,10,0
 _S129:
-        .byte   32,32,32,32,115,117,98,10,0
+        .byte   32,32,32,32,115,116,111,114,101,103,32,37,115,10,0
 _S130:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S131:
-        .byte   32,32,32,32,109,117,108,10,0
+        .byte   32,32,32,32,115,117,98,10,0
 _S132:
-        .byte   32,32,32,32,97,100,100,114,103,32,37,115,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S133:
-        .byte   32,32,32,32,97,100,100,114,108,32,37,100,10,0
+        .byte   32,32,32,32,109,117,108,10,0
 _S134:
-        .byte   32,32,32,32,108,111,97,100,97,32,37,100,10,0
+        .byte   32,32,32,32,97,100,100,114,103,32,37,115,10,0
 _S135:
-        .byte   32,32,32,32,97,100,100,10,0
+        .byte   32,32,32,32,97,100,100,114,108,32,37,100,10,0
 _S136:
-        .byte   95,112,50,52,112,95,97,98,115,0
+        .byte   32,32,32,32,108,111,97,100,97,32,37,100,10,0
 _S137:
-        .byte   97,98,115,0
+        .byte   32,32,32,32,97,100,100,10,0
 _S138:
-        .byte   95,112,50,52,112,95,111,100,100,0
+        .byte   95,112,50,52,112,95,97,98,115,0
 _S139:
-        .byte   111,100,100,0
+        .byte   97,98,115,0
 _S140:
-        .byte   95,112,50,52,112,95,111,114,100,0
+        .byte   95,112,50,52,112,95,111,100,100,0
 _S141:
-        .byte   111,114,100,0
+        .byte   111,100,100,0
 _S142:
-        .byte   95,112,50,52,112,95,99,104,114,0
+        .byte   95,112,50,52,112,95,111,114,100,0
 _S143:
-        .byte   99,104,114,0
+        .byte   111,114,100,0
 _S144:
-        .byte   95,112,50,52,112,95,115,117,99,99,0
+        .byte   95,112,50,52,112,95,99,104,114,0
 _S145:
-        .byte   115,117,99,99,0
+        .byte   99,104,114,0
 _S146:
-        .byte   95,112,50,52,112,95,112,114,101,100,0
+        .byte   95,112,50,52,112,95,115,117,99,99,0
 _S147:
-        .byte   112,114,101,100,0
+        .byte   115,117,99,99,0
 _S148:
-        .byte   95,112,50,52,112,95,115,113,114,0
+        .byte   95,112,50,52,112,95,112,114,101,100,0
 _S149:
-        .byte   115,113,114,0
+        .byte   112,114,101,100,0
 _S150:
-        .byte   95,112,50,52,112,95,101,111,102,0
+        .byte   95,112,50,52,112,95,115,113,114,0
 _S151:
-        .byte   101,111,102,0
+        .byte   115,113,114,0
 _S152:
-        .byte   95,112,50,52,112,95,101,111,108,110,0
+        .byte   95,112,50,52,112,95,101,111,102,0
 _S153:
-        .byte   101,111,108,110,0
+        .byte   101,111,102,0
 _S154:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
+        .byte   95,112,50,52,112,95,101,111,108,110,0
 _S155:
-        .byte   119,114,105,116,101,99,104,97,114,0
+        .byte   101,111,108,110,0
 _S156:
-        .byte   95,112,50,52,112,95,112,101,101,107,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S157:
-        .byte   112,101,101,107,0
+        .byte   119,114,105,116,101,99,104,97,114,0
 _S158:
-        .byte   95,112,50,52,112,95,112,111,107,101,0
+        .byte   95,112,50,52,112,95,112,101,101,107,0
 _S159:
-        .byte   112,111,107,101,0
+        .byte   112,101,101,107,0
 _S160:
-        .byte   95,112,50,52,112,95,109,101,109,99,112,121,0
+        .byte   95,112,50,52,112,95,112,111,107,101,0
 _S161:
-        .byte   109,101,109,99,112,121,0
+        .byte   112,111,107,101,0
 _S162:
-        .byte   95,112,50,52,112,95,109,101,109,115,101,116,0
+        .byte   95,112,50,52,112,95,109,101,109,99,112,121,0
 _S163:
-        .byte   109,101,109,115,101,116,0
+        .byte   109,101,109,99,112,121,0
 _S164:
-        .byte   95,112,50,52,112,95,108,101,100,95,111,110,0
+        .byte   95,112,50,52,112,95,109,101,109,115,101,116,0
 _S165:
-        .byte   108,101,100,111,110,0
+        .byte   109,101,109,115,101,116,0
 _S166:
-        .byte   95,112,50,52,112,95,108,101,100,95,111,102,102,0
+        .byte   95,112,50,52,112,95,108,101,100,95,111,110,0
 _S167:
-        .byte   108,101,100,111,102,102,0
+        .byte   108,101,100,111,110,0
 _S168:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,115,119,105,116,99,104,0
+        .byte   95,112,50,52,112,95,108,101,100,95,111,102,102,0
 _S169:
-        .byte   114,101,97,100,115,119,105,116,99,104,0
+        .byte   108,101,100,111,102,102,0
 _S170:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,100,117,112,108,105,99,97,116,101,32,115,121,109,98,111,108,32,39,37,115,39,10,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,115,119,105,116,99,104,0
 _S171:
-        .byte   116,111,111,32,109,97,110,121,32,115,121,109,98,111,108,115,0
+        .byte   114,101,97,100,115,119,105,116,99,104,0
 _S172:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,100,117,112,108,105,99,97,116,101,32,115,121,109,98,111,108,32,39,37,115,39,10,0
 _S173:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   116,111,111,32,109,97,110,121,32,115,121,109,98,111,108,115,0
 _S174:
-        .byte   32,32,32,32,112,117,115,104,32,49,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S175:
-        .byte   32,32,32,32,112,117,115,104,32,48,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S176:
-        .byte   32,32,32,32,112,117,115,104,32,48,10,0
+        .byte   32,32,32,32,112,117,115,104,32,49,10,0
 _S177:
-        .byte   110,111,116,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,0
+        .byte   32,32,32,32,112,117,115,104,32,48,10,0
 _S178:
         .byte   32,32,32,32,112,117,115,104,32,48,10,0
 _S179:
-        .byte   32,32,32,32,101,113,10,0
+        .byte   110,111,116,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,0
 _S180:
-        .byte   116,111,111,32,109,97,110,121,32,115,116,114,105,110,103,32,108,105,116,101,114,97,108,115,0
+        .byte   32,32,32,32,112,117,115,104,32,48,10,0
 _S181:
-        .byte   115,116,114,105,110,103,32,100,97,116,97,32,112,111,111,108,32,102,117,108,108,0
+        .byte   32,32,32,32,101,113,10,0
 _S182:
-        .byte   32,32,32,32,112,117,115,104,32,83,37,100,10,0
+        .byte   116,111,111,32,109,97,110,121,32,115,116,114,105,110,103,32,108,105,116,101,114,97,108,115,0
 _S183:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+        .byte   115,116,114,105,110,103,32,100,97,116,97,32,112,111,111,108,32,102,117,108,108,0
 _S184:
-        .byte   32,32,32,32,108,111,97,100,98,10,0
+        .byte   32,32,32,32,112,117,115,104,32,83,37,100,10,0
 _S185:
-        .byte   32,32,32,32,108,111,97,100,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
 _S186:
-        .byte   32,32,32,32,108,111,97,100,10,0
+        .byte   32,32,32,32,108,111,97,100,98,10,0
 _S187:
-        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,32,97,102,116,101,114,32,39,46,39,0
+        .byte   32,32,32,32,108,111,97,100,10,0
 _S188:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,102,105,101,108,100,32,39,37,115,39,10,0
+        .byte   32,32,32,32,108,111,97,100,10,0
 _S189:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,32,97,102,116,101,114,32,39,46,39,0
 _S190:
-        .byte   32,32,32,32,97,100,100,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,102,105,101,108,100,32,39,37,115,39,10,0
 _S191:
-        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
-_S192:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S193:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S192:
+        .byte   32,32,32,32,97,100,100,10,0
+_S193:
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
 _S194:
-        .byte   32,32,32,32,115,117,98,10,0
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
 _S195:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S196:
-        .byte   32,32,32,32,109,117,108,10,0
-_S197:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S198:
-        .byte   32,32,32,32,97,100,100,10,0
-_S199:
-        .byte   32,32,32,32,108,111,97,100,98,10,0
-_S200:
-        .byte   32,32,32,32,108,111,97,100,10,0
-_S201:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S202:
-        .byte   32,32,32,32,97,100,100,10,0
-_S203:
-        .byte   32,32,32,32,108,111,97,100,10,0
-_S204:
-        .byte   32,32,32,32,108,111,97,100,10,0
-_S205:
-        .byte   101,120,112,101,99,116,101,100,32,101,120,112,114,101,115,115,105,111,110,0
-_S206:
-        .byte   42,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
-_S207:
-        .byte   32,32,32,32,109,117,108,10,0
-_S208:
-        .byte   100,105,118,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
-_S209:
-        .byte   32,32,32,32,100,105,118,10,0
-_S210:
-        .byte   109,111,100,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
-_S211:
-        .byte   32,32,32,32,109,111,100,10,0
-_S212:
-        .byte   97,110,100,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
-_S213:
-        .byte   32,32,32,32,97,110,100,10,0
-_S214:
-        .byte   117,110,97,114,121,32,109,105,110,117,115,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,0
-_S215:
-        .byte   32,32,32,32,110,101,103,10,0
-_S216:
-        .byte   43,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
-_S217:
-        .byte   32,32,32,32,97,100,100,10,0
-_S218:
-        .byte   45,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
-_S219:
         .byte   32,32,32,32,115,117,98,10,0
+_S197:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S198:
+        .byte   32,32,32,32,109,117,108,10,0
+_S199:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S200:
+        .byte   32,32,32,32,97,100,100,10,0
+_S201:
+        .byte   32,32,32,32,108,111,97,100,98,10,0
+_S202:
+        .byte   32,32,32,32,108,111,97,100,10,0
+_S203:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S204:
+        .byte   32,32,32,32,97,100,100,10,0
+_S205:
+        .byte   32,32,32,32,108,111,97,100,10,0
+_S206:
+        .byte   32,32,32,32,108,111,97,100,10,0
+_S207:
+        .byte   101,120,112,101,99,116,101,100,32,101,120,112,114,101,115,115,105,111,110,0
+_S208:
+        .byte   42,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+_S209:
+        .byte   32,32,32,32,109,117,108,10,0
+_S210:
+        .byte   100,105,118,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+_S211:
+        .byte   32,32,32,32,100,105,118,10,0
+_S212:
+        .byte   109,111,100,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+_S213:
+        .byte   32,32,32,32,109,111,100,10,0
+_S214:
+        .byte   97,110,100,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
+_S215:
+        .byte   32,32,32,32,97,110,100,10,0
+_S216:
+        .byte   117,110,97,114,121,32,109,105,110,117,115,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,0
+_S217:
+        .byte   32,32,32,32,110,101,103,10,0
+_S218:
+        .byte   43,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
+_S219:
+        .byte   32,32,32,32,97,100,100,10,0
 _S220:
-        .byte   111,114,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
+        .byte   45,32,114,101,113,117,105,114,101,115,32,105,110,116,101,103,101,114,115,0
 _S221:
-        .byte   32,32,32,32,111,114,10,0
+        .byte   32,32,32,32,115,117,98,10,0
 _S222:
-        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,99,111,109,112,97,114,105,115,111,110,0
+        .byte   111,114,32,114,101,113,117,105,114,101,115,32,98,111,111,108,101,97,110,115,0
 _S223:
-        .byte   32,32,32,32,101,113,10,0
+        .byte   32,32,32,32,111,114,10,0
 _S224:
-        .byte   32,32,32,32,110,101,10,0
+        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,99,111,109,112,97,114,105,115,111,110,0
 _S225:
-        .byte   32,32,32,32,108,116,10,0
+        .byte   32,32,32,32,101,113,10,0
 _S226:
-        .byte   32,32,32,32,108,101,10,0
+        .byte   32,32,32,32,110,101,10,0
 _S227:
-        .byte   32,32,32,32,103,116,10,0
+        .byte   32,32,32,32,108,116,10,0
 _S228:
-        .byte   32,32,32,32,103,101,10,0
+        .byte   32,32,32,32,108,101,10,0
 _S229:
-        .byte   105,102,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
+        .byte   32,32,32,32,103,116,10,0
 _S230:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+        .byte   32,32,32,32,103,101,10,0
 _S231:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+        .byte   105,102,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
 _S232:
-        .byte   76,37,100,58,10,0
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
 _S233:
-        .byte   76,37,100,58,10,0
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
 _S234:
         .byte   76,37,100,58,10,0
 _S235:
         .byte   76,37,100,58,10,0
 _S236:
-        .byte   119,104,105,108,101,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
+        .byte   76,37,100,58,10,0
 _S237:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+        .byte   76,37,100,58,10,0
 _S238:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+        .byte   119,104,105,108,101,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
 _S239:
-        .byte   76,37,100,58,10,0
-_S240:
-        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,97,102,116,101,114,32,102,111,114,0
-_S241:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
-_S242:
-        .byte   102,111,114,32,118,97,114,105,97,98,108,101,32,109,117,115,116,32,98,101,32,97,32,118,97,114,0
-_S243:
-        .byte   76,37,100,58,10,0
-_S244:
-        .byte   32,32,32,32,103,101,10,0
-_S245:
-        .byte   32,32,32,32,108,101,10,0
-_S246:
         .byte   32,32,32,32,106,122,32,76,37,100,10,0
+_S240:
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+_S241:
+        .byte   76,37,100,58,10,0
+_S242:
+        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,97,102,116,101,114,32,102,111,114,0
+_S243:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+_S244:
+        .byte   102,111,114,32,118,97,114,105,97,98,108,101,32,109,117,115,116,32,98,101,32,97,32,118,97,114,0
+_S245:
+        .byte   76,37,100,58,10,0
+_S246:
+        .byte   32,32,32,32,103,101,10,0
 _S247:
-        .byte   32,32,32,32,112,117,115,104,32,49,10,0
+        .byte   32,32,32,32,108,101,10,0
 _S248:
-        .byte   32,32,32,32,115,117,98,10,0
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
 _S249:
         .byte   32,32,32,32,112,117,115,104,32,49,10,0
 _S250:
-        .byte   32,32,32,32,97,100,100,10,0
+        .byte   32,32,32,32,115,117,98,10,0
 _S251:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+        .byte   32,32,32,32,112,117,115,104,32,49,10,0
 _S252:
-        .byte   76,37,100,58,10,0
+        .byte   32,32,32,32,97,100,100,10,0
 _S253:
-        .byte   76,37,100,58,10,0
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
 _S254:
-        .byte   117,110,116,105,108,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
+        .byte   76,37,100,58,10,0
 _S255:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+        .byte   76,37,100,58,10,0
 _S256:
-        .byte   99,97,115,101,32,115,101,108,101,99,116,111,114,32,109,117,115,116,32,98,101,32,105,110,116,101,103,101,114,32,111,114,32,98,111,111,108,101,97,110,0
+        .byte   117,110,116,105,108,32,99,111,110,100,105,116,105,111,110,32,109,117,115,116,32,98,101,32,98,111,111,108,101,97,110,0
 _S257:
-        .byte   32,32,32,32,100,117,112,10,0
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
 _S258:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   99,97,115,101,32,115,101,108,101,99,116,111,114,32,109,117,115,116,32,98,101,32,105,110,116,101,103,101,114,32,111,114,32,98,111,111,108,101,97,110,0
 _S259:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+        .byte   32,32,32,32,100,117,112,10,0
 _S260:
-        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,32,97,102,116,101,114,32,109,105,110,117,115,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S261:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S262:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,32,97,102,116,101,114,32,109,105,110,117,115,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
 _S263:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S264:
         .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
 _S265:
-        .byte   32,32,32,32,101,113,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S266:
-        .byte   32,32,32,32,106,122,32,76,37,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,105,110,32,99,97,115,101,32,108,97,98,101,108,0
 _S267:
-        .byte   32,32,32,32,100,114,111,112,10,0
+        .byte   32,32,32,32,101,113,10,0
 _S268:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+        .byte   32,32,32,32,106,122,32,76,37,100,10,0
 _S269:
-        .byte   76,37,100,58,10,0
-_S270:
         .byte   32,32,32,32,100,114,111,112,10,0
+_S270:
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
 _S271:
         .byte   76,37,100,58,10,0
 _S272:
-        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,105,110,32,114,101,97,100,0
+        .byte   32,32,32,32,100,114,111,112,10,0
 _S273:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+        .byte   76,37,100,58,10,0
 _S274:
-        .byte   99,97,110,110,111,116,32,114,101,97,100,32,105,110,116,111,32,99,111,110,115,116,97,110,116,0
+        .byte   101,120,112,101,99,116,101,100,32,118,97,114,105,97,98,108,101,32,105,110,32,114,101,97,100,0
 _S275:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
 _S276:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,105,110,116,0
+        .byte   99,97,110,110,111,116,32,114,101,97,100,32,105,110,116,111,32,99,111,110,115,116,97,110,116,0
 _S277:
-        .byte   95,112,50,52,112,95,114,101,97,100,95,108,110,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,0
 _S278:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,105,110,116,0
 _S279:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
+        .byte   95,112,50,52,112,95,114,101,97,100,95,108,110,0
 _S280:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
 _S281:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
 _S282:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S283:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S284:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
 _S285:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
 _S286:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S287:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S288:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
-_S289:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
-_S290:
         .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
-_S291:
+_S289:
         .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
-_S292:
+_S290:
         .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
-_S293:
+_S291:
         .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
+_S292:
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,0
+_S293:
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,0
 _S294:
-        .byte   95,112,50,52,112,95,119,114,105,116,101,95,108,110,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,99,104,97,114,0
 _S295:
-        .byte   110,101,119,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,0
 _S296:
-        .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
+        .byte   95,112,50,52,112,95,119,114,105,116,101,95,108,110,0
 _S297:
-        .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
+        .byte   110,101,119,0
 _S298:
-        .byte   110,101,119,32,114,101,113,117,105,114,101,115,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
-_S299:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S300:
-        .byte   95,112,50,52,112,95,110,101,119,0
-_S301:
-        .byte   100,105,115,112,111,115,101,0
-_S302:
         .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
-_S303:
+_S299:
         .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
+_S300:
+        .byte   110,101,119,32,114,101,113,117,105,114,101,115,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
+_S301:
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S302:
+        .byte   95,112,50,52,112,95,110,101,119,0
+_S303:
+        .byte   100,105,115,112,111,115,101,0
 _S304:
-        .byte   95,112,50,52,112,95,100,105,115,112,111,115,101,0
+        .byte   101,120,112,101,99,116,101,100,32,112,111,105,110,116,101,114,32,118,97,114,105,97,98,108,101,0
 _S305:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,112,114,111,99,101,100,117,114,101,32,39,37,115,39,10,0
+        .byte   117,110,100,101,99,108,97,114,101,100,32,118,97,114,105,97,98,108,101,0
 _S306:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,119,114,111,110,103,32,97,114,103,32,99,111,117,110,116,32,102,111,114,32,37,115,10,0
+        .byte   95,112,50,52,112,95,100,105,115,112,111,115,101,0
 _S307:
-        .byte   32,32,32,32,120,99,97,108,108,32,37,115,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,112,114,111,99,101,100,117,114,101,32,39,37,115,39,10,0
 _S308:
-        .byte   32,32,32,32,99,97,108,108,110,32,37,100,32,37,115,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,119,114,111,110,103,32,97,114,103,32,99,111,117,110,116,32,102,111,114,32,37,115,10,0
 _S309:
-        .byte   32,32,32,32,99,97,108,108,32,37,115,10,0
+        .byte   32,32,32,32,120,99,97,108,108,32,37,115,10,0
 _S310:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+        .byte   32,32,32,32,99,97,108,108,110,32,37,100,32,37,115,10,0
 _S311:
-        .byte   110,111,116,32,97,110,32,97,114,114,97,121,0
+        .byte   32,32,32,32,99,97,108,108,32,37,115,10,0
 _S312:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S313:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S314:
-        .byte   32,32,32,32,115,116,111,114,101,98,10,0
-_S315:
-        .byte   32,32,32,32,115,116,111,114,101,10,0
-_S316:
         .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
-_S317:
-        .byte   110,111,116,32,97,32,112,111,105,110,116,101,114,0
-_S318:
-        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
-_S319:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,102,105,101,108,100,32,39,37,115,39,10,0
-_S320:
-        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
-_S321:
-        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S322:
-        .byte   32,32,32,32,97,100,100,10,0
-_S323:
+_S313:
+        .byte   110,111,116,32,97,110,32,97,114,114,97,121,0
+_S314:
         .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S324:
+_S315:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S316:
+        .byte   32,32,32,32,115,116,111,114,101,98,10,0
+_S317:
+        .byte   32,32,32,32,115,116,111,114,101,10,0
+_S318:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+_S319:
+        .byte   110,111,116,32,97,32,112,111,105,110,116,101,114,0
+_S320:
+        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
+_S321:
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,102,105,101,108,100,32,39,37,115,39,10,0
+_S322:
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
+_S323:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
+_S324:
+        .byte   32,32,32,32,97,100,100,10,0
 _S325:
-        .byte   32,32,32,32,115,117,98,10,0
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
 _S326:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S327:
-        .byte   32,32,32,32,109,117,108,10,0
+        .byte   32,32,32,32,115,117,98,10,0
 _S328:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S329:
-        .byte   32,32,32,32,97,100,100,10,0
-_S330:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S331:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S332:
-        .byte   32,32,32,32,115,116,111,114,101,98,10,0
-_S333:
-        .byte   32,32,32,32,115,116,111,114,101,10,0
-_S334:
         .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
-_S335:
+_S329:
+        .byte   32,32,32,32,109,117,108,10,0
+_S330:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S331:
         .byte   32,32,32,32,97,100,100,10,0
+_S332:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S333:
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+_S334:
+        .byte   32,32,32,32,115,116,111,114,101,98,10,0
+_S335:
+        .byte   32,32,32,32,115,116,111,114,101,10,0
 _S336:
-        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
+        .byte   32,32,32,32,112,117,115,104,32,37,100,10,0
 _S337:
-        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
+        .byte   32,32,32,32,97,100,100,10,0
 _S338:
-        .byte   32,32,32,32,115,116,111,114,101,10,0
-_S339:
-        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
-_S340:
         .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S341:
+_S339:
         .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
-_S342:
+_S340:
         .byte   32,32,32,32,115,116,111,114,101,10,0
+_S341:
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
+_S342:
+        .byte   32,32,32,32,115,116,111,114,101,103,32,95,112,50,52,112,95,116,109,112,10,0
 _S343:
-        .byte   101,120,112,101,99,116,101,100,32,58,61,32,111,114,32,46,102,105,101,108,100,32,97,102,116,101,114,32,94,0
+        .byte   32,32,32,32,108,111,97,100,103,32,95,112,50,52,112,95,116,109,112,10,0
 _S344:
-        .byte   32,32,32,32,115,116,111,114,101,108,32,37,100,10,0
+        .byte   32,32,32,32,115,116,111,114,101,10,0
 _S345:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
+        .byte   101,120,112,101,99,116,101,100,32,58,61,32,111,114,32,46,102,105,101,108,100,32,97,102,116,101,114,32,94,0
 _S346:
-        .byte   99,97,110,110,111,116,32,97,115,115,105,103,110,32,116,111,32,99,111,110,115,116,97,110,116,0
+        .byte   32,32,32,32,115,116,111,114,101,108,32,37,100,10,0
 _S347:
-        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,97,115,115,105,103,110,109,101,110,116,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,100,101,99,108,97,114,101,100,32,39,37,115,39,10,0
 _S348:
-        .byte   101,120,105,116,32,111,117,116,115,105,100,101,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,0
+        .byte   99,97,110,110,111,116,32,97,115,115,105,103,110,32,116,111,32,99,111,110,115,116,97,110,116,0
 _S349:
-        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
+        .byte   116,121,112,101,32,109,105,115,109,97,116,99,104,32,105,110,32,97,115,115,105,103,110,109,101,110,116,0
 _S350:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,99,111,110,115,116,0
+        .byte   101,120,105,116,32,111,117,116,115,105,100,101,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,0
 _S351:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
+        .byte   32,32,32,32,106,109,112,32,76,37,100,10,0
 _S352:
-        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,99,111,110,115,116,0
 _S353:
-        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,32,97,102,116,101,114,32,94,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
 _S354:
-        .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
+        .byte   101,120,112,101,99,116,101,100,32,99,111,110,115,116,97,110,116,32,118,97,108,117,101,0
 _S355:
-        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
+        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,32,97,102,116,101,114,32,94,0
 _S356:
         .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
 _S357:
-        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
+        .byte   101,120,112,101,99,116,101,100,32,102,105,101,108,100,32,110,97,109,101,0
 _S358:
-        .byte   101,120,112,101,99,116,101,100,32,108,111,119,101,114,32,98,111,117,110,100,0
+        .byte   116,111,111,32,109,97,110,121,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
 _S359:
         .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S360:
-        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
-_S361:
-        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
-_S362:
-        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
-_S363:
-        .byte   101,120,112,101,99,116,101,100,32,39,101,110,100,39,32,97,102,116,101,114,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
-_S364:
-        .byte   101,120,112,101,99,116,101,100,32,94,32,111,114,32,114,101,99,111,114,100,32,105,110,32,116,121,112,101,32,100,101,102,105,110,105,116,105,111,110,0
-_S365:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,118,97,114,0
-_S366:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
-_S367:
-        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
-_S368:
         .byte   101,120,112,101,99,116,101,100,32,108,111,119,101,114,32,98,111,117,110,100,0
+_S361:
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
+_S362:
+        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
+_S363:
+        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
+_S364:
+        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
+_S365:
+        .byte   101,120,112,101,99,116,101,100,32,39,101,110,100,39,32,97,102,116,101,114,32,114,101,99,111,114,100,32,102,105,101,108,100,115,0
+_S366:
+        .byte   101,120,112,101,99,116,101,100,32,94,32,111,114,32,114,101,99,111,114,100,32,105,110,32,116,121,112,101,32,100,101,102,105,110,105,116,105,111,110,0
+_S367:
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,105,110,32,118,97,114,0
+_S368:
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S369:
         .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S370:
-        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
+        .byte   101,120,112,101,99,116,101,100,32,108,111,119,101,114,32,98,111,117,110,100,0
 _S371:
-        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
+        .byte   101,120,112,101,99,116,101,100,32,105,110,116,101,103,101,114,0
 _S372:
-        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
+        .byte   101,120,112,101,99,116,101,100,32,117,112,112,101,114,32,98,111,117,110,100,0
 _S373:
-        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
+        .byte   101,120,112,101,99,116,101,100,32,101,108,101,109,101,110,116,32,116,121,112,101,0
 _S374:
-        .byte   46,103,108,111,98,97,108,32,37,115,32,37,100,10,0
+        .byte   97,114,114,97,121,32,115,105,122,101,32,109,117,115,116,32,98,101,32,112,111,115,105,116,105,118,101,0
 _S375:
-        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
+        .byte   46,103,108,111,98,97,108,32,95,112,50,52,112,95,116,109,112,32,49,10,0
 _S376:
-        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
+        .byte   46,103,108,111,98,97,108,32,37,115,32,37,100,10,0
 _S377:
-        .byte   46,103,108,111,98,97,108,32,37,115,32,49,10,0
+        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
 _S378:
-        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,0
+        .byte   101,120,112,101,99,116,101,100,32,116,121,112,101,32,110,97,109,101,0
 _S379:
-        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
+        .byte   46,103,108,111,98,97,108,32,37,115,32,49,10,0
 _S380:
-        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
+        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,0
 _S381:
-        .byte   101,120,112,101,99,116,101,100,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,32,110,97,109,101,0
+        .byte   101,120,112,101,99,116,101,100,32,112,97,114,97,109,101,116,101,114,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S382:
-        .byte   95,117,115,101,114,95,0
+        .byte   101,120,112,101,99,116,101,100,32,105,100,101,110,116,105,102,105,101,114,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S383:
-        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
+        .byte   101,120,112,101,99,116,101,100,32,112,114,111,99,101,100,117,114,101,47,102,117,110,99,116,105,111,110,32,110,97,109,101,0
 _S384:
-        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
+        .byte   95,117,115,101,114,95,0
 _S385:
-        .byte   10,46,112,114,111,99,32,37,115,32,37,100,10,0
+        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
 _S386:
-        .byte   76,37,100,58,10,0
+        .byte   101,120,112,101,99,116,101,100,32,114,101,116,117,114,110,32,116,121,112,101,0
 _S387:
-        .byte   32,32,32,32,108,111,97,100,108,32,37,100,10,0
+        .byte   10,46,112,114,111,99,32,37,115,32,37,100,10,0
 _S388:
-        .byte   32,32,32,32,114,101,116,32,37,100,10,0
-_S389:
-        .byte   46,101,110,100,10,0
-_S390:
-        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
-_S391:
-        .byte   32,32,32,32,99,97,108,108,32,95,112,50,52,112,95,109,97,105,110,10,0
-_S392:
-        .byte   32,32,32,32,104,97,108,116,10,0
-_S393:
-        .byte   46,101,110,100,10,0
-_S394:
-        .byte   10,46,112,114,111,99,32,95,112,50,52,112,95,109,97,105,110,32,48,10,0
-_S395:
-        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
-_S396:
-        .byte   32,32,32,32,101,110,116,101,114,32,48,10,0
-_S397:
-        .byte   95,112,50,52,112,95,105,111,95,105,110,105,116,0
-_S398:
-        .byte   95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,0
-_S399:
         .byte   76,37,100,58,10,0
-_S400:
-        .byte   32,32,32,32,114,101,116,32,48,10,0
-_S401:
-        .byte   32,32,32,32,104,97,108,116,10,0
-_S402:
+_S389:
+        .byte   32,32,32,32,108,111,97,100,108,32,37,100,10,0
+_S390:
+        .byte   32,32,32,32,114,101,116,32,37,100,10,0
+_S391:
         .byte   46,101,110,100,10,0
+_S392:
+        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
+_S393:
+        .byte   32,32,32,32,99,97,108,108,32,95,112,50,52,112,95,109,97,105,110,10,0
+_S394:
+        .byte   32,32,32,32,104,97,108,116,10,0
+_S395:
+        .byte   46,101,110,100,10,0
+_S396:
+        .byte   10,46,112,114,111,99,32,95,112,50,52,112,95,109,97,105,110,32,48,10,0
+_S397:
+        .byte   10,46,112,114,111,99,32,109,97,105,110,32,48,10,0
+_S398:
+        .byte   32,32,32,32,101,110,116,101,114,32,48,10,0
+_S399:
+        .byte   95,112,50,52,112,95,105,111,95,105,110,105,116,0
+_S400:
+        .byte   95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,0
+_S401:
+        .byte   76,37,100,58,10,0
+_S402:
+        .byte   32,32,32,32,114,101,116,32,48,10,0
 _S403:
-        .byte   46,100,97,116,97,32,83,37,100,32,0
+        .byte   32,32,32,32,104,97,108,116,10,0
 _S404:
-        .byte   44,0
+        .byte   46,101,110,100,10,0
 _S405:
-        .byte   37,100,0
+        .byte   46,100,97,116,97,32,83,37,100,32,0
 _S406:
-        .byte   44,48,10,0
+        .byte   44,0
 _S407:
-        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,117,115,101,115,0
+        .byte   37,100,0
 _S408:
-        .byte   104,97,114,100,119,97,114,101,0
+        .byte   44,48,10,0
 _S409:
-        .byte   117,110,105,116,115,0
+        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,117,115,101,115,0
 _S410:
-        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,117,110,105,116,32,39,37,115,39,10,0
+        .byte   104,97,114,100,119,97,114,101,0
 _S411:
-        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
+        .byte   117,110,105,116,115,0
 _S412:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,32,49,10,0
+        .byte   101,114,114,111,114,32,108,105,110,101,32,37,100,58,32,117,110,107,110,111,119,110,32,117,110,105,116,32,39,37,115,39,10,0
 _S413:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,32,49,10,0
+        .byte   101,120,112,101,99,116,101,100,32,117,110,105,116,32,110,97,109,101,32,97,102,116,101,114,32,99,111,109,109,97,0
 _S414:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,32,49,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,32,49,10,0
 _S415:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,32,48,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,32,49,10,0
 _S416:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,32,48,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,32,49,10,0
 _S417:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,32,48,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,32,48,10,0
 _S418:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,32,48,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,32,48,10,0
 _S419:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,32,48,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,32,48,10,0
 _S420:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,32,48,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,32,48,10,0
 _S421:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,32,49,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,32,48,10,0
 _S422:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,32,49,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,32,48,10,0
 _S423:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,32,49,10,0
 _S424:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,32,49,10,0
 _S425:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,105,110,116,10,0
 _S426:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,98,111,111,108,10,0
 _S427:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,115,116,114,10,0
 _S428:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,119,114,105,116,101,95,108,110,10,0
 _S429:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,105,111,95,105,110,105,116,10,0
 _S430:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,105,110,116,10,0
 _S431:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,99,104,97,114,10,0
 _S432:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,114,101,97,100,95,108,110,10,0
 _S433:
-        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,104,101,97,112,95,105,110,105,116,10,0
 _S434:
-        .byte   46,101,120,116,101,114,110,32,37,115,32,37,100,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,110,101,119,10,0
 _S435:
-        .byte   46,101,120,116,101,114,110,32,37,115,10,0
+        .byte   46,101,120,116,101,114,110,32,95,112,50,52,112,95,100,105,115,112,111,115,101,10,0
 _S436:
-        .byte   46,117,110,105,116,32,37,115,10,0
+        .byte   46,101,120,116,101,114,110,32,37,115,32,37,100,10,0
 _S437:
-        .byte   46,105,109,112,111,114,116,32,112,50,52,112,95,114,116,10,0
+        .byte   46,101,120,116,101,114,110,32,37,115,10,0
 _S438:
-        .byte   46,105,109,112,111,114,116,32,37,115,10,0
+        .byte   46,117,110,105,116,32,37,115,10,0
 _S439:
-        .byte   46,109,111,100,117,108,101,32,37,115,10,0
-_S440:
-        .byte   46,101,120,112,111,114,116,32,109,97,105,110,10,0
-_S441:
-        .byte   59,32,112,50,52,112,32,111,117,116,112,117,116,58,32,37,115,10,0
-_S442:
-        .byte   46,101,110,100,117,110,105,116,10,0
-_S443:
-        .byte   46,101,110,100,109,111,100,117,108,101,10,0
-_S444:
-        .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
-_S445:
-        .byte   101,120,112,101,99,116,101,100,32,39,105,110,116,101,114,102,97,99,101,39,32,105,110,32,117,110,105,116,0
-_S446:
-        .byte   46,117,110,105,116,32,37,115,10,0
-_S447:
         .byte   46,105,109,112,111,114,116,32,112,50,52,112,95,114,116,10,0
-_S448:
-        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,10,0
-_S449:
-        .byte   59,32,112,50,52,112,32,117,110,105,116,58,32,37,115,10,0
-_S450:
-        .byte   101,120,112,101,99,116,101,100,32,39,105,109,112,108,101,109,101,110,116,97,116,105,111,110,39,32,105,110,32,117,110,105,116,0
-_S451:
+_S440:
+        .byte   46,105,109,112,111,114,116,32,37,115,10,0
+_S441:
+        .byte   46,109,111,100,117,108,101,32,37,115,10,0
+_S442:
+        .byte   46,101,120,112,111,114,116,32,109,97,105,110,10,0
+_S443:
+        .byte   59,32,112,50,52,112,32,111,117,116,112,117,116,58,32,37,115,10,0
+_S444:
         .byte   46,101,110,100,117,110,105,116,10,0
-_S452:
+_S445:
+        .byte   46,101,110,100,109,111,100,117,108,101,10,0
+_S446:
         .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
-_S453:
-        .byte   59,45,45,45,32,83,80,73,32,45,45,45,10,0
-_S454:
+_S447:
+        .byte   101,120,112,101,99,116,101,100,32,39,105,110,116,101,114,102,97,99,101,39,32,105,110,32,117,110,105,116,0
+_S448:
         .byte   46,117,110,105,116,32,37,115,10,0
+_S449:
+        .byte   46,105,109,112,111,114,116,32,112,50,52,112,95,114,116,10,0
+_S450:
+        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,10,0
+_S451:
+        .byte   46,103,108,111,98,97,108,32,37,115,32,49,10,0
+_S452:
+        .byte   59,32,112,50,52,112,32,117,110,105,116,58,32,37,115,10,0
+_S453:
+        .byte   101,120,112,101,99,116,101,100,32,39,105,109,112,108,101,109,101,110,116,97,116,105,111,110,39,32,105,110,32,117,110,105,116,0
+_S454:
+        .byte   46,101,110,100,117,110,105,116,10,0
 _S455:
-        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,0
+        .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
 _S456:
-        .byte   32,37,100,32,37,100,10,0
+        .byte   59,45,45,45,32,83,80,73,32,45,45,45,10,0
 _S457:
-        .byte   59,45,45,45,32,69,78,68,32,83,80,73,32,45,45,45,10,0
+        .byte   46,117,110,105,116,32,37,115,10,0
 _S458:
-        .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
+        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,0
 _S459:
-        .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
+        .byte   32,37,100,32,37,100,10,0
 _S460:
+        .byte   46,118,97,114,32,37,115,32,37,100,0
+_S461:
+        .byte   32,37,100,10,0
+_S462:
+        .byte   59,45,45,45,32,69,78,68,32,83,80,73,32,45,45,45,10,0
+_S463:
+        .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
+_S464:
+        .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
+_S465:
         .byte   59,32,79,75,10,0

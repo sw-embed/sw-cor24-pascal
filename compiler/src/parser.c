@@ -272,6 +272,55 @@ int load_spi_sections(char *buf, int len) {
                     proc_is_user[pidx] = 0;
                 }
             }
+
+            /* Parse ".var <name> <offset> <type_id>" for exported globals */
+            if (llen > 5 && line[0] == '.' && line[1] == 'v' && line[2] == 'a' && line[3] == 'r' && line[4] == ' ') {
+                int g_offset;
+                int g_type;
+                int sidx;
+                /* Skip ".var " */
+                i = 5;
+                /* Read name */
+                llen = 0;
+                while (line[i] != 0 && line[i] != ' ' && llen < MAX_NAME - 1) {
+                    pascal_name[llen] = line[i];
+                    llen = llen + 1;
+                    i = i + 1;
+                }
+                pascal_name[llen] = 0;
+
+                /* Read offset */
+                g_offset = 0;
+                if (line[i] == ' ') {
+                    i = i + 1;
+                    while (line[i] >= '0' && line[i] <= '9') {
+                        g_offset = g_offset * 10 + (line[i] - '0');
+                        i = i + 1;
+                    }
+                }
+
+                /* Read type_id */
+                g_type = TYPE_INTEGER;
+                if (line[i] == ' ') {
+                    i = i + 1;
+                    g_type = 0;
+                    while (line[i] >= '0' && line[i] <= '9') {
+                        g_type = g_type * 10 + (line[i] - '0');
+                        i = i + 1;
+                    }
+                }
+
+                /* Register as imported global variable.
+                   import_idx is set to import_count-1 (current unit's index).
+                   +1 because p24p_rt is always import 0. */
+                sidx = sym_add(pascal_name, SYM_VAR, g_type, 0);
+                if (sidx >= 0) {
+                    sym_is_imported[sidx] = 1;
+                    sym_import_idx[sidx] = import_count; /* will be +1 after p24p_rt */
+                    sym_import_off[sidx] = g_offset;
+                    sym_global_off[sidx] = g_offset;
+                }
+            }
         }
     }
     return pos;
@@ -368,6 +417,8 @@ void emit_load_sym(int idx) {
         } else {
             printf("    loadl %d\n", sym_value[idx]);
         }
+    } else if (sym_is_imported[idx]) {
+        printf("    xloadg %d %d\n", sym_import_idx[idx], sym_import_off[idx]);
     } else {
         printf("    loadg %s\n", sym_name_at(idx));
     }
@@ -384,6 +435,8 @@ void emit_store_sym(int idx) {
         } else {
             printf("    storel %d\n", sym_value[idx]);
         }
+    } else if (sym_is_imported[idx]) {
+        printf("    xstoreg %d %d\n", sym_import_idx[idx], sym_import_off[idx]);
     } else {
         printf("    storeg %s\n", sym_name_at(idx));
     }
@@ -474,6 +527,11 @@ int sym_add(char *name, int kind, int type, int value) {
     sym_type_id[idx] = type;
     sym_value[idx] = value;
     sym_depth[idx] = scope_depth;
+    sym_is_imported[idx] = 0;
+    sym_import_idx[idx] = 0;
+    sym_import_off[idx] = 0;
+    sym_global_off[idx] = 0;
+    sym_is_exported_g[idx] = 0;
     sym_count = sym_count + 1;
     return idx;
 }
@@ -1905,6 +1963,7 @@ void parse_var_decl(void) {
         /* Emit scratch global for array store if first array */
         if (!has_arrays) {
             has_arrays = 1;
+            global_offset = global_offset + 1;
             printf(".global _p24p_tmp 1\n");
         }
 
@@ -1923,6 +1982,9 @@ void parse_var_decl(void) {
             } else {
                 alloc_words = arr_size;
             }
+            sym_global_off[i] = global_offset;
+            if (in_interface) sym_is_exported_g[i] = 1;
+            global_offset = global_offset + alloc_words;
             printf(".global %s %d\n", sym_name_at(i), alloc_words);
             i = i + 1;
         }
@@ -1961,6 +2023,9 @@ void parse_var_decl(void) {
         while (i < sym_count) {
             sym_type_id[i] = type;
             sym_ptr_base[i] = utidx;
+            sym_global_off[i] = global_offset;
+            if (in_interface) sym_is_exported_g[i] = 1;
+            global_offset = global_offset + 1;
             printf(".global %s 1\n", sym_name_at(i));
             i = i + 1;
         }
@@ -2394,6 +2459,7 @@ void parser_init(char *src, int len) {
     unit_name[0] = 0;
     import_count = 0;
     has_arrays = 0;
+    global_offset = 0;
     scope_base = 0;
     scope_depth = 0;
     in_proc = 0;
@@ -2605,6 +2671,17 @@ void parse_unit(void) {
             i = i + 1;
         }
     }
+    /* Re-emit .global directives for interface variables (emitted before header) */
+    {
+        int i;
+        i = 0;
+        while (i < sym_count) {
+            if (sym_kind[i] == SYM_VAR && sym_is_exported_g[i]) {
+                printf(".global %s 1\n", sym_name_at(i));
+            }
+            i = i + 1;
+        }
+    }
     printf("; p24p unit: %s\n", unit_name);
 
     /* Expect 'implementation' keyword */
@@ -2651,6 +2728,15 @@ void parse_unit(void) {
             if (proc_is_exported[i]) {
                 printf(".export %s %d", proc_extern_at(i), proc_argc[i]);
                 printf(" %d %d\n", proc_has_ret[i], proc_ret_type[i]);
+            }
+            i = i + 1;
+        }
+        /* Emit .var for each exported global variable */
+        i = 0;
+        while (i < sym_count) {
+            if (sym_kind[i] == SYM_VAR && sym_is_exported_g[i]) {
+                printf(".var %s %d", sym_name_at(i), sym_global_off[i]);
+                printf(" %d\n", sym_type_id[i]);
             }
             i = i + 1;
         }
