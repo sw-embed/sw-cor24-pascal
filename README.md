@@ -12,6 +12,7 @@ scripts/     Build and utility scripts
 
 ## Pipeline
 
+### Single-unit (default)
 ```
 .pas  ->  p24p (compiler/)  ->  .spc
                                   |
@@ -26,12 +27,25 @@ runtime/runtime.spc  -------------+
                                               pvm.s (COR24 VM)
 ```
 
+### Multi-unit
+```
+unit.pas  ->  p24p  ->  unit.spc + unit.spi
+main.pas  ->  p24p (with SPI)  ->  main.spc
+
+pa24r unit.spc  ->  unit.p24
+pa24r main.spc  ->  main.p24
+
+p24-load main.p24 unit.p24 p24p_rt.p24  ->  image.p24m
+pvm.s image.p24m
+```
+
 ## Language Features
 
 - Integer, boolean, char types
 - Arrays, records (including array fields), pointer types (`^T`)
 - `new` / `dispose` for heap allocation
 - Procedures and functions (nested, forward-declared, pointer return types)
+- User-defined units (`unit`/`interface`/`implementation`) with cross-unit procedure calls
 - Control flow: if/else, while, for, repeat/until, case, exit
 - Standard I/O: read, readln, write, writeln
 - 128 string literals (packed pool)
@@ -52,6 +66,9 @@ Sibling repos (cloned under `~/github/sw-embed/`):
 
 # Run a Pascal program
 ./compiler/scripts/run-pascal.sh compiler/tests/t01_factorial.pas
+
+# Run a multi-unit program
+./compiler/scripts/run-multi-unit.sh compiler/tests/t37_multi_mathlib.pas compiler/tests/t37_mathlib.pas
 
 # Run all regression tests
 ./compiler/scripts/test-all.sh

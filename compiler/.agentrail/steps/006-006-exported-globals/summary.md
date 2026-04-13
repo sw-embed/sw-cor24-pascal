@@ -1,0 +1,1 @@
+Researched cross-unit global access. PVM has xloadg/xstoreg opcodes (0x75/0x76) and pa24r supports the mnemonics, but p24-load has no unit_id patching — can't resolve which unit to target at link time. Filed sw-embed/sw-cor24-pcode#9 for linker support. Cross-unit globals blocked on that fix. Multi-unit procedure calls work end-to-end.

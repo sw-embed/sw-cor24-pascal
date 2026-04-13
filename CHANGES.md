@@ -1,5 +1,43 @@
 # Changelog
 
+## 2026-04-13 — User-defined unit support
+
+### Compiler
+- **Unit declarations** (issue #14): `unit <name>; interface ... implementation ... end.`
+  - `TOK_UNIT`, `TOK_INTERFACE`, `TOK_IMPLEMENTATION` keywords
+  - Interface-section procedures are implicit forward declarations
+  - Auto-detects `unit` vs `program` by first token
+- **Export code generation**: interface procedures get `.export` directives in `.spc`
+  - `proc_is_exported[]` flag in procedure table
+  - `.spc` exports use pa24r-compatible format (`name argc`)
+- **SPI interface files**: compiler emits `;--- SPI ---` section after `.endunit`
+  - Extended format with `has_ret` and `ret_type` for function signatures
+  - Build scripts extract `.spi` files for importing units
+- **SPI loader**: programs can import user-defined units via `uses <unitname>`
+  - SPI sections prepended to input stream by build scripts
+  - `load_spi_sections()` registers imported procedures with full signatures
+  - Emits `.import <unitname>` and `.extern` for imported symbols
+  - `xcall` for cross-unit procedure calls
+
+### Build Scripts
+- `compile-unit.sh` — compile a Pascal unit to `.spc` + `.spi`
+- `run-multi-unit.sh` — compile, assemble, link, and run multi-unit programs
+- `demo-multi-unit.sh` — CLI demo with two user-defined units
+- `test-all.sh` — multi-unit test section with automatic unit dependency discovery
+
+### Tests
+- t36_unit_decl — unit declaration (compile-only)
+- t37_mathlib — MathLib unit with add/multiply/square (compile-only)
+- t37_multi_mathlib — end-to-end: main program imports MathLib unit
+- demo_multi_unit/ — two-unit demo (mathlib + strutils)
+
+### Known Limitations
+- Cross-unit global variables not yet supported (requires sw-cor24-pcode#9)
+- Only procedures and functions can be shared between units
+
+### Issues closed
+- #14 Support multiple user-defined compilation units
+
 ## 2026-04-12 — Forward-declared pointer parameter fix
 
 ### Compiler
