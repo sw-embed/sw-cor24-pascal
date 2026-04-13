@@ -2487,5 +2487,19 @@ void parse_unit(void) {
 
     if (parse_error) {
         printf("; compilation failed\n");
+    } else {
+        /* Emit .spi interface data as a delimited section after .endunit.
+           Build scripts extract this to create the .spi file. */
+        int i;
+        printf(";--- SPI ---\n");
+        printf(".unit %s\n", unit_name);
+        i = 0;
+        while (i < proc_count) {
+            if (proc_is_exported[i]) {
+                printf(".export %s %d\n", proc_extern_at(i), proc_argc[i]);
+            }
+            i = i + 1;
+        }
+        printf(";--- END SPI ---\n");
     }
 }

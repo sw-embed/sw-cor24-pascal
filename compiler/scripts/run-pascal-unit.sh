@@ -36,6 +36,12 @@ fi
 
 echo "$SPC_OUTPUT" | sed -n '/^\.unit/,/^\.endunit/p' > "$TMP/$NAME.spc"
 
+# Extract .spi interface file if present (for unit compilations)
+if echo "$SPC_OUTPUT" | grep -q '^;--- SPI ---'; then
+  echo "$SPC_OUTPUT" | sed -n '/^;--- SPI ---$/,/^;--- END SPI ---$/p' | \
+    grep -v '^;---' > "$TMP/$NAME.spi"
+fi
+
 # Step 2: Assemble user unit to .p24 (v2)
 "$PA24R" "$TMP/$NAME.spc" -o "$TMP/$NAME.p24" 2>/dev/null
 

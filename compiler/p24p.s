@@ -14804,10 +14804,10 @@ L1511:
         la      r1,_proc_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1537
+        brt     L1542
         la      r2,L1512
         jmp     (r2)
-L1537:
+L1542:
         la      r0,_proc_is_exported
         push    r0
         lw      r0,-3(fp)
@@ -14969,7 +14969,8 @@ L1532:
         ceq     r0,z
         brt     L1534
         lc      r0,0
-        bra     L1482
+        la      r2,L1482
+        jmp     (r2)
 L1534:
         lc      r0,22
         push    r0
@@ -14984,8 +14985,79 @@ L1534:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1536
+        brt     L1535
         la      r0,_S451
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r2,L1536
+        jmp     (r2)
+L1535:
+        la      r0,_S452
+        push    r0
+        la      r0,___tc24r_printf0
+        jal     r1,(r0)
+        add     sp,3
+        la      r0,_unit_name
+        push    r0
+        la      r0,_S453
+        push    r0
+        la      r0,___tc24r_printf1
+        jal     r1,(r0)
+        add     sp,6
+        lc      r0,0
+        sw      r0,-3(fp)
+L1537:
+        lw      r0,-3(fp)
+        la      r1,_proc_count
+        lw      r1,0(r1)
+        cls     r0,r1
+        brt     L1541
+        la      r2,L1538
+        jmp     (r2)
+L1541:
+        la      r0,_proc_is_exported
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        ceq     r0,z
+        brt     L1540
+        la      r0,_proc_argc
+        push    r0
+        lw      r0,-3(fp)
+        lc      r1,3
+        mul     r0,r1
+        mov     r1,r0
+        pop     r0
+        add     r0,r1
+        lw      r0,0(r0)
+        push    r0
+        lw      r0,-3(fp)
+        push    r0
+        la      r0,_proc_extern_at
+        jal     r1,(r0)
+        add     sp,3
+        push    r0
+        la      r0,_S454
+        push    r0
+        la      r0,___tc24r_printf2
+        jal     r1,(r0)
+        add     sp,9
+L1540:
+        lw      r0,-3(fp)
+        lc      r1,1
+        add     r0,r1
+        sw      r0,-3(fp)
+        la      r2,L1537
+        jmp     (r2)
+L1538:
+        la      r0,_S455
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -15007,7 +15079,7 @@ _main:
         add     sp,-6
         lc      r0,0
         sw      r0,-6(fp)
-L1539:
+L1544:
         lw      r0,-6(fp)
         push    r0
         la      r0,32768
@@ -15016,10 +15088,10 @@ L1539:
         mov     r1,r0
         pop     r0
         cls     r0,r1
-        brt     L1551
-        la      r2,L1540
+        brt     L1556
+        la      r2,L1545
         jmp     (r2)
-L1551:
+L1556:
         la      r0,_getchar
         jal     r1,(r0)
         sw      r0,-3(fp)
@@ -15028,7 +15100,7 @@ L1551:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1543
+        brf     L1548
         lw      r0,-3(fp)
         push    r0
         lc      r0,1
@@ -15041,16 +15113,16 @@ L1551:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1543
+        brf     L1548
         lc      r0,0
-        bra     L1544
-L1543:
+        bra     L1549
+L1548:
         lc      r0,1
-L1544:
+L1549:
         ceq     r0,z
-        brt     L1542
-        bra     L1540
-L1542:
+        brt     L1547
+        bra     L1545
+L1547:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -15061,9 +15133,9 @@ L1542:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        la      r2,L1539
+        la      r2,L1544
         jmp     (r2)
-L1540:
+L1545:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -15073,16 +15145,16 @@ L1540:
         lw      r0,-6(fp)
         lc      r1,0
         ceq     r0,r1
-        brf     L1546
-        la      r0,_S452
+        brf     L1551
+        la      r0,_S456
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        la      r2,L1538
+        la      r2,L1543
         jmp     (r2)
-L1546:
+L1551:
         lw      r0,-6(fp)
         push    r0
         la      r0,_input_buf
@@ -15094,34 +15166,34 @@ L1546:
         lw      r0,0(r1)
         lc      r1,66
         ceq     r0,r1
-        brf     L1547
+        brf     L1552
         la      r0,_parse_unit
         jal     r1,(r0)
-        bra     L1548
-L1547:
+        bra     L1553
+L1552:
         la      r0,_parse_program
         jal     r1,(r0)
-L1548:
+L1553:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1550
-        la      r0,_S453
+        brt     L1555
+        la      r0,_S457
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        bra     L1538
-L1550:
-        la      r0,_S454
+        bra     L1543
+L1555:
+        la      r0,_S458
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1538
-L1538:
+        bra     L1543
+L1543:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -40985,8 +41057,16 @@ _S450:
 _S451:
         .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
 _S452:
-        .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
+        .byte   59,45,45,45,32,83,80,73,32,45,45,45,10,0
 _S453:
-        .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
+        .byte   46,117,110,105,116,32,37,115,10,0
 _S454:
+        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,10,0
+_S455:
+        .byte   59,45,45,45,32,69,78,68,32,83,80,73,32,45,45,45,10,0
+_S456:
+        .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
+_S457:
+        .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
+_S458:
         .byte   59,32,79,75,10,0
