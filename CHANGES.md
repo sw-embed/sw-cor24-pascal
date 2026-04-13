@@ -18,6 +18,9 @@
   - `load_spi_sections()` registers imported procedures with full signatures
   - Emits `.import <unitname>` and `.extern` for imported symbols
   - `xcall` for cross-unit procedure calls
+- **Cross-unit globals**: interface-declared variables exported via `.var` in SPI
+  - `xloadg`/`xstoreg` instructions for reading/writing imported globals
+  - Requires sw-cor24-pcode >= 0f951b3 for p24-load unit_id patching
 
 ### Build Scripts
 - `compile-unit.sh` — compile a Pascal unit to `.spc` + `.spi`
@@ -29,11 +32,9 @@
 - t36_unit_decl — unit declaration (compile-only)
 - t37_mathlib — MathLib unit with add/multiply/square (compile-only)
 - t37_multi_mathlib — end-to-end: main program imports MathLib unit
+- t38_counter — unit exporting global variable with accessor procedures
+- t38_multi_counter — cross-unit global read via xloadg (3 increments → 3)
 - demo_multi_unit/ — two-unit demo (mathlib + strutils)
-
-### Known Limitations
-- Cross-unit global variables not yet supported (requires sw-cor24-pcode#9)
-- Only procedures and functions can be shared between units
 
 ### Issues closed
 - #14 Support multiple user-defined compilation units
