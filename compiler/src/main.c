@@ -31,7 +31,12 @@ int main() {
     }
 
     parser_init(input_buf, len);
-    parse_program();
+
+    if (tok_type == TOK_UNIT) {
+        parse_unit();
+    } else {
+        parse_program();
+    }
 
     if (parse_error) {
         printf("; COMPILE ERROR\n");

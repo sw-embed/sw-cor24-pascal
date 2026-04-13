@@ -1,0 +1,8 @@
+number = 2
+slug = "002-export-codegen"
+status = "pending"
+description = "Add export code generation for unit compilation. When compiling a 'unit' (not..."
+role = "production"
+context_files = []
+created_at = "2026-04-13T10:36:01"
+commits = []

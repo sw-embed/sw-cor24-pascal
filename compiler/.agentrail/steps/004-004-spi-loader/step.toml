@@ -1,0 +1,8 @@
+number = 4
+slug = "004-spi-loader"
+status = "pending"
+description = "Add .spi interface file loading to the compiler. When 'uses <unitname>' is en..."
+role = "production"
+context_files = []
+created_at = "2026-04-13T10:36:08"
+commits = []

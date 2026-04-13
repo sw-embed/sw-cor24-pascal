@@ -1,0 +1,8 @@
+number = 5
+slug = "005-end-to-end-pipeline"
+status = "pending"
+description = "End-to-end test of multi-unit compilation and linking. Create a test case: a ..."
+role = "production"
+context_files = []
+created_at = "2026-04-13T10:36:11"
+commits = []

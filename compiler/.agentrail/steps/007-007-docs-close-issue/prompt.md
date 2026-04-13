@@ -1,0 +1,1 @@
+Update documentation and close GitHub issue #14. Update CHANGES.md with user-defined unit support summary. Update compiler/CLAUDE.md to remove 'Single translation unit (no linker)' and document the unit compilation workflow. Update README if needed. Close issue #14 with a summary of what was implemented.

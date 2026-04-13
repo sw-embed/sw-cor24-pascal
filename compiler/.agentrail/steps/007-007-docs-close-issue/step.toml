@@ -1,0 +1,8 @@
+number = 7
+slug = "007-docs-close-issue"
+status = "pending"
+description = "Update documentation and close GitHub issue #14. Update CHANGES.md with user-..."
+role = "production"
+context_files = []
+created_at = "2026-04-13T10:36:17"
+commits = []

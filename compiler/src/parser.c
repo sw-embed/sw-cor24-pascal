@@ -2047,10 +2047,12 @@ void parse_proc_or_func_decl(int is_func) {
     expect(TOK_SEMI);
     if (parse_error) return;
 
-    /* Check for forward declaration */
-    if (tok_type == TOK_FORWARD) {
-        next_token();
-        expect(TOK_SEMI);
+    /* Check for forward declaration (explicit 'forward' or implicit in interface section) */
+    if (tok_type == TOK_FORWARD || in_interface) {
+        if (tok_type == TOK_FORWARD) {
+            next_token();
+            expect(TOK_SEMI);
+        }
         /* Register in proc table as user proc */
         pidx = proc_add(name, extern_name, param_count, is_func, ret_type);
         if (pidx >= 0) {
@@ -2241,6 +2243,9 @@ void parser_init(char *src, int len) {
     field_count = 0;
     unit_hardware = 0;
     unit_mode = 0;
+    is_unit_compilation = 0;
+    in_interface = 0;
+    unit_name[0] = 0;
     has_arrays = 0;
     scope_base = 0;
     scope_depth = 0;
@@ -2374,6 +2379,95 @@ void parse_program(void) {
     } else {
         printf(".endmodule\n");
     }
+
+    if (parse_error) {
+        printf("; compilation failed\n");
+    }
+}
+
+void parse_unit(void) {
+    /* unit <name>; interface <declarations> implementation <bodies> end. */
+
+    expect(TOK_UNIT);
+    if (parse_error) return;
+
+    str_copy(unit_name, tok_lexeme);
+    expect(TOK_IDENT);
+    if (parse_error) return;
+
+    expect(TOK_SEMI);
+    if (parse_error) return;
+
+    is_unit_compilation = 1;
+    unit_mode = 1; /* units always compile in unit mode */
+
+    /* Parse optional uses clause (for importing other units) */
+    if (tok_type == TOK_USES) {
+        parse_uses_clause();
+        if (parse_error) return;
+    }
+
+    /* Emit unit header */
+    printf(".unit %s\n", unit_name);
+    printf(".import p24p_rt\n");
+    emit_externs();
+    printf("; p24p unit: %s\n", unit_name);
+
+    /* Expect 'interface' keyword */
+    if (tok_type != TOK_INTERFACE) {
+        error("expected 'interface' in unit");
+        return;
+    }
+    next_token();
+
+    /* Interface section: const, type, var, and procedure/function headers */
+    /* Procedure headers are implicitly forward declarations */
+    in_interface = 1;
+
+    if (tok_type == TOK_CONST) parse_const_section();
+    if (tok_type == TOK_TYPE) parse_type_section();
+    if (tok_type == TOK_VAR) parse_var_section();
+
+    while ((tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION) && !parse_error) {
+        if (tok_type == TOK_PROCEDURE) {
+            parse_proc_or_func_decl(0);
+        } else {
+            parse_proc_or_func_decl(1);
+        }
+    }
+
+    in_interface = 0;
+
+    /* Expect 'implementation' keyword */
+    if (tok_type != TOK_IMPLEMENTATION) {
+        error("expected 'implementation' in unit");
+        return;
+    }
+    next_token();
+
+    /* Implementation section: additional const/type/var, then proc/func bodies */
+    if (tok_type == TOK_CONST) parse_const_section();
+    if (tok_type == TOK_TYPE) parse_type_section();
+    if (tok_type == TOK_VAR) parse_var_section();
+
+    while ((tok_type == TOK_PROCEDURE || tok_type == TOK_FUNCTION) && !parse_error) {
+        if (tok_type == TOK_PROCEDURE) {
+            parse_proc_or_func_decl(0);
+        } else {
+            parse_proc_or_func_decl(1);
+        }
+    }
+
+    if (str_count > 0) {
+        emit_string_data();
+    }
+
+    /* Expect 'end.' */
+    expect(TOK_END);
+    if (parse_error) return;
+    expect(TOK_DOT);
+
+    printf(".endunit\n");
 
     if (parse_error) {
         printf("; compilation failed\n");

@@ -1,0 +1,1 @@
+Add unit declaration syntax to the lexer and parser. Add TOK_UNIT, TOK_INTERFACE, TOK_IMPLEMENTATION keywords to the lexer. Parse the unit structure: 'unit <name>; interface <proc/func declarations> implementation <proc/func bodies> end.' This is parse-only — no code generation changes yet. Add a test unit source file to validate parsing succeeds without errors.

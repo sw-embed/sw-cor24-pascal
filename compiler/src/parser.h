@@ -112,6 +112,9 @@ int has_arrays;
 /* Unit flags */
 int unit_hardware;
 int unit_mode;       /* 1 = emit .unit/.xcall for multi-unit loading */
+int is_unit_compilation; /* 1 = compiling a 'unit', 0 = compiling a 'program' */
+int in_interface;        /* 1 = parsing interface section (proc headers are implicit forward) */
+char unit_name[MAX_NAME]; /* name of the unit being compiled */
 
 /* Error flag */
 int parse_error;
@@ -121,3 +124,6 @@ void parser_init(char *src, int len);
 
 /* Parse a complete Pascal program, emitting .spc to stdout */
 void parse_program(void);
+
+/* Parse a Pascal unit, emitting .spc to stdout */
+void parse_unit(void);

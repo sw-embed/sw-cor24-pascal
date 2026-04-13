@@ -107,6 +107,9 @@ int lex_keyword(char *id) {
     if (strcmp(id, "uses") == 0) return TOK_USES;
     if (strcmp(id, "exit") == 0) return TOK_EXIT;
     if (strcmp(id, "nil") == 0) return TOK_NIL;
+    if (strcmp(id, "unit") == 0) return TOK_UNIT;
+    if (strcmp(id, "interface") == 0) return TOK_INTERFACE;
+    if (strcmp(id, "implementation") == 0) return TOK_IMPLEMENTATION;
     return TOK_IDENT;
 }
 
@@ -358,6 +361,9 @@ char *token_name(int type) {
     if (type == TOK_EXIT) return "EXIT";
     if (type == TOK_NIL) return "NIL";
     if (type == TOK_CARET) return "CARET";
+    if (type == TOK_UNIT) return "UNIT";
+    if (type == TOK_INTERFACE) return "INTERFACE";
+    if (type == TOK_IMPLEMENTATION) return "IMPLEMENTATION";
     if (type == TOK_EOF) return "EOF";
     return "ERROR";
 }

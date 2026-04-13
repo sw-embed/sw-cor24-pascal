@@ -1,0 +1,8 @@
+number = 6
+slug = "006-exported-globals"
+status = "pending"
+description = "Add support for cross-unit global variable access. Units may export global va..."
+role = "production"
+context_files = []
+created_at = "2026-04-13T10:36:15"
+commits = []
