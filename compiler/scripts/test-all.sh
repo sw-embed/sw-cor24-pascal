@@ -34,8 +34,8 @@ printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
 
 for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests/countdown.pas; do
   [ -f "$f" ] || continue
-  # Skip unit-mode tests and unit-declaration files (handled separately below)
-  case "$f" in *_unit*) continue ;; esac
+  # Skip unit-mode tests, unit-declaration files, and multi-unit tests (handled separately below)
+  case "$f" in *_unit*|*_multi_*) continue ;; esac
   if head -1 "$f" | grep -qi '^unit '; then continue; fi
   NAME=$(basename "$f" .pas)
   EXPECT="$EXPECTED/${NAME}.txt"
@@ -137,6 +137,51 @@ for f in "$P24P_DIR"/tests/t*.pas; do
   else
     printf "FAIL %-20s (unit decl compile error)\n" "$NAME"
     echo "$SPC_OUTPUT" | grep "error" | head -5 | sed 's/^/     /'
+    FAIL=$((FAIL + 1))
+  fi
+done
+
+# Multi-unit tests (files matching *_multi_*.pas)
+# These require compiling unit dependencies first, then linking.
+# Blocked on sw-cor24-pcode issues: pa24r requires main in units, p24-load import resolution.
+MULTI_SCRIPT="$P24P_DIR/scripts/run-multi-unit.sh"
+for f in "$P24P_DIR"/tests/*_multi_*.pas; do
+  [ -f "$f" ] || continue
+  NAME=$(basename "$f" .pas)
+  EXPECT="$EXPECTED/${NAME}.txt"
+
+  if [ ! -f "$EXPECT" ]; then
+    printf "SKIP %-20s (multi-unit, no expected output)\n" "$NAME"
+    SKIP=$((SKIP + 1))
+    continue
+  fi
+
+  # Find unit dependencies: look for matching t<num>_<unitname>.pas files
+  # Convention: t37_multi_mathlib.pas depends on t37_mathlib.pas
+  PREFIX=$(echo "$NAME" | sed 's/_multi_.*//')
+  UNIT_FILES=()
+  for uf in "$P24P_DIR"/tests/${PREFIX}_*.pas; do
+    [ -f "$uf" ] || continue
+    if head -1 "$uf" | grep -qi '^unit '; then
+      UNIT_FILES+=("$uf")
+    fi
+  done
+
+  if [ ${#UNIT_FILES[@]} -eq 0 ]; then
+    printf "SKIP %-20s (multi-unit, no unit files found)\n" "$NAME"
+    SKIP=$((SKIP + 1))
+    continue
+  fi
+
+  ACTUAL=$(bash "$MULTI_SCRIPT" "$f" "${UNIT_FILES[@]}" 2>&1) || true
+
+  echo "$ACTUAL" > "$TMP/${NAME}_actual.txt"
+  if diff -q "$EXPECT" "$TMP/${NAME}_actual.txt" > /dev/null 2>&1; then
+    printf "PASS %-20s (multi-unit)\n" "$NAME"
+    PASS=$((PASS + 1))
+  else
+    printf "FAIL %-20s (multi-unit, output mismatch)\n" "$NAME"
+    diff "$EXPECT" "$TMP/${NAME}_actual.txt" | head -10 | sed 's/^/     /'
     FAIL=$((FAIL + 1))
   fi
 done

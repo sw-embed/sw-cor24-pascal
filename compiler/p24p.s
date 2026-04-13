@@ -16220,10 +16220,10 @@ L1642:
         la      r1,_proc_count
         lw      r1,0(r1)
         cls     r0,r1
-        brt     L1675
+        brt     L1674
         la      r2,L1643
         jmp     (r2)
-L1675:
+L1674:
         la      r0,_proc_is_exported
         push    r0
         lw      r0,-3(fp)
@@ -16234,10 +16234,7 @@ L1675:
         add     r0,r1
         lw      r0,0(r0)
         ceq     r0,z
-        brf     L1674
-        la      r2,L1645
-        jmp     (r2)
-L1674:
+        brt     L1645
         la      r0,_proc_argc
         push    r0
         lw      r0,-3(fp)
@@ -16259,31 +16256,6 @@ L1674:
         la      r0,___tc24r_printf2
         jal     r1,(r0)
         add     sp,9
-        la      r0,_proc_ret_type
-        push    r0
-        lw      r0,-3(fp)
-        lc      r1,3
-        mul     r0,r1
-        mov     r1,r0
-        pop     r0
-        add     r0,r1
-        lw      r0,0(r0)
-        push    r0
-        la      r0,_proc_has_ret
-        push    r0
-        lw      r0,-3(fp)
-        lc      r1,3
-        mul     r0,r1
-        mov     r1,r0
-        pop     r0
-        add     r0,r1
-        lw      r0,0(r0)
-        push    r0
-        la      r0,_S449
-        push    r0
-        la      r0,___tc24r_printf2
-        jal     r1,(r0)
-        add     sp,9
 L1645:
         lw      r0,-3(fp)
         lc      r1,1
@@ -16294,7 +16266,7 @@ L1645:
 L1643:
         la      r0,_unit_name
         push    r0
-        la      r0,_S450
+        la      r0,_S449
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -16304,7 +16276,7 @@ L1643:
         lc      r1,68
         ceq     r0,r1
         brt     L1647
-        la      r0,_S451
+        la      r0,_S450
         push    r0
         la      r0,_error
         jal     r1,(r0)
@@ -16421,7 +16393,7 @@ L1665:
         la      r0,_expect
         jal     r1,(r0)
         add     sp,3
-        la      r0,_S452
+        la      r0,_S451
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -16430,7 +16402,7 @@ L1665:
         lw      r0,0(r1)
         ceq     r0,z
         brt     L1666
-        la      r0,_S453
+        la      r0,_S452
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -16438,14 +16410,14 @@ L1665:
         la      r2,L1667
         jmp     (r2)
 L1666:
-        la      r0,_S454
+        la      r0,_S453
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         la      r0,_unit_name
         push    r0
-        la      r0,_S455
+        la      r0,_S454
         push    r0
         la      r0,___tc24r_printf1
         jal     r1,(r0)
@@ -16491,7 +16463,7 @@ L1672:
         jal     r1,(r0)
         add     sp,3
         push    r0
-        la      r0,_S456
+        la      r0,_S455
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -16516,7 +16488,7 @@ L1672:
         add     r0,r1
         lw      r0,0(r0)
         push    r0
-        la      r0,_S457
+        la      r0,_S456
         push    r0
         la      r0,___tc24r_printf2
         jal     r1,(r0)
@@ -16529,7 +16501,7 @@ L1671:
         la      r2,L1668
         jmp     (r2)
 L1669:
-        la      r0,_S458
+        la      r0,_S457
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
@@ -16551,7 +16523,7 @@ _main:
         add     sp,-9
         lc      r0,0
         sw      r0,-6(fp)
-L1677:
+L1676:
         lw      r0,-6(fp)
         push    r0
         la      r0,32768
@@ -16560,10 +16532,10 @@ L1677:
         mov     r1,r0
         pop     r0
         cls     r0,r1
-        brt     L1691
-        la      r2,L1678
+        brt     L1690
+        la      r2,L1677
         jmp     (r2)
-L1691:
+L1690:
         la      r0,_getchar
         jal     r1,(r0)
         sw      r0,-3(fp)
@@ -16572,7 +16544,7 @@ L1691:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1681
+        brf     L1680
         lw      r0,-3(fp)
         push    r0
         lc      r0,1
@@ -16585,16 +16557,16 @@ L1691:
         ceq     r0,r1
         mov     r0,c
         ceq     r0,z
-        brf     L1681
+        brf     L1680
         lc      r0,0
-        bra     L1682
-L1681:
-        lc      r0,1
-L1682:
-        ceq     r0,z
-        brt     L1680
-        bra     L1678
+        bra     L1681
 L1680:
+        lc      r0,1
+L1681:
+        ceq     r0,z
+        brt     L1679
+        bra     L1677
+L1679:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -16605,9 +16577,9 @@ L1680:
         lc      r1,1
         add     r0,r1
         sw      r0,-6(fp)
-        la      r2,L1677
+        la      r2,L1676
         jmp     (r2)
-L1678:
+L1677:
         la      r0,_input_buf
         lw      r1,-6(fp)
         add     r0,r1
@@ -16617,16 +16589,16 @@ L1678:
         lw      r0,-6(fp)
         lc      r1,0
         ceq     r0,r1
-        brf     L1684
-        la      r0,_S459
+        brf     L1683
+        la      r0,_S458
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        la      r2,L1676
+        la      r2,L1675
         jmp     (r2)
-L1684:
+L1683:
         lw      r0,-6(fp)
         push    r0
         la      r0,_input_buf
@@ -16649,7 +16621,7 @@ L1684:
         lw      r0,-9(fp)
         lc      r1,0
         cls     r1,r0
-        brf     L1686
+        brf     L1685
         lw      r0,-9(fp)
         push    r0
         la      r0,_input_buf
@@ -16657,39 +16629,39 @@ L1684:
         la      r0,_load_spi_sections
         jal     r1,(r0)
         add     sp,6
-L1686:
+L1685:
         la      r1,_tok_type
         lw      r0,0(r1)
         lc      r1,66
         ceq     r0,r1
-        brf     L1687
+        brf     L1686
         la      r0,_parse_unit
         jal     r1,(r0)
-        bra     L1688
-L1687:
+        bra     L1687
+L1686:
         la      r0,_parse_program
         jal     r1,(r0)
-L1688:
+L1687:
         la      r1,_parse_error
         lw      r0,0(r1)
         ceq     r0,z
-        brt     L1690
-        la      r0,_S460
+        brt     L1689
+        la      r0,_S459
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,1
-        bra     L1676
-L1690:
-        la      r0,_S461
+        bra     L1675
+L1689:
+        la      r0,_S460
         push    r0
         la      r0,___tc24r_printf0
         jal     r1,(r0)
         add     sp,3
         lc      r0,0
-        bra     L1676
-L1676:
+        bra     L1675
+L1675:
         mov     sp,fp
         pop     r1
         pop     r2
@@ -42720,30 +42692,28 @@ _S446:
 _S447:
         .byte   46,105,109,112,111,114,116,32,112,50,52,112,95,114,116,10,0
 _S448:
-        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,0
+        .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,10,0
 _S449:
-        .byte   32,37,100,32,37,100,10,0
-_S450:
         .byte   59,32,112,50,52,112,32,117,110,105,116,58,32,37,115,10,0
-_S451:
+_S450:
         .byte   101,120,112,101,99,116,101,100,32,39,105,109,112,108,101,109,101,110,116,97,116,105,111,110,39,32,105,110,32,117,110,105,116,0
-_S452:
+_S451:
         .byte   46,101,110,100,117,110,105,116,10,0
-_S453:
+_S452:
         .byte   59,32,99,111,109,112,105,108,97,116,105,111,110,32,102,97,105,108,101,100,10,0
-_S454:
+_S453:
         .byte   59,45,45,45,32,83,80,73,32,45,45,45,10,0
-_S455:
+_S454:
         .byte   46,117,110,105,116,32,37,115,10,0
-_S456:
+_S455:
         .byte   46,101,120,112,111,114,116,32,37,115,32,37,100,0
-_S457:
+_S456:
         .byte   32,37,100,32,37,100,10,0
-_S458:
+_S457:
         .byte   59,45,45,45,32,69,78,68,32,83,80,73,32,45,45,45,10,0
-_S459:
+_S458:
         .byte   59,32,69,82,82,79,82,58,32,110,111,32,105,110,112,117,116,10,0
-_S460:
+_S459:
         .byte   59,32,67,79,77,80,73,76,69,32,69,82,82,79,82,10,0
-_S461:
+_S460:
         .byte   59,32,79,75,10,0

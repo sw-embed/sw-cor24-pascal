@@ -2594,14 +2594,13 @@ void parse_unit(void) {
     printf(".unit %s\n", unit_name);
     printf(".import p24p_rt\n");
     emit_externs();
-    /* Emit .export for each interface-declared procedure */
+    /* Emit .export for each interface-declared procedure (pa24r format: name argc only) */
     {
         int i;
         i = 0;
         while (i < proc_count) {
             if (proc_is_exported[i]) {
-                printf(".export %s %d", proc_extern_at(i), proc_argc[i]);
-                printf(" %d %d\n", proc_has_ret[i], proc_ret_type[i]);
+                printf(".export %s %d\n", proc_extern_at(i), proc_argc[i]);
             }
             i = i + 1;
         }
