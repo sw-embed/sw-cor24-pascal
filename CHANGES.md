@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-04-13 — Unit-mode read(ch)/eof fix
+
+### Runtime
+- Removed obsolete dummy `main` proc from `runtime-unit.spc` (pa24r no longer
+  requires it for library units since sw-cor24-pcode@53cb8ad).
+
+### Tests
+- t39_unit_read_loop — regression test for `while not eof do read(ch)` in
+  unit mode. Requires sw-cor24-pcode >= ef45f8e (loader push relocation fix).
+
+### Scripts
+- `run-pascal-unit.sh` accepts optional input file for `-u` UART mode.
+- `test-all.sh` passes `.input` file to unit-mode tests.
+
+### Issues closed
+- #15 Unit-mode read(ch)/eof loop hangs with -u UART input (fixed upstream
+  in sw-cor24-pcode@ef45f8e; loader incorrectly relocated `push -1` as a
+  data ref, corrupting the runtime's `_io_la` lookahead buffer sentinel).
+
 ## 2026-04-13 — User-defined unit support
 
 ### Compiler
