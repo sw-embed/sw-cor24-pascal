@@ -1018,10 +1018,4 @@ ms_done:
     ret 3
 .end
 
-; Dummy main required by assembler — runtime is a library unit,
-; entry point is never called directly.
-.proc main 0
-    halt
-.end
-
 .endunit

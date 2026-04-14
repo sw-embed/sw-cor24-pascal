@@ -201,7 +201,12 @@ for f in "$P24P_DIR"/tests/*_unit*.pas; do
     continue
   fi
 
-  ACTUAL=$(bash "$UNIT_SCRIPT" "$f" 50000000 2>&1)
+  INPUT_FILE="$EXPECTED/${NAME}.input"
+  if [ -f "$INPUT_FILE" ]; then
+    ACTUAL=$(bash "$UNIT_SCRIPT" "$f" 50000000 "$INPUT_FILE" 2>&1)
+  else
+    ACTUAL=$(bash "$UNIT_SCRIPT" "$f" 50000000 2>&1)
+  fi
 
   echo "$ACTUAL" > "$TMP/${NAME}_actual.txt"
   if diff -q "$EXPECT" "$TMP/${NAME}_actual.txt" > /dev/null 2>&1; then

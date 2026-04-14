@@ -7,8 +7,9 @@
 #           pvm.s loads image.p24m
 set -euo pipefail
 
-PAS="${1:?Usage: $0 <file.pas> [max_instructions]}"
+PAS="${1:?Usage: $0 <file.pas> [max_instructions] [input_file]}"
 MAX_INSTRS="${2:-50000000}"
+INPUT_FILE="${3:-}"
 
 # Tool paths
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -58,10 +59,20 @@ if [ -z "$CODE_PTR" ]; then
 fi
 
 # Step 5: Run on PVM
-cor24-run --load-binary "$TMP/pvm.bin@0" \
-  --load-binary "$TMP/$NAME.p24m@0x010000" \
-  --patch "0x${CODE_PTR}=0x010000" \
-  --entry 0 --speed 0 -n "$MAX_INSTRS" --terminal 2>&1 | \
-  awk '/^PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
-  grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
-  grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'
+if [ -n "$INPUT_FILE" ] && [ -f "$INPUT_FILE" ]; then
+  cor24-run --load-binary "$TMP/pvm.bin@0" \
+    --load-binary "$TMP/$NAME.p24m@0x010000" \
+    --patch "0x${CODE_PTR}=0x010000" \
+    --entry 0 --speed 0 -n "$MAX_INSTRS" -u "$(cat "$INPUT_FILE")"$'\x04' 2>&1 | \
+    awk '/^UART output: PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
+    grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+    grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'
+else
+  cor24-run --load-binary "$TMP/pvm.bin@0" \
+    --load-binary "$TMP/$NAME.p24m@0x010000" \
+    --patch "0x${CODE_PTR}=0x010000" \
+    --entry 0 --speed 0 -n "$MAX_INSTRS" --terminal 2>&1 | \
+    awk '/^PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
+    grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+    grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'
+fi
