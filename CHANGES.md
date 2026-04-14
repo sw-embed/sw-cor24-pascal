@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-04-13 — chr() write dispatch fix
+
+### Compiler
+- **chr() return type** (issue #16): changed from `TYPE_INTEGER` to `TYPE_CHAR`
+  so `write(chr(N))` dispatches to `_p24p_write_char` (writing byte N) instead
+  of `_p24p_write_int` (writing digits). Matches Pascal semantics where `chr`
+  returns `char`.
+
+### Tests
+- t40_chr_write — `write(chr(65))`, `write(chr(13))`, `write(chr(10))` inline
+
+### Issues closed
+- #16 write(chr(n)) outputs integer n instead of character
+
 ## 2026-04-13 — Unit-mode read(ch)/eof fix
 
 ### Runtime
