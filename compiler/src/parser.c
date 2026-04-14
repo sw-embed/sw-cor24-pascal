@@ -476,7 +476,7 @@ void register_system_unit(void) {
     proc_add("abs", "_p24p_abs", 1, 1, TYPE_INTEGER);
     proc_add("odd", "_p24p_odd", 1, 1, TYPE_BOOLEAN);
     proc_add("ord", "_p24p_ord", 1, 1, TYPE_INTEGER);
-    proc_add("chr", "_p24p_chr", 1, 1, TYPE_INTEGER);
+    proc_add("chr", "_p24p_chr", 1, 1, TYPE_CHAR);
     proc_add("succ", "_p24p_succ", 1, 1, TYPE_INTEGER);
     proc_add("pred", "_p24p_pred", 1, 1, TYPE_INTEGER);
     proc_add("sqr", "_p24p_sqr", 1, 1, TYPE_INTEGER);

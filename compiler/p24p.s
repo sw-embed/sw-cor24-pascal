@@ -7758,7 +7758,7 @@ _register_system_unit:
         la      r0,_proc_add
         jal     r1,(r0)
         add     sp,15
-        lc      r0,0
+        lc      r0,4
         push    r0
         lc      r0,1
         push    r0
