@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-04-14 — Unit-mode string literal output fix
+
+### Scripts
+- `run-pascal-unit.sh` and `run-multi-unit.sh` pass `--load-addr 0x010000`
+  to p24-load so `push <data_ref>` operands get the correct absolute VM
+  address.
+- Output filters in all run scripts tightened from `^\[` to `^\[UART` and
+  `^\[CPU ` so program output starting with `[` (like `[]`) is no longer
+  stripped.
+
+### Tests
+- t41_unit_strs — regression test for unit-mode `write('AB')`, `write('[]')`,
+  `write('()')`, `write('[abc]')`, `write('[x]y')`.
+
+### Toolchain Requirements
+- Requires sw-cor24-pcode >= e5c8f03 (adds `--load-addr` to p24-load).
+
+### Issues closed
+- #17 write(string_literal) for non-alphanumeric strings produces corrupted
+  output (fixed upstream in sw-cor24-pcode@e5c8f03; p24-load now relocates
+  data-ref push operands to absolute VM addresses).
+
 ## 2026-04-13 — chr() write dispatch fix
 
 ### Compiler
