@@ -95,7 +95,7 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
       --terminal --speed 0 -n 50000000 2>&1)
   fi
 
-  ACTUAL=$(echo "$EXEC_OUTPUT" | grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+  ACTUAL=$(echo "$EXEC_OUTPUT" | grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
     grep -v '^Executed' | grep -v '^Loaded' | grep -v 'PVM OK' | grep -v '^$' | \
     grep -v '^HALT$' | grep -v '^CPU halted')
 

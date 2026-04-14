@@ -96,7 +96,7 @@ EXEC_OUTPUT=$(cor24-run --run "$PVM" \
 
 EXEC_INSTRS=$(echo "$EXEC_OUTPUT" | grep -oE 'Executed [0-9]+' | grep -oE '[0-9]+')
 HALTED=$(echo "$EXEC_OUTPUT" | grep -c 'CPU halted' || true)
-UART=$(echo "$EXEC_OUTPUT" | grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+UART=$(echo "$EXEC_OUTPUT" | grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
   grep -v '^Executed' | grep -v '^Loaded' | grep -v '^PVM OK' | grep -v '^$' | grep -v '^HALT$')
 
 echo ""

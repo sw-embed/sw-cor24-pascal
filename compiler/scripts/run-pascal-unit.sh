@@ -47,7 +47,7 @@ fi
 "$PA24R" "$TMP/$NAME.spc" -o "$TMP/$NAME.p24" 2>/dev/null
 
 # Step 3: Link units with p24-load (user first = entry, runtime second)
-"$P24LOAD" "$TMP/$NAME.p24" "$RT_P24" -o "$TMP/$NAME.p24m" 2>/dev/null
+"$P24LOAD" --load-addr 0x010000 "$TMP/$NAME.p24" "$RT_P24" -o "$TMP/$NAME.p24m" 2>/dev/null
 
 # Step 4: Pre-assemble PVM and find code_ptr (must run from vm/ dir for includes)
 PVM_DIR="$(dirname "$PVM")"
@@ -65,7 +65,7 @@ if [ -n "$INPUT_FILE" ] && [ -f "$INPUT_FILE" ]; then
     --patch "0x${CODE_PTR}=0x010000" \
     --entry 0 --speed 0 -n "$MAX_INSTRS" -u "$(cat "$INPUT_FILE")"$'\x04' 2>&1 | \
     awk '/^UART output: PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
-    grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+    grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
     grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'
 else
   cor24-run --load-binary "$TMP/pvm.bin@0" \
@@ -73,6 +73,6 @@ else
     --patch "0x${CODE_PTR}=0x010000" \
     --entry 0 --speed 0 -n "$MAX_INSTRS" --terminal 2>&1 | \
     awk '/^PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
-    grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+    grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
     grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'
 fi

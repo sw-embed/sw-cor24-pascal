@@ -82,7 +82,7 @@ echo "$SPC_OUTPUT" | sed -n '/^\.unit/,/^\.endunit/p' > "$TMP/$MAIN_NAME.spc"
 "$PA24R" "$TMP/$MAIN_NAME.spc" -o "$TMP/$MAIN_NAME.p24" 2>/dev/null
 
 # Step 4: Link with p24-load (main first, then units, then runtime)
-"$P24LOAD" "$TMP/$MAIN_NAME.p24" $P24_FILES "$RT_P24" -o "$TMP/$MAIN_NAME.p24m" 2>/dev/null
+"$P24LOAD" --load-addr 0x010000 "$TMP/$MAIN_NAME.p24" $P24_FILES "$RT_P24" -o "$TMP/$MAIN_NAME.p24m" 2>/dev/null
 
 # Step 5: Pre-assemble PVM and find code_ptr
 PVM_DIR="$(dirname "$PVM")"
@@ -99,5 +99,5 @@ cor24-run --load-binary "$TMP/pvm.bin@0" \
   --patch "0x${CODE_PTR}=0x010000" \
   --entry 0 --speed 0 -n "$MAX_INSTRS" --terminal 2>&1 | \
   awk '/^PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
-  grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+  grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
   grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'

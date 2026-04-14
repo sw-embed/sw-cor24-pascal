@@ -60,6 +60,6 @@ cor24-run --run "$PVM" \
   --load-binary "$TMP/$NAME.bin@0x010000" \
   --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
   --terminal --speed 0 -n "$MAX_INSTRS" 2>&1 | \
-  grep -v '^\[' | grep -v '^Assembled' | grep -v '^Running' | \
+  grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
   grep -v '^Executed' | grep -v '^Loaded' | grep -v '^PVM OK' | \
   grep -v '^$' | grep -v '^HALT$'
