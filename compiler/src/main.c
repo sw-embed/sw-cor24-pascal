@@ -6,7 +6,7 @@
 #include <string.h>
 #include "parser.c"
 
-#define INPUT_BUF_SIZE 65536
+#define INPUT_BUF_SIZE 131072
 
 char input_buf[INPUT_BUF_SIZE];
 
@@ -14,12 +14,18 @@ int main() {
     int ch;
     int len;
     int src_offset;
+    int truncated;
 
     len = 0;
-    while (len < INPUT_BUF_SIZE - 1) {
+    truncated = 0;
+    while (1) {
         ch = getchar();
         if (ch == 4 || ch == -1) {
             break;
+        }
+        if (len >= INPUT_BUF_SIZE - 1) {
+            truncated = 1;
+            continue;
         }
         input_buf[len] = ch;
         len = len + 1;
@@ -28,6 +34,11 @@ int main() {
 
     if (len == 0) {
         printf("; ERROR: no input\n");
+        return 1;
+    }
+
+    if (truncated) {
+        printf("; ERROR: source exceeds compiler input buffer (%d bytes)\n", INPUT_BUF_SIZE);
         return 1;
     }
 
