@@ -79,6 +79,12 @@ Sibling repos (cloned under `~/github/sw-embed/`):
 - [sw-cor24-basic](https://github.com/sw-embed/sw-cor24-basic) — 1970s-terminal-inspired "Time Sharing" BASIC interpreter for COR24 ISA hardware and emulator.
 - `runtime/` — the Pascal runtime library in this repo is itself written in Pascal.
 
+## Links
+
+- Blog: [Software Wrighter Lab](https://software-wrighter-lab.github.io/)
+- Discord: [Join the community](https://discord.com/invite/Ctzk5uHggZ)
+- YouTube: [Software Wrighter](https://www.youtube.com/@SoftwareWrighter)
+
 ## License
 
-See [LICENSE](LICENSE).
+Copyright (c) 2026 Michael A Wright. MIT-licensed; see [LICENSE](LICENSE).
