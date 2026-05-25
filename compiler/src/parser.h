@@ -19,7 +19,7 @@
 #define SYM_LOCAL 3
 
 /* Symbol table limits */
-#define MAX_SYMBOLS 256
+#define MAX_SYMBOLS 512
 #define MAX_NAME 32
 #define SYM_NAME_SIZE 8192
 
