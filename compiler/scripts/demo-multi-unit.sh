@@ -34,17 +34,19 @@ TMP="/tmp/p24p_demo_$$"
 mkdir -p "$TMP"
 trap "rm -rf $TMP" EXIT
 
+# Pre-assemble compiler (once)
+cor24-asm "$P24P_S" --bin "$TMP/p24p.bin"
+
 for UNIT_PAS in "$DEMO_DIR/mathlib.pas" "$DEMO_DIR/strutils.pas"; do
   UNIT_NAME=$(basename "$UNIT_PAS" .pas)
   echo ""
   echo ">>> Compiling unit: $UNIT_NAME"
 
-  SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "$(cat "$UNIT_PAS")"$'\x04' --speed 0 -n 50000000 2>&1 | \
-    grep -v '^\[UART' | sed 's/^UART output: //')
+  SPC_OUTPUT=$(cor24-emu --load-binary "$TMP/p24p.bin@0" --entry 0 \
+    --uart-file "$UNIT_PAS" --speed 0 -n 50000000 -q 2>/dev/null)
 
   if echo "$SPC_OUTPUT" | grep -q "; OK"; then
     echo "    OK"
-    # Extract .spc and .spi
     echo "$SPC_OUTPUT" | sed -n '/^\.unit/,/^\.endunit$/p' | sed '/^\.endunit$/q' > "$TMP/$UNIT_NAME.spc"
     echo "$SPC_OUTPUT" | sed -n '/^;--- SPI ---$/,/^;--- END SPI ---$/p' | grep -v '^;---' > "$TMP/$UNIT_NAME.spi"
     echo "    Generated: $UNIT_NAME.spc ($( wc -l < "$TMP/$UNIT_NAME.spc" | tr -d ' ') lines)"
@@ -74,11 +76,11 @@ $(cat "$SPI_FILE")
 "
 done
 
-MAIN_INPUT="${SPI_DATA}$(cat "$DEMO_DIR/main.pas")"
+echo "${SPI_DATA}$(cat "$DEMO_DIR/main.pas")" > "$TMP/main_input.pas"
 echo ""
 echo ">>> Compiling: main.pas (imports: mathlib, strutils)"
-SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "${MAIN_INPUT}"$'\x04' --speed 0 -n 50000000 2>&1 | \
-  grep -v '^\[UART' | sed 's/^UART output: //')
+SPC_OUTPUT=$(cor24-emu --load-binary "$TMP/p24p.bin@0" --entry 0 \
+  --uart-file "$TMP/main_input.pas" --speed 0 -n 50000000 -q 2>/dev/null)
 
 if echo "$SPC_OUTPUT" | grep -q "; OK"; then
   echo "    OK"
