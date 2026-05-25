@@ -18,10 +18,13 @@ fi
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 REPO_DIR="$(cd "$P24P_DIR/.." && pwd)"
 P24P_S="$P24P_DIR/p24p.s"
-PA24R="$REPO_DIR/../sw-cor24-pcode/target/release/pa24r"
-P24LOAD="$REPO_DIR/../sw-cor24-pcode/target/release/p24-load"
 RT_P24="$REPO_DIR/runtime/p24p_rt.p24"
-PVM="$REPO_DIR/../sw-cor24-pcode/vm/pvm.s"
+
+# Resolve PVM (env override or derive from toolchain location)
+if [ ! -f "${PVM:-}" ]; then
+  PVM="$(dirname "$(command -v cor24-emu)")/../lib/pcode/pvm.s"
+fi
+[ -f "$PVM" ] || { echo "Error: pvm.s not found — set PVM env var" >&2; exit 1; }
 
 MAIN_PAS="$1"
 shift
@@ -43,6 +46,14 @@ TMP="/tmp/p24p_multi_$$"
 mkdir -p "$TMP"
 trap "rm -rf $TMP" EXIT
 
+# Pre-assemble compiler and PVM
+cor24-asm "$P24P_S" --bin "$TMP/p24p.bin"
+export P24P_BIN="$TMP/p24p.bin"
+cor24-asm "$PVM" --bin "$TMP/pvm.bin" --listing "$TMP/pvm.lst"
+
+CODE_PTR=$(grep -A1 "code_ptr:" "$TMP/pvm.lst" | tail -1 | awk '{print $1}' | tr -d ':')
+[ -n "$CODE_PTR" ] || { echo "Error: could not resolve code_ptr from PVM" >&2; exit 1; }
+
 # Step 1: Compile each unit
 SPI_DATA=""
 P24_FILES=""
@@ -52,7 +63,6 @@ for UNIT_PAS in "${UNIT_FILES[@]}"; do
 
   # Collect SPI data for prepending to main
   if [ -f "$TMP/$UNIT_NAME.spi" ]; then
-    # Extract the actual unit name from .spi file (.unit <name>)
     SPI_UNIT_NAME=$(grep '^\.unit ' "$TMP/$UNIT_NAME.spi" | head -1 | awk '{print $2}')
     SPI_DATA="${SPI_DATA};--- SPI ${SPI_UNIT_NAME} ---
 $(cat "$TMP/$UNIT_NAME.spi")
@@ -61,14 +71,14 @@ $(cat "$TMP/$UNIT_NAME.spi")
   fi
 
   # Assemble unit to .p24
-  "$PA24R" "$TMP/$UNIT_NAME.spc" -o "$TMP/$UNIT_NAME.p24" 2>/dev/null
+  pa24r "$TMP/$UNIT_NAME.spc" -o "$TMP/$UNIT_NAME.p24" >/dev/null 2>/dev/null
   P24_FILES="$P24_FILES $TMP/$UNIT_NAME.p24"
 done
 
-# Step 2: Compile main program with SPI data prepended
-MAIN_INPUT="${SPI_DATA}$(cat "$MAIN_PAS")"
-SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "${MAIN_INPUT}"$'\x04' --speed 0 -n 50000000 2>&1 | \
-  grep -v '^\[UART' | sed 's/^UART output: //')
+# Step 2: Compile main program with SPI data prepended (write to temp file for --uart-file)
+echo "${SPI_DATA}$(cat "$MAIN_PAS")" > "$TMP/main_input.pas"
+SPC_OUTPUT=$(cor24-emu --load-binary "$TMP/p24p.bin@0" --entry 0 \
+  --uart-file "$TMP/main_input.pas" --speed 0 -n 50000000 -q 2>/dev/null)
 
 if ! echo "$SPC_OUTPUT" | grep -q "; OK"; then
   echo "Compilation failed for $MAIN_PAS:" >&2
@@ -79,25 +89,14 @@ fi
 echo "$SPC_OUTPUT" | sed -n '/^\.unit/,/^\.endunit/p' > "$TMP/$MAIN_NAME.spc"
 
 # Step 3: Assemble main to .p24
-"$PA24R" "$TMP/$MAIN_NAME.spc" -o "$TMP/$MAIN_NAME.p24" 2>/dev/null
+pa24r "$TMP/$MAIN_NAME.spc" -o "$TMP/$MAIN_NAME.p24" >/dev/null 2>/dev/null
 
 # Step 4: Link with p24-load (main first, then units, then runtime)
-"$P24LOAD" --load-addr 0x010000 "$TMP/$MAIN_NAME.p24" $P24_FILES "$RT_P24" -o "$TMP/$MAIN_NAME.p24m" 2>/dev/null
+p24-load --load-addr 0x010000 "$TMP/$MAIN_NAME.p24" $P24_FILES "$RT_P24" -o "$TMP/$MAIN_NAME.p24m" 2>/dev/null
 
-# Step 5: Pre-assemble PVM and find code_ptr
-PVM_DIR="$(dirname "$PVM")"
-(cd "$PVM_DIR" && cor24-run --assemble "$(basename "$PVM")" "$TMP/pvm.bin" "$TMP/pvm.lst" >/dev/null 2>&1)
-CODE_PTR=$(grep -A1 "code_ptr:" "$TMP/pvm.lst" | tail -1 | awk '{print $1}' | tr -d ':')
-if [ -z "$CODE_PTR" ]; then
-  echo "Error: could not resolve code_ptr from PVM listing" >&2
-  exit 1
-fi
-
-# Step 6: Run on PVM
-cor24-run --load-binary "$TMP/pvm.bin@0" \
+# Step 5: Run on PVM
+cor24-emu --load-binary "$TMP/pvm.bin@0" \
   --load-binary "$TMP/$MAIN_NAME.p24m@0x010000" \
   --patch "0x${CODE_PTR}=0x010000" \
-  --entry 0 --speed 0 -n "$MAX_INSTRS" --terminal 2>&1 | \
-  awk '/^PVM OK$/ { found=1; next } /^HALT$/ { found=0; next } /^TRAP / { print; next } found { print }' | \
-  grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
-  grep -v '^Executed' | grep -v '^Loaded' | grep -v '^$'
+  --entry 0 --speed 0 -n "$MAX_INSTRS" --terminal -q 2>/dev/null | \
+  sed '/^PVM OK$/d;/^Entry point:/d;/^HALT$/d;/^$/d'
