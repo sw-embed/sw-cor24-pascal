@@ -14,9 +14,17 @@ NAME=$(basename "$PAS" .pas)
 
 mkdir -p "$OUTDIR"
 
+# Use pre-assembled compiler if available, otherwise assemble now
+if [ -n "${P24P_BIN:-}" ] && [ -f "$P24P_BIN" ]; then
+  _p24p_bin="$P24P_BIN"
+else
+  cor24-asm "$P24P_S" --bin "$OUTDIR/p24p.bin"
+  _p24p_bin="$OUTDIR/p24p.bin"
+fi
+
 # Compile unit
-SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "$(cat "$PAS")"$'\x04' --speed 0 -n 50000000 2>&1 | \
-  grep -v '^\[UART' | sed 's/^UART output: //')
+SPC_OUTPUT=$(cor24-emu --load-binary "$_p24p_bin@0" --entry 0 \
+  --uart-file "$PAS" --speed 0 -n 50000000 -q 2>/dev/null)
 
 if ! echo "$SPC_OUTPUT" | grep -q "; OK"; then
   echo "Compilation failed for $PAS:" >&2

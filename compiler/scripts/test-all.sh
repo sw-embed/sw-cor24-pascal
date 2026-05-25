@@ -8,29 +8,33 @@ set -euo pipefail
 P24P_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 REPO_DIR="$(cd "$P24P_DIR/.." && pwd)"
 P24P_S="$P24P_DIR/p24p.s"
-PL24R="$REPO_DIR/../sw-cor24-pcode/target/release/pl24r"
-PA24R="$REPO_DIR/../sw-cor24-pcode/target/release/pa24r"
 RUNTIME="$REPO_DIR/runtime/runtime.spc"
-PVM="$REPO_DIR/../sw-cor24-pcode/vm/pvm.s"
 EXPECTED="$P24P_DIR/tests/expected"
+
+# Resolve PVM (env override or derive from toolchain location)
+if [ ! -f "${PVM:-}" ]; then
+  PVM="$(dirname "$(command -v cor24-emu)")/../lib/pcode/pvm.s"
+fi
+[ -f "$PVM" ] || { echo "Error: pvm.s not found — set PVM env var" >&2; exit 1; }
 
 TMP="/tmp/p24p_test_$$"
 mkdir -p "$TMP"
 trap "rm -rf $TMP" EXIT
 
-# Resolve code_ptr address dynamically from PVM
-CODE_PTR_ADDR=$(cor24-run --run "$PVM" -e code_ptr --speed 0 -n 0 2>&1 | \
-  grep "Entry point:" | sed 's/.*@ //')
-if [ -z "$CODE_PTR_ADDR" ]; then
-  echo "Error: could not resolve code_ptr address from PVM" >&2
+# Pre-assemble compiler and PVM (once for entire test run)
+cor24-asm "$P24P_S" --bin "$TMP/p24p.bin"
+cor24-asm "$PVM" --bin "$TMP/pvm.bin" --listing "$TMP/pvm.lst"
+export P24P_BIN="$TMP/p24p.bin"
+
+CODE_PTR=$(grep -A1 "code_ptr:" "$TMP/pvm.lst" | tail -1 | awk '{print $1}' | tr -d ':')
+if [ -z "$CODE_PTR" ]; then
+  echo "Error: could not resolve code_ptr from PVM" >&2
   exit 1
 fi
 
 PASS=0
 FAIL=0
 SKIP=0
-
-printf '\x00\x00\x01' > "$TMP/code_ptr.bin"
 
 for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests/countdown.pas; do
   [ -f "$f" ] || continue
@@ -48,9 +52,8 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
   fi
 
   # Step 1: Compile
-  # Use -u (preloaded UART) instead of --terminal to avoid ~4KB terminal buffer limit
-  SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "$(cat "$f")"$'\x04' --speed 0 -n 50000000 2>&1 | \
-    grep -v '^\[UART' | sed 's/^UART output: //')
+  SPC_OUTPUT=$(cor24-emu --load-binary "$TMP/p24p.bin@0" --entry 0 \
+    --uart-file "$f" --speed 0 -n 50000000 -q 2>/dev/null)
 
   if ! echo "$SPC_OUTPUT" | grep -q "; OK"; then
     printf "FAIL %-20s (compile error)\n" "$NAME"
@@ -61,21 +64,21 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
   echo "$SPC_OUTPUT" | sed -n '/^\.module/,/^\.endmodule/p' > "$TMP/$NAME.spc"
 
   # Step 2: Link
-  if ! "$PL24R" "$RUNTIME" "$TMP/$NAME.spc" -o "$TMP/${NAME}_linked.spc" 2>"$TMP/link.log"; then
+  if ! pl24r "$RUNTIME" "$TMP/$NAME.spc" -o "$TMP/${NAME}_linked.spc" >/dev/null 2>"$TMP/link.log"; then
     printf "FAIL %-20s (link error)\n" "$NAME"
     FAIL=$((FAIL + 1))
     continue
   fi
 
   # Step 3: Assemble
-  if ! "$PA24R" "$TMP/${NAME}_linked.spc" -o "$TMP/$NAME.p24" 2>/dev/null; then
+  if ! pa24r "$TMP/${NAME}_linked.spc" -o "$TMP/$NAME.p24" >/dev/null 2>/dev/null; then
     printf "FAIL %-20s (assemble error)\n" "$NAME"
     FAIL=$((FAIL + 1))
     continue
   fi
 
   # Step 4: Relocate
-  if ! python3 "$REPO_DIR/scripts/relocate_p24.py" "$TMP/$NAME.p24" 0x010000 2>/dev/null; then
+  if ! python3 "$REPO_DIR/scripts/relocate_p24.py" "$TMP/$NAME.p24" 0x010000 >/dev/null 2>/dev/null; then
     printf "FAIL %-20s (relocate error)\n" "$NAME"
     FAIL=$((FAIL + 1))
     continue
@@ -84,27 +87,25 @@ for f in "$P24P_DIR"/tests/t*.pas "$P24P_DIR"/tests/hello*.pas "$P24P_DIR"/tests
   # Step 5: Execute (with optional UART input from .input file)
   INPUT_FILE="$P24P_DIR/tests/expected/${NAME}.input"
   if [ -f "$INPUT_FILE" ]; then
-    EXEC_OUTPUT=$(cor24-run --run "$PVM" \
+    ACTUAL=$(cor24-emu --load-binary "$TMP/pvm.bin@0" \
       --load-binary "$TMP/$NAME.bin@0x010000" \
-      --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
-      -u "$(cat "$INPUT_FILE")" --speed 0 -n 50000000 2>&1)
+      --patch "0x${CODE_PTR}=0x010000" \
+      --entry 0 --speed 0 -n 50000000 -u "$(cat "$INPUT_FILE")"$'\x04' -q 2>"$TMP/exec.log" | \
+      sed '/^PVM OK$/d;/^Entry point:/d;/^HALT$/d;/^$/d')
   else
-    EXEC_OUTPUT=$(cor24-run --run "$PVM" \
+    ACTUAL=$(cor24-emu --load-binary "$TMP/pvm.bin@0" \
       --load-binary "$TMP/$NAME.bin@0x010000" \
-      --load-binary "$TMP/code_ptr.bin@${CODE_PTR_ADDR}" \
-      --terminal --speed 0 -n 50000000 2>&1)
+      --patch "0x${CODE_PTR}=0x010000" \
+      --entry 0 --speed 0 -n 50000000 --terminal -q 2>"$TMP/exec.log" | \
+      sed '/^PVM OK$/d;/^Entry point:/d;/^HALT$/d;/^$/d')
   fi
 
-  ACTUAL=$(echo "$EXEC_OUTPUT" | grep -v '^\[UART' | grep -v '^\[CPU ' | grep -v '^Assembled' | grep -v '^Running' | \
-    grep -v '^Executed' | grep -v '^Loaded' | grep -v 'PVM OK' | grep -v '^$' | \
-    grep -v '^HALT$' | grep -v '^CPU halted')
-
-  HALTED=$(echo "$EXEC_OUTPUT" | grep -c 'CPU halted' || true)
+  HALTED=$(grep -c 'CPU halted' "$TMP/exec.log" || true)
 
   # Compare
   echo "$ACTUAL" > "$TMP/${NAME}_actual.txt"
   if diff -q "$EXPECT" "$TMP/${NAME}_actual.txt" > /dev/null 2>&1; then
-    if [ "$HALTED" -eq 1 ]; then
+    if [ "$HALTED" -ge 1 ]; then
       printf "PASS %-20s\n" "$NAME"
       PASS=$((PASS + 1))
     else
@@ -121,15 +122,13 @@ done
 # Unit-declaration compile-only tests (files that start with 'unit' keyword)
 for f in "$P24P_DIR"/tests/t*.pas; do
   [ -f "$f" ] || continue
-  # Check if the file starts with 'unit' (not 'program')
   if ! head -1 "$f" | grep -qi '^unit '; then
     continue
   fi
   NAME=$(basename "$f" .pas)
 
-  # Compile and check for success
-  SPC_OUTPUT=$(cor24-run --run "$P24P_S" -u "$(cat "$f")"$'\x04' --speed 0 -n 50000000 2>&1 | \
-    grep -v '^\[UART' | sed 's/^UART output: //')
+  SPC_OUTPUT=$(cor24-emu --load-binary "$TMP/p24p.bin@0" --entry 0 \
+    --uart-file "$f" --speed 0 -n 50000000 -q 2>/dev/null)
 
   if echo "$SPC_OUTPUT" | grep -q "; OK"; then
     printf "PASS %-20s (unit decl)\n" "$NAME"
@@ -142,8 +141,6 @@ for f in "$P24P_DIR"/tests/t*.pas; do
 done
 
 # Multi-unit tests (files matching *_multi_*.pas)
-# These require compiling unit dependencies first, then linking.
-# Blocked on sw-cor24-pcode issues: pa24r requires main in units, p24-load import resolution.
 MULTI_SCRIPT="$P24P_DIR/scripts/run-multi-unit.sh"
 for f in "$P24P_DIR"/tests/*_multi_*.pas; do
   [ -f "$f" ] || continue
@@ -157,7 +154,6 @@ for f in "$P24P_DIR"/tests/*_multi_*.pas; do
   fi
 
   # Find unit dependencies: look for matching t<num>_<unitname>.pas files
-  # Convention: t37_multi_mathlib.pas depends on t37_mathlib.pas
   PREFIX=$(echo "$NAME" | sed 's/_multi_.*//')
   UNIT_FILES=()
   for uf in "$P24P_DIR"/tests/${PREFIX}_*.pas; do
@@ -190,7 +186,6 @@ done
 UNIT_SCRIPT="$P24P_DIR/scripts/run-pascal-unit.sh"
 for f in "$P24P_DIR"/tests/*_unit*.pas; do
   [ -f "$f" ] || continue
-  # Skip unit-declaration files (handled by unit-decl section above)
   if head -1 "$f" | grep -qi '^unit '; then continue; fi
   NAME=$(basename "$f" .pas)
   EXPECT="$EXPECTED/${NAME}.txt"
